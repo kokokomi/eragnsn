@@ -1,0 +1,64 @@
+﻿; ステージの攻略
+; erb/stage/stages/stage_{stageId}.erbを攻略する対象とする
+; ステージの実装は/erb/stage/stages/doc.mdを参照
+@stage(stageId)
+#DIM stageId
+#DIM command
+
+
+$INPUT_LOOP
+CALL show_floor_gui(stageId)
+PRINTFORML [1] - 探索を進める
+PRINTFORML [2] - 周辺を探索
+
+INPUT
+command = RESULT
+
+SELECTCASE command
+CASE 1
+    ; 探索を進める
+    CALL stage_command_foward(stageId)
+CASE 2
+    ; 周辺を探索
+    CALL stage_command_explore(stageId)
+ENDSELECT
+
+; ターンが終わったとき
+; 必要に応じてEPリセット
+CALL party_reset_ep_if_ecstasy
+
+GOTO INPUT_LOOP
+
+$STAGE_FINISH
+
+@stage_command_foward(stageId)
+#DIM stageId
+PRINTFORML 先に進むことにした
+CALLFORM stage_foward_{stageId}
+
+@stage_command_explore(stageId)
+#DIM stageId
+PRINTFORML 周辺を探索することにした
+WAIT
+CALLFORM stage_explore_{stageId}
+PRINTFORML {RESULT}
+IF !RESULT
+    PRINTFORML 何も見つからなかった
+ENDIF
+
+@show_floor_gui(stageId)
+#DIM lcount
+#DIM memberCount
+#DIM stageId
+
+DRAWLINE
+CALLFORMF stage_{stageId}_stage_name
+PRINTFORML << %RESULTS%攻略中 >>
+CALL party_get_member_count
+memberCount = RESULT
+FOR lcount, 0, memberCount
+    PRINTFORML %charactor_get_charactor_name(lcount)%
+    CALL view_component_statusbar(lcount)
+    PRINTL
+NEXT
+DRAWLINE

@@ -1,0 +1,33 @@
+﻿; 敵の名前
+@enemy_name(enemyId)
+#DIM enemyId
+#FUNCTIONS
+CALLFORMF enemy_name_{enemyId}
+RETURNF RESULTS
+
+; 敵のHP
+@enemy_max_hp(enemyId, enemyLevel)
+#DIM enemyId
+#DIM enemyLevel
+CALLFORM enemy_max_hp_{enemyId}(enemyLevel)
+RETURN RESULT
+
+; 敵の攻撃力
+@enemy_atk(enemyId, enemyLevel)
+#DIM enemyId
+#DIM enemyLevel
+CALLFORM enemy_atk_{enemyId}(enemyLevel)
+RETURN RESULT
+
+; 敵の行動
+@enemy_select_command(enemyId, enemyNum)
+#DIM enemyId
+#DIM enemyNum
+#DIM targetCharactor
+#DIM enemyCommand
+
+CALLFORM enemy_select_command_{enemyId}(enemyNum)
+targetCharactor = RESULT:0
+enemyCommand = RESULT:1
+
+CALLFORM enemy_command_{enemyCommand}(enemyNum, targetCharactor)

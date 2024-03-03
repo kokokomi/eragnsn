@@ -1,0 +1,46 @@
+﻿;お店（という名の待機画面）処理
+
+@EVENTSHOP
+CALL print_debug("EVENTSHOP")
+DRAWLINE
+
+@SHOW_SHOP
+CALL print_debug("SHOW_SHOP")
+CALL show_home_gui
+
+; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
+PRINTFORML [100] - 探索へ向かう
+
+@USERSHOP
+#DIM command
+command = RESULT
+
+CALL print_debug("USERSHOP")
+
+SELECTCASE command
+CASE 100
+    CALL select_stage
+ENDSELECT
+
+@show_home_gui
+#DIM memberCount
+#DIM lcount
+DRAWLINE
+PRINTFORML 調査開始から {DAY}日目
+DRAWLINE
+PRINTFORML << 編成 >>
+CALL party_get_member_count
+memberCount = RESULT
+FOR lcount, 0, memberCount
+    CALL party_get_member_nth(lcount)
+    CALL show_charactor_status_for_home(RESULT, lcount)
+NEXT
+DRAWLINE
+
+@show_charactor_status_for_home(charactorId, charactorNum)
+#DIM charactorId
+#DIM charactorNum
+PRINTFORML %charactor_get_charactor_name(charactorNum)%
+CALL view_component_statusbar(charactorNum)
+
+PRINTL

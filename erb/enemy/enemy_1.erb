@@ -1,0 +1,39 @@
+﻿; 敵の名前
+@enemy_name_1
+#FUNCTIONS
+RESULTS = ヒルチャール
+RETURNF RESULTS
+
+; HP
+@enemy_max_hp_1(enemyLevel)
+#DIM enemyLevel
+RETURN 1000 + (enemyLevel * 100)
+
+; 行動選択
+@enemy_select_command_1(enemyNum)
+#DIM enemyNum
+#DIM commandTarget
+#DIM enemyCommand
+
+CALL enemy_command_util_random_target
+commandTarget = RESULT
+SELECTCASE RAND:5
+    CASE 0
+        enemyCommand = 1
+    CASE 1
+        enemyCommand = 2
+    CASE 2
+        enemyCommand = 3
+    CASE 3
+        enemyCommand = 5
+    CASE 4
+        enemyCommand = 6
+    CASEELSE
+        THROW enemy_select_command_1: 想定外のパターン
+ENDSELECT
+RETURN commandTarget, enemyCommand
+
+; 攻撃力
+@enemy_atk_1(enemyLevel)
+#DIM enemyLevel
+RETURN 40 + (enemyLevel * 40)

@@ -1,0 +1,68 @@
+﻿; 戦闘開始前の設定を初期化する
+@battle_setup
+DT_CREATE "enemies"
+DT_COLUMN_ADD "enemies", "enemy_id", "int16"
+DT_COLUMN_ADD "enemies", "enemy_name"
+DT_COLUMN_ADD "enemies", "enemy_level", "int16"
+DT_COLUMN_ADD "enemies", "enemy_max_hp", "int16"
+DT_COLUMN_ADD "enemies", "enemy_hp", "int16"
+DT_COLUMN_ADD "enemies", "enemy_aura", "int16"
+DT_COLUMN_ADD "enemies", "enemy_atk", "int16"
+
+; 戦闘に敵を追加する
+@battle_setup_add_enemy(enemyId, enemyLevel)
+#DIM enemyId
+#DIM enemyLevel
+#DIM maxHp
+#DIM enemyAtk
+
+CALLF enemy_name(enemyId)
+CALL enemy_max_hp(enemyId)
+maxHp = RESULT
+CALL enemy_atk(enemyId)
+enemyAtk = RESULT
+
+DT_ROW_ADD "enemies", "enemy_id", enemyId, "enemy_name", RESULTS, "enemy_level", enemyLevel, "enemy_max_hp", maxHp, "enemy_hp", maxHp, "enemy_aura", 0, "enemy_atk", enemyAtk
+
+@battle_enemy_get_prop(enemyIndex, prop)
+#DIM enemyIndex
+#DIMS prop
+DT_CELL_GET "enemies", enemyIndex, prop
+RETURN RESULT
+
+@battle_enemy_get_prop_string(enemyIndex, prop)
+#FUNCTIONS
+#DIM enemyIndex
+#DIMS prop
+RETURNF DT_CELL_GETS("enemies", enemyIndex, prop)
+
+@battle_enemy_name(enemyNum)
+#FUNCTIONS
+#DIM enemyNum
+RETURNF DT_CELL_GETS("enemies", enemyNum, "enemy_name")
+
+@battle_enemy_atk(enemyNum)
+#DIM enemyNum
+RETURN DT_CELL_GET("enemies", enemyNum, "enemy_atk")
+
+; 敵の数
+@battle_enemy_count
+DT_ROW_LENGTH "enemies"
+RETURN RESULT
+
+; 終了時の後片付け
+@battle_cleanup
+DT_RELEASE "enemies"
+
+; 戦闘の設定が正しいかのバリデーション
+@validate_battle_configuration
+DT_EXIST "enemies"
+IF !RESULT
+    RETURN false
+ENDIF
+
+DT_ROW_LENGTH "enemies"
+IF RESULT < 1
+    RETURN false
+ENDIF
+RETURN true

@@ -1,0 +1,51 @@
+﻿; ステージ初期化処理
+@stage_initialize_1
+
+@stage_1_stage_name
+#FUNCTIONS
+RESULTS = 始まりの秘境
+RETURNF RESULTS
+
+@stage_1_can_challenge
+RETURN true
+
+; このステージの最大フロア
+@stage_get_max_floor_1
+RETURN 10
+
+; 周辺探索時のイベントを呼び出す
+; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
+; 何かしらのイベントが発生した場合はtrueを返す
+@stage_explore_1
+#DIM queryCount
+DT_CREATE "stage_events"
+DT_COLUMN_ADD "stage_events", "event_id", "int16"
+DT_COLUMN_ADD "stage_events", "rarity", "int16"
+
+DT_ROW_ADD "stage_events", "event_id", 1, "rarity", 1
+DT_ROW_ADD "stage_events", "event_id", 2, "rarity", 1
+
+LOCAL:0 = RAND:100
+
+; 20%でイベントなし
+IF LOCAL:0 < 20
+    DT_RELEASE "stage_events"
+    RETURN false
+ENDIF
+queryCount = DT_SELECT("stage_events", "rarity = 1", "event_id ASC")
+LOCAL:1 = RAND:(queryCount)
+CALLFORM stage_event_{DT_CELL_GET("stage_events", LOCAL:1, "event_id")}
+DT_RELEASE "stage_events"
+
+RETURN true
+
+; 先へ進む場合呼び出される
+; 探索度を加算したり、イベントを発生させる
+@stage_foward_1
+
+CALL battle_setup
+CALL battle_setup_add_enemy(1, 10)
+CALL battle_setup_add_enemy(1, 12)
+CALL battle_setup_add_enemy(1, 11)
+CALL battle_setup_add_enemy(1, 12)
+CALL battle

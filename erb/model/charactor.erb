@@ -1,0 +1,223 @@
+﻿; キャラクターについての操作
+
+; 元素名
+@charactor_get_element_type_name(charactorId)
+#FUNCTIONS
+#DIM charactorId
+RETURNF STR:(CFLAG:(charactorId):0)
+
+; 武器の種類名
+@charactor_get_weapon_type_name(charactorId)
+#FUNCTIONS
+#DIM charactorId
+RETURNF STR:(CFLAG:(charactorId):1)
+
+; キャラクター名
+@charactor_get_charactor_name(charactorNum)
+#FUNCTIONS
+#DIM charactorNum
+
+RETURNF CALLNAME:charactorNum
+
+; hp
+@charactor_get_hp(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):0
+
+; max hp
+@charactor_get_max_hp(charactorNum)
+#DIM charactorNum
+RETURN MAXBASE:(charactorNum):0
+
+; スタミナ
+@charactor_get_sp(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):1
+
+; max スタミナ
+@charactor_get_max_sp(charactorNum)
+#DIM charactorNum
+RETURN MAXBASE:(charactorNum):1
+
+; 精神
+@charactor_get_mp(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):2
+
+; max 精神
+@charactor_get_max_mp(charactorNum)
+#DIM charactorNum
+RETURN MAXBASE:(charactorNum):2
+
+; 衣装
+@charactor_get_cp(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):3
+
+; max 衣装
+@charactor_get_max_cp(charactorNum)
+#DIM charactorNum
+RETURN MAXBASE:(charactorNum):3
+
+; 快楽
+@charactor_get_ep(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):4
+
+; max 快楽
+@charactor_get_max_ep(charactorNum)
+#DIM charactorNum
+RETURN MAXBASE:(charactorNum):4
+
+; ステータス操作系 ----------------------------------------------------------------------------------
+; 強制的にEPを1にする
+@charactor_set_ep_1(charactorNum)
+#DIM charactorNum
+BASE:(charactorNum):4 = 1
+
+; EPをリセット
+@charactor_reset_ep_if_ecstasy(charactorNum)
+#DIM charactorNum
+IF BASE:(charactorNum):4 == 0
+    BASE:(charactorNum):4 = MAXBASE:(charactorNum):4
+ENDIF
+
+; キャラクターへの操作 ----------------------------------------------------------------------------------
+
+; 絶頂させる
+@charactor_ecstasy(charactorNum, ecstasyLevel, part)
+#DIM charactorNum
+#DIM ecstasyLevel ;何回分の絶頂か
+#DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
+; 絶頂経験+1
+EXP:(charactorNum):24 += 1
+
+CALL message_player_ecstasy(charactorNum, ecstasyLevel, part)
+; 絶頂によって精神が削られる
+CALL charactor_damage_mp(charactorNum, 100)
+
+; 状態の判定 ----------------------------------------------------------------------------------
+; 倒れているか
+@charactor_is_faint(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):2 <= 0
+
+; HPが尽きて弱っているか
+@charactor_is_weak(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):0 <= 0
+
+
+; 服が破れて全裸か
+@charactor_is_nude(charactorNum)
+#DIM charactorNum
+RETURN BASE:(charactorNum):3 <= 0
+
+; ダメージ系操作 ----------------------------------------------------------------------------------
+; MPにダメージを与える
+@charactor_damage_mp(charactorNum, damage)
+#DIM charactorNum
+#DIM damage
+CALL message_player_mp_damage(charactorNum, damage)
+BASE:(charactorNum):2 = MAX(0, BASE:(charactorNum):2 - damage)
+
+; CPにダメージを与える
+@charactor_damage_cp(charactorNum, damage)
+#DIM charactorNum
+#DIM damage
+CALL message_player_cp_damage(charactorNum, damage)
+BASE:(charactorNum):3 = MAX(0, BASE:(charactorNum):3 - damage)
+
+; HPにダメージを与える
+@charactor_damage_hp(charactorNum, damage)
+#DIM charactorNum
+#DIM damage
+CALL message_player_hp_damage(charactorNum, damage)
+BASE:(charactorNum):0 = MAX(0, BASE:(charactorNum):0 - damage)
+
+; EPダメージを与える
+@charactor_damage_ep(charactorNum, damage, part)
+#DIM charactorNum
+#DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
+#DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
+
+; ダメージ量計算
+; 部位ごとに倍率
+IF part_has_b(part)
+    SELECTCASE TALENT:(charactorNum):102
+        CASE -1 ; 鈍感
+            damage = damage * 4 / 10
+        CASE 1 ; 敏感
+            damage = damage * 14 / 10
+        CASE 2 ; 過敏
+            damage = damage * 16 / 10
+    ENDSELECT
+
+    ;貧乳
+    IF TALENT:(charactorNum):109
+        damage = damage * 11 / 10
+    ENDIF
+    ;巨乳
+    IF TALENT:(charactorNum):110
+        damage = damage * 8 / 10
+    ENDIF
+ENDIF
+
+IF part_has_c(part)
+    SELECTCASE TALENT:(charactorNum):103
+        CASE -1 ; 鈍感
+            damage = damage * 4 / 10
+        CASE 1 ; 敏感
+            damage = damage * 14 / 10
+        CASE 2 ; 過敏
+            damage = damage * 16 / 10
+    ENDSELECT
+ENDIF
+
+IF part_has_v(part)
+    SELECTCASE TALENT:(charactorNum):104
+        CASE -1 ; 鈍感
+            damage = damage * 4 / 10
+        CASE 1 ; 敏感
+            damage = damage * 14 / 10
+        CASE 2 ; 過敏
+            damage = damage * 16 / 10
+    ENDSELECT
+ENDIF
+
+IF part_has_a(part)
+    SELECTCASE TALENT:(charactorNum):101
+        CASE -1 ; 鈍感
+            damage = damage * 4 / 10
+        CASE 1 ; 敏感
+            damage = damage * 14 / 10
+        CASE 2 ; 過敏
+            damage = damage * 16 / 10
+    ENDSELECT
+ENDIF
+
+; 快感に素直
+IF TALENT:(charactorNum):70
+    damage = damage * 11 / 10
+ENDIF
+; 快感の否定
+IF TALENT:(charactorNum):70
+    damage = damage * 9 / 10
+ENDIF
+
+; 全裸状態の場合はEPダメージを1.2倍する
+CALL charactor_is_nude
+IF RESULT
+    damage = damage * 12 / 10
+ENDIF
+
+; ここまででダメージを確定
+
+CALL message_player_ep_damage(charactorNum, damage)
+BASE:(charactorNum):4 = MAX(0, BASE:(charactorNum):4 - damage)
+; 快感が0になったら絶頂
+IF BASE:(charactorNum):4 == 0
+    ; 絶頂何回分？
+    LOCAL:0 = damage / MAXBASE:(charactorNum):4
+    CALL charactor_ecstasy(charactorNum, LOCAL:0, part)
+ENDIF

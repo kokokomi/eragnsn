@@ -1,0 +1,23 @@
+﻿@view_component_colorbar(currentValue, maxValue, barLength = 20, color, colorBg)
+#DIM currentValue
+#DIM maxValue
+#DIM barLength
+#DIM color
+#DIM colorBg
+#DIMS barCharactor = @"%UNICODE(0x2582)%"
+#DIMS barBgCharactor = @"%UNICODE(0x2581)%"
+#DIM lcount
+
+LOCAL:1 = currentValue * barLength / maxValue
+
+FOR lcount, 0, barLength
+    IF LOCAL:1 > lcount
+        SETCOLOR color
+        PRINTFORM %barCharactor%
+    ELSE
+        SETCOLOR colorBg
+        PRINTFORM %barBgCharactor%
+    ENDIF
+NEXT
+
+RESETCOLOR

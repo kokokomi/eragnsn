@@ -1,0 +1,141 @@
+﻿; 戦闘画面
+; battleを呼ぶ前にbattle_setupをする必要がある
+@battle
+CALL print_debug("battle")
+
+$TURNLOOP
+CALL battle_player_turn
+CALL battle_enemy_turn
+
+; ターンエンド
+CALL party_reset_ep_if_ecstasy
+; PT全滅
+CALL party_is_defeat
+IF RESULT
+    CALL print_debug("@battle PT全滅")
+    GOTO BATTLE_FINISH
+ENDIF
+
+;次のターンへ
+GOTO TURNLOOP
+
+$BATTLE_FINISH
+CALL print_debug("battle finish")
+CALL battle_cleanup
+
+; 敵やプレイヤーのステータス表示
+@show_battle_gui
+#DIM lcount
+#DIM enemy_count
+#DIM memberCount
+
+#DIM enemyLv
+DRAWLINE
+
+CALL battle_enemy_count
+enemy_count = RESULT
+FOR lcount, 0, enemy_count
+
+    CALL battle_enemy_get_prop(lcount, "enemy_level")
+    enemyLv = RESULT
+    PRINTFORM 【%battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv】
+    CALL battle_enemy_get_prop(lcount, "enemy_hp")
+    LOCAL:0 = RESULT
+    CALL battle_enemy_get_prop(lcount, "enemy_max_hp")
+    LOCAL:1 = RESULT
+    PRINTFORM {LOCAL:0} / {LOCAL:1} 
+    CALL view_component_colorbar(LOCAL:0, LOCAL:1, 20, COLOR_HP, COLOR_HP_BG)
+    PRINTL
+NEXT
+
+DRAWLINE
+
+CALL party_get_member_count
+memberCount = RESULT
+FOR lcount, 0, memberCount
+    PRINTFORML %charactor_get_charactor_name(lcount)%
+    CALL view_component_statusbar(lcount)
+    PRINTL
+NEXT
+
+; プレイヤーのターン
+@battle_player_turn
+#DIM charactorNum
+#DIM lcount
+#DIM memberCount
+
+CALL party_get_member_count
+memberCount = RESULT
+
+FOR lcount, 0, memberCount
+    ; 放心チェック
+    CALL charactor_is_faint(lcount)
+    IF RESULT
+        CALL message_skip_player_turn_faint(lcount)
+        CONTINUE
+    ENDIF
+    ; 体力が尽きている場合、ランダムな確率で行動不能
+    CALL charactor_is_weak(lcount)
+    IF !RESULT && RAND:5 < 1
+        CALL message_skip_player_turn_weak(lcount)
+        WAIT
+        CONTINUE
+    ENDIF
+
+    CALL battle_charactor_command(lcount)
+NEXT
+
+; 各キャラクターのコマンド
+@battle_charactor_command(charactorNum)
+#DIM charactorNum
+#DIM enemy_count
+#DIM lcount
+#DIM enemyLv
+
+CALL show_battle_gui
+DRAWLINE
+
+PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
+PRINTFORML [1] 通常攻撃 
+PRINTFORML [2] スキル
+PRINTFORML [3] 元素爆発
+
+INPUT
+
+PRINTFORML 誰を狙う？
+CALL battle_enemy_count
+enemy_count = RESULT
+FOR lcount, 0, enemy_count
+
+    CALL battle_enemy_get_prop(lcount, "enemy_level")
+    enemyLv = RESULT
+    PRINTFORM [{lcount}]
+    PRINTFORM 【%battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv】
+    CALL battle_enemy_get_prop(lcount, "enemy_hp")
+    LOCAL:0 = RESULT
+    CALL battle_enemy_get_prop(lcount, "enemy_max_hp")
+    LOCAL:1 = RESULT
+    CALL view_component_colorbar(LOCAL:0, LOCAL:1, 20, COLOR_HP, COLOR_HP_BG)
+    PRINTL
+NEXT
+
+INPUT
+
+; 敵のターン
+@battle_enemy_turn
+#DIM enemy_count
+#DIM enemyId
+#DIM lcount
+#DIM enemyLv
+CALL battle_enemy_count
+enemy_count = RESULT
+FOR lcount, 0, enemy_count
+    CALL battle_enemy_get_prop(lcount, "enemy_id")
+    enemyLv = RESULT
+    PRINTFORML << %battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv のターン >>
+    WAIT
+    CALL battle_enemy_get_prop(lcount, "enemy_id")
+    enemyId = RESULT
+    CALL enemy_select_command(enemyId, lcount)
+    WAIT
+NEXT

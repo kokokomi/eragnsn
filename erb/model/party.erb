@@ -1,0 +1,38 @@
+﻿; n番目のパーティーメンバーのcharactorIdを返す
+; 存在しない場合は-1を返す
+@party_get_member_nth(num)
+#DIM num
+GETCHARA num
+RETURN RESULT
+
+; パーティメンバーの人数を返す
+@party_get_member_count
+RETURN MIN(CHARANUM, 4)
+
+; パーティーが全滅したか
+@party_is_defeat
+#DIM member_count
+#DIM lcount
+
+CALL party_get_member_count
+member_count = RESULT
+
+FOR lcount, 0, member_count
+    CALL charactor_is_faint(lcount)
+    IF !RESULT
+        RETURN false
+    ENDIF
+NEXT
+RETURN true
+
+; 絶頂したメンバーのEPをリセット
+@party_reset_ep_if_ecstasy
+#DIM member_count
+#DIM lcount
+
+CALL party_get_member_count
+member_count = RESULT
+
+FOR lcount, 0, member_count
+    CALL charactor_reset_ep_if_ecstasy(lcount)
+NEXT

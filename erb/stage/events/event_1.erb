@@ -1,0 +1,10 @@
+﻿; イベント処理
+@stage_event_1
+#DIM lcount
+PRINTFORML ピンク色の瘴気が周りから吹き出す！
+PRINTFORML 全員の感度が上がってしまった
+
+CALL party_get_member_count
+FOR lcount, 0, RESULT
+    CALL charactor_set_ep_1(lcount)
+NEXT
