@@ -1,0 +1,23 @@
+﻿;
+@calculate_hp_damage(damageMultiplier, attackerLevel, attackerAtk, targetDef)
+#FUNCTION
+#DIM damageMultiplier
+#DIM attackerLevel
+#DIM attackerAtk
+#DIM targetDef
+
+; 攻撃力にダメージ倍率をかけて防御補正で減衰した値がダメージ
+RETURNF attackerAtk * damageMultiplier * (1 - (calculate_hp_def_correction(attackerLevel, targetDef) / 100))
+
+@calculate_hp_def_correction(attackerLevel, targetDef)
+#FUNCTION
+#DIM attackerLevel
+#DIM targetDef
+
+RETURNF (targetDef / (targetDef + 5 * attackerLevel + 500)) * 100
+
+; 敵の防御力
+@calculate_enemy_def(enemyLevel)
+#FUNCTION
+#DIM enemyLevel
+RETURNF (enemyLevel + 100) * 5
