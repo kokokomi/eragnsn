@@ -63,7 +63,7 @@ FOR lcount, 0, memberCount
         CONTINUE
     ENDIF
     ; 体力が尽きている場合、ランダムな確率で行動不能
-    IF !charactor_is_weak(lcount) && RAND:5 < 1
+    IF charactor_is_weak(lcount) && RAND:5 < 1
         CALL message_skip_player_turn_weak(lcount)
         WAIT
         CONTINUE
@@ -84,8 +84,8 @@ DRAWLINE
 
 PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
 PRINTFORML [1] 通常攻撃 
-PRINTFORML [2] スキル
-PRINTFORML [3] 元素爆発
+PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
+PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
 
 INPUT
 
