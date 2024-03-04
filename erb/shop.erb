@@ -38,7 +38,9 @@ DRAWLINE
 @show_charactor_status_for_home(charactorId, charactorNum)
 #DIM charactorId
 #DIM charactorNum
+SETCOLOR CFLAG:(charactorNum):キャラの色
 PRINTFORML %charactor_get_charactor_name(charactorNum)%
+RESETCOLOR
 CALL view_component_statusbar(charactorNum)
 
 PRINTL
