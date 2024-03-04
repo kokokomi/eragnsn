@@ -3,22 +3,27 @@
 ; 生のまま扱うと可読性が悪いので関数で名前をつけておく
 @part_has_b(part)
 #DIM part
-RETURN part & PART_FLAG_B
+#FUNCTION
+RETURNF part & PART_FLAG_B
 
 @part_has_c(part)
 #DIM part
-RETURN part & PART_FLAG_C
+#FUNCTION
+RETURNF part & PART_FLAG_C
 
 @part_has_v(part)
 #DIM part
-RETURN part & PART_FLAG_V
+#FUNCTION
+RETURNF part & PART_FLAG_V
 
 @part_has_a(part)
 #DIM part
-RETURN part & PART_FLAG_A
+#FUNCTION
+RETURNF part & PART_FLAG_A
 
 ; 部位のフラグからpartを組み立てる
 @part_build(part_b, part_c, part_v, part_a)
+#FUNCTION
 #DIM part_b
 #DIM part_c
 #DIM part_v
@@ -36,4 +41,4 @@ ENDIF
 IF part_a
     LOCAL:0 |= PART_FLAG_A
 ENDIF
-RETURN LOCAL:0
+RETURNF LOCAL:0

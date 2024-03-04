@@ -54,8 +54,7 @@ ENDIF
 DRAWLINE
 CALLFORMF stage_{stageId}_stage_name
 PRINTFORML << %RESULTS%攻略中 >>
-CALL party_get_member_count
-memberCount = RESULT
+memberCount = party_get_member_count()
 FOR lcount, 0, memberCount
     PRINTFORML %charactor_get_charactor_name(lcount)%
     CALL view_component_statusbar(lcount)

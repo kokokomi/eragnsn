@@ -5,7 +5,6 @@
 #DIM lcount
 PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の服を掴み強引に破って脱がそうとしてきた
 
-CALL battle_enemy_atk(enemyNum)
 FOR lcount, 0, 1 + RAND:3
     CALL charactor_damage_cp(charactorNum, 20 + RAND:30)
 NEXT

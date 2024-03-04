@@ -4,5 +4,4 @@
 #DIM charactorNum
 PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に体当りした
 
-CALL battle_enemy_atk(enemyNum)
-CALL charactor_damage_hp(charactorNum, 50 * RESULT)
+CALL charactor_damage_hp(charactorNum, 50 * battle_enemy_atk(enemyNum))

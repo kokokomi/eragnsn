@@ -1,51 +1,27 @@
 ﻿; キャラクターのHPなどの各種ステータスを簡易表示する
 @view_component_statusbar(charactorNum)
 #DIM charactorNum
-#DIM currentHp
-#DIM maxHp
-#DIM currentMp
-#DIM maxMp
-#DIM currentCp
-#DIM maxCp
-#DIM currentEp
-#DIM maxEp
 
 ; HP
-CALL charactor_get_hp(charactorNum)
-currentHp = RESULT
-CALL charactor_get_max_hp(charactorNum)
-maxHp = RESULT
-PRINTFORM HP {currentHp}/{maxHp}
+PRINTFORM HP {charactor_get_hp(charactorNum)}/{charactor_get_max_hp(charactorNum)}
 PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(currentHp, maxHp, 5, COLOR_HP, COLOR_HP_BG)
+CALL view_component_colorbar(charactor_get_hp(charactorNum), charactor_get_max_hp(charactorNum), 5, COLOR_HP, COLOR_HP_BG)
 PRINTFORM %UNICODE(0x208E)%
 
 ; MP
-CALL charactor_get_mp(charactorNum)
-currentMp = RESULT
-CALL charactor_get_max_mp(charactorNum)
-maxMp = RESULT
-PRINTFORM MP {currentMp}/{maxMp}
+PRINTFORM MP {charactor_get_mp(charactorNum)}/{charactor_get_max_mp(charactorNum)}
 PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(currentMp, maxMp, 5, COLOR_MP, COLOR_MP_BG)
+CALL view_component_colorbar(charactor_get_mp(charactorNum), charactor_get_max_mp(charactorNum), 5, COLOR_MP, COLOR_MP_BG)
 PRINTFORM %UNICODE(0x208E)%
 
 ; CP
-CALL charactor_get_cp(charactorNum)
-currentCp = RESULT
-CALL charactor_get_max_cp(charactorNum)
-maxCp = RESULT
-PRINTFORM CP {currentCp}/{maxCp}
+PRINTFORM CP {charactor_get_cp(charactorNum)}/{charactor_get_max_cp(charactorNum)}
 PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(currentCp, maxCp, 5, COLOR_CP, COLOR_CP_BG)
+CALL view_component_colorbar(charactor_get_cp(charactorNum), charactor_get_max_cp(charactorNum), 5, COLOR_CP, COLOR_CP_BG)
 PRINTFORM %UNICODE(0x208E)%
 
 ; EP
-CALL charactor_get_ep(charactorNum)
-currentEp = RESULT
-CALL charactor_get_max_Ep(charactorNum)
-maxEp = RESULT
-PRINTFORM EP {currentEp}/{maxEp}
+PRINTFORM EP {charactor_get_ep(charactorNum)}/{charactor_get_max_Ep(charactorNum)}
 PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(currentEp, maxEp, 5, COLOR_EP, COLOR_EP_BG)
+CALL view_component_colorbar(charactor_get_ep(charactorNum), charactor_get_max_Ep(charactorNum), 5, COLOR_EP, COLOR_EP_BG)
 PRINTFORM %UNICODE(0x208E)%

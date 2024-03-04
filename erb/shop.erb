@@ -29,11 +29,9 @@ DRAWLINE
 PRINTFORML 調査開始から {DAY}日目
 DRAWLINE
 PRINTFORML << 編成 >>
-CALL party_get_member_count
-memberCount = RESULT
+memberCount = party_get_member_count()
 FOR lcount, 0, memberCount
-    CALL party_get_member_nth(lcount)
-    CALL show_charactor_status_for_home(RESULT, lcount)
+    CALL show_charactor_status_for_home(party_get_member_nth(lcount), lcount)
 NEXT
 DRAWLINE
 

@@ -10,8 +10,7 @@ CALL battle_enemy_turn
 ; ターンエンド
 CALL party_reset_ep_if_ecstasy
 ; PT全滅
-CALL party_is_defeat
-IF RESULT
+IF party_is_defeat()
     CALL print_debug("@battle PT全滅")
     GOTO BATTLE_FINISH
 ENDIF
@@ -32,8 +31,7 @@ CALL battle_cleanup
 #DIM enemyLv
 DRAWLINE
 
-CALL battle_enemy_count
-enemy_count = RESULT
+enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
 
     CALL battle_enemy_get_prop(lcount, "enemy_level")
@@ -50,8 +48,7 @@ NEXT
 
 DRAWLINE
 
-CALL party_get_member_count
-memberCount = RESULT
+memberCount = party_get_member_count()
 FOR lcount, 0, memberCount
     PRINTFORML %charactor_get_charactor_name(lcount)%
     CALL view_component_statusbar(lcount)
@@ -64,19 +61,16 @@ NEXT
 #DIM lcount
 #DIM memberCount
 
-CALL party_get_member_count
-memberCount = RESULT
+memberCount = party_get_member_count()
 
 FOR lcount, 0, memberCount
     ; 放心チェック
-    CALL charactor_is_faint(lcount)
-    IF RESULT
+    IF charactor_is_faint(lcount)
         CALL message_skip_player_turn_faint(lcount)
         CONTINUE
     ENDIF
     ; 体力が尽きている場合、ランダムな確率で行動不能
-    CALL charactor_is_weak(lcount)
-    IF !RESULT && RAND:5 < 1
+    IF !charactor_is_weak(lcount) && RAND:5 < 1
         CALL message_skip_player_turn_weak(lcount)
         WAIT
         CONTINUE
@@ -103,8 +97,7 @@ PRINTFORML [3] 元素爆発
 INPUT
 
 PRINTFORML 誰を狙う？
-CALL battle_enemy_count
-enemy_count = RESULT
+enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
 
     CALL battle_enemy_get_prop(lcount, "enemy_level")
@@ -127,8 +120,7 @@ INPUT
 #DIM enemyId
 #DIM lcount
 #DIM enemyLv
-CALL battle_enemy_count
-enemy_count = RESULT
+enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
     CALL battle_enemy_get_prop(lcount, "enemy_id")
     enemyLv = RESULT

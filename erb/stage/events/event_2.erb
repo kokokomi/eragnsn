@@ -1,11 +1,9 @@
 ﻿; イベント処理
 @stage_event_2
 #DIM targetCharactor
-CALL party_get_member_count
-target = RAND:(RESULT)
+targetCharactor = RAND:(party_get_member_count())
 
 PRINTFORML 粘液を滴らせた触手が%charactor_get_charactor_name(targetCharactor)%の背後から忍び寄る
 PRINTFORML %charactor_get_charactor_name(targetCharactor)%の動きを封じると胸をもてあそんだ
 
-CALL part_build(1, 0, 0, 0)
-CALL charactor_damage_ep(targetCharactor, 1000, RESULT)
+CALL charactor_damage_ep(targetCharactor, 1000, part_build(true, false, false, false))

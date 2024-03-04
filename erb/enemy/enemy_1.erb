@@ -15,8 +15,7 @@ RETURN 1000 + (enemyLevel * 100)
 #DIM commandTarget
 #DIM enemyCommand
 
-CALL enemy_command_util_random_target
-commandTarget = RESULT
+commandTarget = enemy_command_util_random_target()
 SELECTCASE RAND:5
     CASE 0
         enemyCommand = 1

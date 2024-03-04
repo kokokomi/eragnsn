@@ -1,6 +1,6 @@
 ﻿@enemy_command_util_random_target
-CALL party_get_member_count
-RETURN RAND:(RESULT)
+#FUNCTION
+RETURNF RAND:(party_get_member_count())
 
 @enemy_command_util_random_command
 RETURN 

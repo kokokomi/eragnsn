@@ -21,53 +21,63 @@ RETURNF CALLNAME:charactorNum
 
 ; hp
 @charactor_get_hp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):0
+RETURNF BASE:(charactorNum):0
 
 ; max hp
 @charactor_get_max_hp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN MAXBASE:(charactorNum):0
+RETURNF MAXBASE:(charactorNum):0
 
 ; スタミナ
 @charactor_get_sp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):1
+RETURNF BASE:(charactorNum):1
 
 ; max スタミナ
 @charactor_get_max_sp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN MAXBASE:(charactorNum):1
+RETURNF MAXBASE:(charactorNum):1
 
 ; 精神
 @charactor_get_mp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):2
+RETURNF BASE:(charactorNum):2
 
 ; max 精神
 @charactor_get_max_mp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN MAXBASE:(charactorNum):2
+RETURNF MAXBASE:(charactorNum):2
 
 ; 衣装
 @charactor_get_cp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):3
+RETURNF BASE:(charactorNum):3
 
 ; max 衣装
 @charactor_get_max_cp(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN MAXBASE:(charactorNum):3
+RETURNF MAXBASE:(charactorNum):3
 
 ; 快楽
 @charactor_get_ep(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):4
+RETURNF BASE:(charactorNum):4
 
 ; max 快楽
 @charactor_get_max_ep(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN MAXBASE:(charactorNum):4
+RETURNF MAXBASE:(charactorNum):4
 
 ; ステータス操作系 ----------------------------------------------------------------------------------
 ; 強制的にEPを1にする
@@ -99,19 +109,22 @@ CALL charactor_damage_mp(charactorNum, 100)
 ; 状態の判定 ----------------------------------------------------------------------------------
 ; 倒れているか
 @charactor_is_faint(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):2 <= 0
+RETURNF BASE:(charactorNum):2 <= 0
 
 ; HPが尽きて弱っているか
 @charactor_is_weak(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):0 <= 0
+RETURNF BASE:(charactorNum):0 <= 0
 
 
 ; 服が破れて全裸か
 @charactor_is_nude(charactorNum)
+#FUNCTION
 #DIM charactorNum
-RETURN BASE:(charactorNum):3 <= 0
+RETURNF BASE:(charactorNum):3 <= 0
 
 ; ダメージ系操作 ----------------------------------------------------------------------------------
 ; MPにダメージを与える
@@ -206,8 +219,7 @@ IF TALENT:(charactorNum):70
 ENDIF
 
 ; 全裸状態の場合はEPダメージを1.2倍する
-CALL charactor_is_nude
-IF RESULT
+IF charactor_is_nude()
     damage = damage * 12 / 10
 ENDIF
 

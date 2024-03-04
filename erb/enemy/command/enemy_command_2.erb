@@ -5,8 +5,7 @@
 #DIM lcount
 PRINTFORML %battle_enemy_name(enemyNum)%は棍棒を振り回しながら%charactor_get_charactor_name(charactorNum)%に突進した
 
-CALL battle_enemy_atk(enemyNum)
 FOR lcount, 0, 1 + RAND:3
-    CALL charactor_damage_hp(charactorNum, 20 * RESULT)
+    CALL charactor_damage_hp(charactorNum, 20 * battle_enemy_atk(enemyNum))
     CALL charactor_damage_cp(charactorNum, 10 + RAND:30)
 NEXT
