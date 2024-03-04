@@ -1,0 +1,4 @@
+﻿; 狙う相手とコマンド完全にランダム
+@enemy_strategy_random(enemyCommands)
+#DIM REF enemyCommands
+RETURN RAND:(party_get_member_count()), array_get_random_element(enemyCommands)

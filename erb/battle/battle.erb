@@ -33,16 +33,9 @@ DRAWLINE
 
 enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
-
-    CALL battle_enemy_get_prop(lcount, "enemy_level")
-    enemyLv = RESULT
-    PRINTFORM 【%battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv】
-    CALL battle_enemy_get_prop(lcount, "enemy_hp")
-    LOCAL:0 = RESULT
-    CALL battle_enemy_get_prop(lcount, "enemy_max_hp")
-    LOCAL:1 = RESULT
-    PRINTFORM {LOCAL:0} / {LOCAL:1} 
-    CALL view_component_colorbar(LOCAL:0, LOCAL:1, 20, COLOR_HP, COLOR_HP_BG)
+    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    PRINTFORM {battle_enemy_hp(lcount)} / {battle_enemy_max_hp(lcount)} 
+    CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
     PRINTL
 NEXT
 
@@ -99,16 +92,9 @@ INPUT
 PRINTFORML 誰を狙う？
 enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
-
-    CALL battle_enemy_get_prop(lcount, "enemy_level")
-    enemyLv = RESULT
     PRINTFORM [{lcount}]
-    PRINTFORM 【%battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv】
-    CALL battle_enemy_get_prop(lcount, "enemy_hp")
-    LOCAL:0 = RESULT
-    CALL battle_enemy_get_prop(lcount, "enemy_max_hp")
-    LOCAL:1 = RESULT
-    CALL view_component_colorbar(LOCAL:0, LOCAL:1, 20, COLOR_HP, COLOR_HP_BG)
+    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
     PRINTL
 NEXT
 
@@ -122,12 +108,8 @@ INPUT
 #DIM enemyLv
 enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
-    CALL battle_enemy_get_prop(lcount, "enemy_id")
-    enemyLv = RESULT
-    PRINTFORML << %battle_enemy_get_prop_string(lcount, "enemy_name")% {enemyLv}Lv のターン >>
+    PRINTFORML << %battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv のターン >>
     WAIT
-    CALL battle_enemy_get_prop(lcount, "enemy_id")
-    enemyId = RESULT
-    CALL enemy_select_command(enemyId, lcount)
+    CALL enemy_select_command(battle_enemy_id(lcount), lcount)
     WAIT
 NEXT

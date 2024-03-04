@@ -25,6 +25,11 @@ DT_ROW_ADD "enemies", "enemy_id", enemyId, "enemy_name", enemy_name(enemyId), "e
 #DIM enemyNum
 RETURNF DT_CELL_GETS("enemies", enemyNum, "enemy_name")
 
+@battle_enemy_id(enemyNum)
+#FUNCTION
+#DIM enemyNum
+RETURNF DT_CELL_GET("enemies", enemyNum, "enemy_id")
+
 @battle_enemy_level(enemyNum)
 #FUNCTION
 #DIM enemyNum
