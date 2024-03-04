@@ -10,16 +10,14 @@ RETURNF RESULTS
 #FUNCTION
 #DIM enemyId
 #DIM enemyLevel
-CALLFORM enemy_max_hp_{enemyId}(enemyLevel)
-RETURNF RESULT
+RETURNF CALLFORMF enemy_max_hp_{enemyId}(enemyLevel)
 
 ; 敵の攻撃力
 @enemy_atk(enemyId, enemyLevel)
 #FUNCTION
 #DIM enemyId
 #DIM enemyLevel
-CALLFORM enemy_atk_{enemyId}(enemyLevel)
-RETURNF RESULT
+RETURNF CALLFORMF enemy_atk_{enemyId}(enemyLevel)
 
 ; 敵の行動
 @enemy_select_command(enemyId, enemyNum)
