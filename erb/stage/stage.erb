@@ -28,6 +28,12 @@ ENDSELECT
 ; 必要に応じてEPリセット
 CALL party_reset_ep_if_ecstasy
 
+; 全滅チェック
+IF party_is_defeat()
+    CALL message_stage_defeat(stageId, FLAG:現在のフロア)
+    GOTO STAGE_FINISH
+ENDIF 
+
 IF FLAG:探索度 >= 100
     FLAG:探索度 = 0
     FLAG:現在のフロア++
@@ -35,8 +41,9 @@ IF FLAG:探索度 >= 100
 ENDIF
 
 CALLFORM stage_get_max_floor_{stageId}
-IF FLAG:現在のフロア >= RESULT
+IF FLAG:現在のフロア >= RESULT && FLAG:探索度 >= 100
     ; ステージクリア！
+    CALL message_stage_clear(stageId)
     GOTO STAGE_FINISH
 ENDIF
 
@@ -48,15 +55,13 @@ FLAG:現在のフロア = 0
 
 @stage_command_foward(stageId)
 #DIM stageId
-PRINTFORML 先に進むことにした
+CALL message_stage_select_foward
 CALLFORM stage_foward_{stageId}
 
 @stage_command_explore(stageId)
 #DIM stageId
-PRINTFORML 周辺を探索することにした
-WAIT
+CALL message_stage_select_explore
 CALLFORM stage_explore_{stageId}
-PRINTFORML {RESULT}
 IF !RESULT
     PRINTFORML 何も見つからなかった
 ENDIF
