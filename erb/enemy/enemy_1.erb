@@ -1,15 +1,11 @@
-﻿; 敵の名前
-@enemy_name_1
-#FUNCTIONS
-RESULTS = ヒルチャール
-RETURNF RESULTS
+﻿@enemy_initialize_1(enemyId)
+#DIM enemyId
 
-; HP
-@enemy_max_hp_1(enemyLevel)
-#FUNCTION
-#DIM enemyLevel
-RESULT = 1000 + (enemyLevel * 100)
-RETURNF RESULT
+敵の名前:(enemyId) = ヒルチャール
+敵ステータス:(enemyId):攻撃力 = 40
+敵ステータス:(enemyId):攻撃力加算値 = 40
+敵ステータス:(enemyId):体力 = 1000
+敵ステータス:(enemyId):体力加算値 = 120
 
 ; 行動選択
 @enemy_select_command_1(enemyNum)
@@ -19,10 +15,3 @@ RETURNF RESULT
 
 CALL enemy_strategy_random(enemyCommands)
 RETURN RESULT:0, RESULT:1
-
-; 攻撃力
-@enemy_atk_1(enemyLevel)
-#FUNCTION
-#DIM enemyLevel
-RESULT = 40 + (enemyLevel * 40)
-RETURNF RESULT
