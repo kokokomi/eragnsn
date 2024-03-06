@@ -1,4 +1,20 @@
-﻿;
+﻿; 敵 -> プレイヤーへのダメージ計算
+@calculate_hp_damage_to_player(charactorNum, enemyNum, damageMultiplier)
+#FUNCTION
+#DIM damageMultiplier
+#DIM charactorNum
+#DIM enemyNum
+RETURNF calculate_hp_damage(damageMultiplier, battle_enemy_level(enemyNum), battle_enemy_atk(enemyNum), calculate_player_def(charactorNum))
+
+; プレイヤー -> 敵へのダメージ計算
+@calculate_hp_damage_to_enemy(charactorNum, enemyNum, damageMultiplier)
+#FUNCTION
+#DIM damageMultiplier
+#DIM charactorNum
+#DIM enemyNum
+
+RETURNF calculate_hp_damage(damageMultiplier, calculate_player_def(charactorNum), calculate_player_atk(charactorNum), calculate_enemy_def(enemyNum))
+
 @calculate_hp_damage(damageMultiplier, attackerLevel, attackerAtk, targetDef)
 #FUNCTION
 #DIM damageMultiplier
@@ -21,3 +37,15 @@ RETURNF (targetDef / (targetDef + 5 * attackerLevel + 500)) * 100
 #FUNCTION
 #DIM enemyLevel
 RETURNF (enemyLevel + 100) * 5
+
+; プレイヤーキャラ防御力
+@calculate_player_def(charactorNum)
+#FUNCTION
+#DIM charactorNum
+RETURNF (能力:(charactorNum):防御力 + 経験:(charactorNum):プレイヤーレベル) * 5
+
+; プレイヤーキャラ攻撃力
+@calculate_player_atk(charactorNum)
+#FUNCTION
+#DIM charactorNum
+RETURNF (能力:(charactorNum):攻撃力 + 経験:(charactorNum):プレイヤーレベル) * 5
