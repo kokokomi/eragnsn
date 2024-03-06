@@ -1,17 +1,11 @@
 ﻿; ステージ初期化処理
-@stage_initialize_1
-
-@stage_1_stage_name
-#FUNCTIONS
-RESULTS = 始まりの秘境
-RETURNF RESULTS
+@stage_initialize_1(stageId)
+#DIM stageId
+ステージ名:(stageId) = 始まりの秘境
+ステージ定義:(stageId):最大階層 = 10
 
 @stage_1_can_challenge
 RETURN true
-
-; このステージの最大フロア
-@stage_get_max_floor_1
-RETURN 10
 
 ; 周辺探索時のイベントを呼び出す
 ; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
@@ -49,4 +43,4 @@ RETURN true
 ; CALL battle_setup_add_enemy(1, 11)
 ; CALL battle_setup_add_enemy(1, 12)
 ; CALL battle
-FLAG:探索度 += 10
+ステージ探索度 += 10
