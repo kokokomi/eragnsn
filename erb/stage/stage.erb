@@ -4,7 +4,8 @@
 @stage(stageId)
 #DIM stageId
 #DIM command
-
+ステージ探索度 = 0
+ステージ現在フロア = 1
 
 $INPUT_LOOP
 CALL show_floor_gui(stageId)
@@ -27,21 +28,42 @@ ENDSELECT
 ; 必要に応じてEPリセット
 CALL party_reset_ep_if_ecstasy
 
+; 全滅チェック
+IF party_is_defeat()
+    CALL message_stage_defeat(stageId, ステージ現在フロア)
+    GOTO STAGE_FINISH
+ENDIF 
+
+IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && ステージ探索度 >= 100
+    ; ステージクリア！
+    ステージ実績:(stageId):クリア = true
+    ステージ実績:(stageId):最高クリア階層 = ステージ定義:(stageId):最大階層
+    CALL message_stage_clear(stageId)
+    GOTO STAGE_FINISH
+ENDIF
+
+IF ステージ探索度 >= 100
+    ステージ探索度 = 0
+    ステージ実績:(stageId):最高クリア階層 = MAX(ステージ実績:(stageId):最高クリア階層, ステージ現在フロア)
+    ステージ現在フロア++
+    ; 次の階層へ
+ENDIF
+
 GOTO INPUT_LOOP
 
 $STAGE_FINISH
+ステージ探索度 = 0
+ステージ現在フロア = 0
 
 @stage_command_foward(stageId)
 #DIM stageId
-PRINTFORML 先に進むことにした
+CALL message_stage_select_foward
 CALLFORM stage_foward_{stageId}
 
 @stage_command_explore(stageId)
 #DIM stageId
-PRINTFORML 周辺を探索することにした
-WAIT
+CALL message_stage_select_explore
 CALLFORM stage_explore_{stageId}
-PRINTFORML {RESULT}
 IF !RESULT
     PRINTFORML 何も見つからなかった
 ENDIF
@@ -52,8 +74,8 @@ ENDIF
 #DIM stageId
 
 DRAWLINE
-CALLFORMF stage_{stageId}_stage_name
-PRINTFORML << %RESULTS%攻略中 >>
+PRINTFORML << %ステージ名:(stageId)%攻略中 >>
+PRINTFORML {ステージ現在フロア}F {ステージ探索度}\%
 memberCount = party_get_member_count()
 FOR lcount, 0, memberCount
     PRINTFORML %charactor_get_charactor_name(lcount)%

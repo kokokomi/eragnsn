@@ -6,3 +6,7 @@ CALL print_debug("initialize_global")
 FOR lcount, 0, VARSIZE("敵の名前")
     TRYCALLFORM enemy_initialize_{lcount}(lcount)
 NEXT
+
+FOR lcount, 0, MAX_STAGE_ID
+    TRYCALLFORM stage_initialize_{lcount}(lcount)
+NEXT
