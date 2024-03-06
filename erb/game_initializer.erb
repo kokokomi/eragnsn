@@ -1,3 +1,9 @@
 ﻿; ゲーム起動時に行う初期化処理を呼び出す場所
 @initialize_global
+#DIM lcount
 CALL print_debug("initialize_global")
+
+; ステージの定義を設定
+FOR lcount, 0, MAX_STAGE_ID
+    TRYCALLFORM stage_initialize_{lcount}(lcount)
+NEXT

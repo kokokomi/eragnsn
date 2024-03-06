@@ -12,12 +12,10 @@ FOR lcount, 0, MAX_STAGE_ID
 	RESULT = false
 
 	TRYCALLFORM stage_{lcount}_can_challenge
-	LOCAL:1 = RESULT
 	IF !RESULT
 		CONTINUE
 	ENDIF
-	TRYCALLFORMF stage_{lcount}_stage_name
-	PRINTFORML [{lcount}] - %RESULTS%
+	PRINTFORML [{lcount}] - %ステージ名:(lcount)%
 NEXT
 
 PRINTL [ 0] 戻る
