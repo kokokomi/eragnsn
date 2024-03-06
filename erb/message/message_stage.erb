@@ -1,12 +1,12 @@
 ﻿@message_stage_clear(stageId)
 #DIM stageId
-PRINTFORML << %stage_name(stageId)% ステージクリア >>
+PRINTFORML << %ステージ名:(stageId)% ステージクリア >>
 WAIT
 
 @message_stage_defeat(stageId, floor)
 #DIM stageId
 #DIM floor
-PRINTFORML << %stage_name(stageId)% 全滅してしまった >>
+PRINTFORML << %ステージ名:(stageId)% 全滅してしまった >>
 PRINTFORML 今回の踏破階層: {floor}
 WAIT
 
