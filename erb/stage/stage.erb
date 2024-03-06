@@ -34,16 +34,19 @@ IF party_is_defeat()
     GOTO STAGE_FINISH
 ENDIF 
 
-IF ステージ探索度 >= 100
-    ステージ探索度 = 0
-    ステージ現在フロア++
-    ; 次の階層へ
-ENDIF
-
 IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && ステージ探索度 >= 100
     ; ステージクリア！
+    ステージ実績:(stageId):クリア = true
+    ステージ実績:(stageId):最高クリア階層 = ステージ定義:(stageId):最大階層
     CALL message_stage_clear(stageId)
     GOTO STAGE_FINISH
+ENDIF
+
+IF ステージ探索度 >= 100
+    ステージ探索度 = 0
+    ステージ実績:(stageId):最高クリア階層 = MAX(ステージ実績:(stageId):最高クリア階層, ステージ現在フロア)
+    ステージ現在フロア++
+    ; 次の階層へ
 ENDIF
 
 GOTO INPUT_LOOP
