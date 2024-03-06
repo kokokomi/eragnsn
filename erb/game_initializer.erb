@@ -3,7 +3,10 @@
 #DIM lcount
 CALL print_debug("initialize_global")
 
-; ステージの定義を設定
+FOR lcount, 0, VARSIZE("敵の名前")
+    TRYCALLFORM enemy_initialize_{lcount}(lcount)
+NEXT
+
 FOR lcount, 0, MAX_STAGE_ID
     TRYCALLFORM stage_initialize_{lcount}(lcount)
 NEXT
