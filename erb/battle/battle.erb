@@ -1,11 +1,24 @@
 ﻿; 戦闘画面
 ; battleを呼ぶ前にbattle_setupをする必要がある
 @battle
+#DIM lcount
 CALL print_debug("battle")
+CALL battle_init
 
 $TURNLOOP
 CALL battle_player_turn
 CALL battle_enemy_turn
+
+FOR lcount, 0, party_get_member_count()
+    ; 状態異常の残りターン数更新
+    CFLAG:(lcount):恍惚 = MAX(0, CFLAG:(lcount):恍惚 - 1)
+    CFLAG:(lcount):麻痺 = MAX(0, CFLAG:(lcount):麻痺 - 1)
+    CFLAG:(lcount):凍結 = MAX(0, CFLAG:(lcount):凍結 - 1)
+    CFLAG:(lcount):羞恥 = MAX(0, CFLAG:(lcount):羞恥 - 1)
+
+    ; クールタイム更新
+    CALL charactor_decrease_cooltime(lcount)
+NEXT
 
 ; ターンエンド
 CALL party_reset_ep_if_ecstasy
@@ -26,6 +39,14 @@ GOTO TURNLOOP
 $BATTLE_FINISH
 CALL print_debug("battle finish")
 CALL battle_cleanup
+FOR lcount, 0, party_get_member_count()
+    CFLAG:(lcount):拘束 = 0
+    CFLAG:(lcount):丸呑み = 0
+    CFLAG:(lcount):恍惚 = 0
+    CFLAG:(lcount):麻痺 = 0
+    CFLAG:(lcount):凍結 = 0
+    CFLAG:(lcount):羞恥 = 0
+NEXT
 
 ; 敵やプレイヤーのステータス表示
 @show_battle_gui
@@ -91,8 +112,17 @@ DRAWLINE
 
 PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
 PRINTFORML [1] 通常攻撃 
-PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
-PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
+IF charactor_can_use_skill(charactorNum)
+    PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
+ELSE
+    PRINTFORML [x] %CSTR:(charactorNum):元素スキル%はまだ使えない
+ENDIF
+
+IF charactor_can_use_burst(charactorNum)
+    PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
+ELSE
+    PRINTFORML [x] %CSTR:(charactorNum):元素爆発%はまだ使えない
+ENDIF
 
 INPUT
 command = RESULT
@@ -113,9 +143,23 @@ SELECTCASE command
     CASE 1
         CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
     CASE 2
-        CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
+        IF charactor_can_use_skill(charactorNum)
+            CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
+            ; スキルを発動したキャラに元素エネルギーを入れる
+            CALL charactor_charge_energy(charactorNum, RAND:3 + 5)
+
+            ; PTのキャラ全員に元素エネルギーを入れる
+            FOR lcount, 0, party_get_member_count()
+                CALL charactor_charge_energy(lcount, RAND:3 + 5)
+            NEXT
+            CFLAG:(charactorNum):元素スキルクールタイム = ABL:(charactorNum):スキルクールタイム
+        ENDIF
     CASE 3
-        CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
+        IF charactor_can_use_burst(charactorNum)
+            CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
+            CFLAG:(charactorNum):元素爆発クールタイム = ABL:(charactorNum):元素爆発クールタイム
+            CFLAG:(charactorNum):元素エネルギー量 = 0
+        ENDIF
 ENDSELECT
 
 ; 敵のターン
@@ -135,4 +179,10 @@ FOR lcount, 0, enemy_count
     WAIT
     CALL enemy_select_command(battle_enemy_id(lcount), lcount)
     WAIT
+NEXT
+
+@battle_init
+#DIM lcount
+FOR lcount, 0, party_get_member_count()
+    CALL charactor_reset_for_battle_start(lcount)
 NEXT

@@ -124,6 +124,34 @@ RETURNF BASE:(charactorNum):0 <= 0
 #FUNCTION
 #DIM charactorNum
 RETURNF BASE:(charactorNum):3 <= 0
+; 戦闘系操作 ----------------------------------------------------------------------------------
+@charactor_reset_for_battle_start(charactorNum)
+#DIM charactorNum
+#DIM lcount
+CFLAG:(charactorNum):元素エネルギー量 = 0
+CFLAG:(charactorNum):元素スキルクールタイム = 0
+CFLAG:(charactorNum):元素爆発クールタイム = 0
+
+@charactor_charge_energy(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+amount = amount * ABL:(charactorNum):元素チャージ / 100
+CFLAG:(charactorNum):元素エネルギー量 = MAX(ABL:(charactorNum):元素エネルギー, CFLAG:(charactorNum):元素エネルギー量 + amount)
+
+@charactor_decrease_cooltime(charactorNum)
+#DIM charactorNum
+CFLAG:(charactorNum):元素スキルクールタイム = MAX(0, CFLAG:(charactorNum):元素スキルクールタイム - 2)
+CFLAG:(charactorNum):元素爆発クールタイム = MAX(0, CFLAG:(charactorNum):元素爆発クールタイム - 2)
+
+@charactor_can_use_skill(charactorNum)
+#FUNCTION
+#DIM charactorNum
+RETURNF CFLAG:(charactorNum):元素スキルクールタイム == 0
+
+@charactor_can_use_burst(charactorNum)
+#FUNCTION
+#DIM charactorNum
+RETURNF CFLAG:(charactorNum):元素爆発クールタイム == 0 && CFLAG:(charactorNum):元素エネルギー量 == ABL:(charactorNum):元素エネルギー
 
 ; ダメージ系操作 ----------------------------------------------------------------------------------
 ; MPにダメージを与える

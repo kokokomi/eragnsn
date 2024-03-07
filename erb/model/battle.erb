@@ -83,14 +83,27 @@ RETURNF battle_enemy_hp(enemyNum) <= 0
 
 @battle_is_enemy_dead_all
 #FUNCTION
-RETURNF DT_SELECT("enemies", "enemy_hp != 0", "id ASC") == 0
+RETURNF DT_SELECT("enemies", "enemy_hp > 0", "id ASC") == 0
 
 @battle_attack_to_enemy(enemyNum, damage)
 #DIM enemyNum
 #DIM damage
 #DIM newHp
+#DIM lcount
+; 敵が死んでいる場合は特に処理しない
+IF battle_is_enemy_dead(enemyNum)
+    RETURN
+ENDIF
 
 newHp = MAX(0, battle_enemy_hp(enemyNum) - damage)
 DT_CELL_SET "enemies", enemyNum, "enemy_hp", newHp
+
+IF battle_is_enemy_dead(enemyNum)
+    ; この攻撃で敵が死んだら元素エネルギー生成
+    FOR lcount, 0, party_get_member_count()
+        CALL charactor_charge_energy(lcount, RAND:3 + 5)
+    NEXT
+ENDIF
+
 CALL message_enemy_damage(enemyNum, damage)
 WAIT
