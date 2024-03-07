@@ -1,0 +1,7 @@
+﻿@normal_attack_1(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+; 片手剣は2回攻撃
+CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 60))
+CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 60))

@@ -78,6 +78,8 @@ NEXT
 #DIM enemy_count
 #DIM lcount
 #DIM enemyLv
+#DIM command
+#DIM targetEnemy
 
 CALL show_battle_gui
 DRAWLINE
@@ -88,6 +90,7 @@ PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
 PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
 
 INPUT
+command = RESULT
 
 PRINTFORML 誰を狙う？
 enemy_count = battle_enemy_count()
@@ -99,6 +102,12 @@ FOR lcount, 0, enemy_count
 NEXT
 
 INPUT
+targetEnemy = RESULT
+
+SELECTCASE command
+    CASE 1
+        CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
+ENDSELECT
 
 ; 敵のターン
 @battle_enemy_turn

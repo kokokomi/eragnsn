@@ -74,3 +74,18 @@ IF RESULT < 1
     RETURNF false
 ENDIF
 RETURNF true
+
+@battle_is_enemy_dead(enemyNum)
+#FUNCTION
+#DIM enemyNum
+RETURNF battle_enemy_hp(enemyNum) <= 0
+
+@battle_attack_to_enemy(enemyNum, damage)
+#DIM enemyNum
+#DIM damage
+#DIM newHp
+
+newHp = MAX(0, battle_enemy_hp(enemyNum) - damage)
+DT_CELL_SET "enemies", enemyNum, "enemy_hp", newHp
+CALL message_enemy_damage(enemyNum, damage)
+WAIT

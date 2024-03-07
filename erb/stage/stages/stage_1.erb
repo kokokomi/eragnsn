@@ -37,10 +37,10 @@ RETURN true
 ; 探索度を加算したり、イベントを発生させる
 @stage_foward_1
 
-; CALL battle_setup
-; CALL battle_setup_add_enemy(1, 10)
-; CALL battle_setup_add_enemy(1, 12)
-; CALL battle_setup_add_enemy(1, 11)
-; CALL battle_setup_add_enemy(1, 12)
-; CALL battle
+CALL battle_setup
+CALL battle_setup_add_enemy(1, 10)
+CALL battle_setup_add_enemy(1, 12)
+CALL battle_setup_add_enemy(1, 11)
+CALL battle_setup_add_enemy(1, 12)
+CALL battle
 ステージ探索度 += 10
