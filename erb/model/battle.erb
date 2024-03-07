@@ -81,6 +81,10 @@ RETURNF true
 #DIM enemyNum
 RETURNF battle_enemy_hp(enemyNum) <= 0
 
+@battle_is_enemy_dead_all
+#FUNCTION
+RETURNF DT_SELECT("enemies", "enemy_hp != 0", "id ASC") == 0
+
 @battle_attack_to_enemy(enemyNum, damage)
 #DIM enemyNum
 #DIM damage

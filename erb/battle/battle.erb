@@ -14,6 +14,11 @@ IF party_is_defeat()
     CALL print_debug("@battle PT全滅")
     GOTO BATTLE_FINISH
 ENDIF
+; 敵全滅
+IF battle_is_enemy_dead_all()
+    CALL print_debug("@battle 勝利！")
+    GOTO BATTLE_FINISH
+ENDIF
 
 ;次のターンへ
 GOTO TURNLOOP
@@ -121,6 +126,11 @@ ENDSELECT
 #DIM enemyLv
 enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
+    ; 敵が死んでいる場合行動スキップ
+    IF battle_is_enemy_dead(lcount)
+        CONTINUE
+    ENDIF
+
     PRINTFORML << %battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv のターン >>
     WAIT
     CALL enemy_select_command(battle_enemy_id(lcount), lcount)
