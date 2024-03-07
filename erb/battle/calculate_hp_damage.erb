@@ -23,14 +23,15 @@ RETURNF calculate_hp_damage(damageMultiplier, calculate_player_def(charactorNum)
 #DIM targetDef
 
 ; 攻撃力にダメージ倍率をかけて防御補正で減衰した値がダメージ
-RETURNF attackerAtk * damageMultiplier * (1 - (calculate_hp_def_correction(attackerLevel, targetDef) / 100))
+RETURNF attackerAtk * damageMultiplier * (100 - calculate_hp_def_correction(attackerLevel, targetDef)) / (100 * 100)
 
 @calculate_hp_def_correction(attackerLevel, targetDef)
 #FUNCTION
 #DIM attackerLevel
 #DIM targetDef
 
-RETURNF (targetDef / (targetDef + 5 * attackerLevel + 500)) * 100
+; 少数が扱えないのでそれぞれ*100しておく
+RETURNF (targetDef * 100) / (targetDef + 5 * attackerLevel + 500)
 
 ; 敵の防御力
 @calculate_enemy_def(enemyLevel)
@@ -42,10 +43,10 @@ RETURNF (enemyLevel + 100) * 5
 @calculate_player_def(charactorNum)
 #FUNCTION
 #DIM charactorNum
-RETURNF (能力:(charactorNum):防御力 + 経験:(charactorNum):プレイヤーレベル) * 5
+RETURNF (ABL:(charactorNum):防御力 + EXP:(charactorNum):キャラクターレベル) * 5
 
 ; プレイヤーキャラ攻撃力
 @calculate_player_atk(charactorNum)
 #FUNCTION
 #DIM charactorNum
-RETURNF (能力:(charactorNum):攻撃力 + 経験:(charactorNum):プレイヤーレベル) * 5
+RETURNF (ABL:(charactorNum):攻撃力 + EXP:(charactorNum):キャラクターレベル) * 5
