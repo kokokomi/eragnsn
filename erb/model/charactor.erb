@@ -136,7 +136,7 @@ CFLAG:(charactorNum):元素爆発クールタイム = 0
 #DIM charactorNum
 #DIM amount
 amount = amount * ABL:(charactorNum):元素チャージ / 100
-CFLAG:(charactorNum):元素エネルギー量 = MAX(ABL:(charactorNum):元素エネルギー, CFLAG:(charactorNum):元素エネルギー量 + amount)
+CFLAG:(charactorNum):元素エネルギー量 = MIN(ABL:(charactorNum):元素エネルギー, CFLAG:(charactorNum):元素エネルギー量 + amount)
 
 @charactor_decrease_cooltime(charactorNum)
 #DIM charactorNum

@@ -3,25 +3,33 @@
 #DIM charactorNum
 
 ; HP
-PRINTFORM HP {charactor_get_hp(charactorNum)}/{charactor_get_max_hp(charactorNum)}
-PRINTFORM %UNICODE(0x208D)%
+PRINTFORM HP　%UNICODE(0x208D)%
 CALL view_component_colorbar(charactor_get_hp(charactorNum), charactor_get_max_hp(charactorNum), 5, COLOR_HP, COLOR_HP_BG)
 PRINTFORM %UNICODE(0x208E)%
-
-; MP
-PRINTFORM MP {charactor_get_mp(charactorNum)}/{charactor_get_max_mp(charactorNum)}
-PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(charactor_get_mp(charactorNum), charactor_get_max_mp(charactorNum), 5, COLOR_MP, COLOR_MP_BG)
-PRINTFORM %UNICODE(0x208E)%
-
-; CP
-PRINTFORM CP {charactor_get_cp(charactorNum)}/{charactor_get_max_cp(charactorNum)}
-PRINTFORM %UNICODE(0x208D)%
-CALL view_component_colorbar(charactor_get_cp(charactorNum), charactor_get_max_cp(charactorNum), 5, COLOR_CP, COLOR_CP_BG)
-PRINTFORM %UNICODE(0x208E)%
+PRINTFORM \({charactor_get_hp(charactorNum),6}/{charactor_get_max_hp(charactorNum),6}\)
 
 ; EP
-PRINTFORM EP {charactor_get_ep(charactorNum)}/{charactor_get_max_Ep(charactorNum)}
-PRINTFORM %UNICODE(0x208D)%
+PRINTFORM EP　%UNICODE(0x208D)%
 CALL view_component_colorbar(charactor_get_ep(charactorNum), charactor_get_max_Ep(charactorNum), 5, COLOR_EP, COLOR_EP_BG)
 PRINTFORM %UNICODE(0x208E)%
+PRINTFORM \({charactor_get_ep(charactorNum),6}/{charactor_get_max_Ep(charactorNum),6}\)
+
+; MP
+PRINTFORM MP　%UNICODE(0x208D)%
+CALL view_component_colorbar(charactor_get_mp(charactorNum), charactor_get_max_mp(charactorNum), 5, COLOR_MP, COLOR_MP_BG)
+PRINTFORM %UNICODE(0x208E)%
+PRINTFORM \({charactor_get_mp(charactorNum),6}/{charactor_get_max_mp(charactorNum),6}\)
+
+PRINTL
+
+; CP
+PRINTFORM CP　%UNICODE(0x208D)%
+CALL view_component_colorbar(charactor_get_cp(charactorNum), charactor_get_max_cp(charactorNum), 5, COLOR_CP, COLOR_CP_BG)
+PRINTFORM %UNICODE(0x208E)%
+PRINTFORM \({charactor_get_cp(charactorNum),6}/{charactor_get_max_cp(charactorNum),6}\)
+
+; 元素チャージ
+PRINTFORM ER　%UNICODE(0x208D)%
+CALL view_component_colorbar(CFLAG:(charactorNum):元素エネルギー量, ABL:(charactorNum):元素エネルギー, 5, 0x0000CD, 0x000080)
+PRINTFORM %UNICODE(0x208E)%
+PRINTFORM \({CFLAG:(charactorNum):元素エネルギー量,6}/{ABL:(charactorNum):元素エネルギー,6}\)
