@@ -1,0 +1,13 @@
+﻿; 元素スキル
+@do_skill_2(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 292))
+
+; 元素爆発
+@do_burst_2(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+CALL skill_util_attack(charactorNum, targetEnemyNum, 424)
+CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 251 / 100) + 1540)

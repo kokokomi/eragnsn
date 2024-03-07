@@ -15,11 +15,12 @@ DT_COLUMN_ADD "enemies", "enemy_atk", "int16"
 #DIM enemyLevel
 #DIM maxHp
 #DIM enemyAtk
+#DIM namePostfix = 0x41
 
 maxHp = 敵ステータス:(enemyId):体力 + (敵ステータス:(enemyId):体力加算値 * enemyLevel)
 enemyAtk = 敵ステータス:(enemyId):攻撃力 + (敵ステータス:(enemyId):攻撃力加算値 * enemyLevel)
 
-DT_ROW_ADD "enemies", "enemy_id", enemyId, "enemy_name", 敵の名前:(enemyId), "enemy_level", enemyLevel, "enemy_max_hp", maxHp, "enemy_hp", maxHp, "enemy_aura", 0, "enemy_atk", enemyAtk
+DT_ROW_ADD "enemies", "enemy_id", enemyId, "enemy_name", @"%敵の名前:(enemyId)% %UNICODE(namePostfix + battle_enemy_count())%", "enemy_level", enemyLevel, "enemy_max_hp", maxHp, "enemy_hp", maxHp, "enemy_aura", 0, "enemy_atk", enemyAtk
 
 @battle_enemy_name(enemyNum)
 #FUNCTIONS

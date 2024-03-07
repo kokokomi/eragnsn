@@ -1,0 +1,21 @@
+﻿; 元素スキル
+@do_skill_3(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 50))
+CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 168))
+
+; 元素爆発
+@do_burst_3(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+#DIM lcount
+#DIM lcount2
+
+; 8回の攻撃をすべての敵に
+CALL skill_util_attack(charactorNum, targetEnemyNum, 24, battle_enemy_count(), 8)
+
+
+; 最終段は1匹に
+CALL skill_util_attack(charactorNum, targetEnemyNum, 188)

@@ -107,6 +107,10 @@ targetEnemy = RESULT
 SELECTCASE command
     CASE 1
         CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
+    CASE 2
+        CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
+    CASE 3
+        CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
 ENDSELECT
 
 ; 敵のターン

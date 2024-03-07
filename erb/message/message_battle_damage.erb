@@ -54,3 +54,15 @@ PRINTFORML %charactor_get_charactor_name(charactorNum)%はイッてしまった�
 #DIM damageAmount
 #DIM enemyNum
 PRINTFORML %battle_enemy_name(enemyNum)%に{damageAmount}ダメージを与えた！
+
+@message_player_hp_heal(charactorNum, amount)
+#DIM amount
+#DIM charactorNum
+
+PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+
+SETCOLOR COLOR_HEAL
+PRINTFORM {amount}
+RESETCOLOR
+
+PRINTL 回復した

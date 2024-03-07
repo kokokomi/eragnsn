@@ -1,0 +1,58 @@
+﻿@skill_util_attack(charactorNum, targetEnemyNum, multiplier, range = 0, hitCount = 1)
+#DIM charactorNum
+#DIM targetEnemyNum
+#DIM multiplier
+#DIM range
+#DIM hitCount
+
+#DIM lcount1
+#DIM lcount2
+
+; 複数回攻撃のループ
+FOR lcount2, 0, hitCount
+    ; 範囲攻撃の中心
+    CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
+    FOR lcount1, 1, range + 1
+        ; 中心から左右に攻撃を当てていく
+        IF (targetEnemyNum - lcount1) >= 0
+            CALL battle_attack_to_enemy(targetEnemyNum - lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
+        ENDIF
+        IF (targetEnemyNum + lcount1) < battle_enemy_count()
+            CALL battle_attack_to_enemy(targetEnemyNum + lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
+        ENDIF
+    NEXT
+NEXT
+
+@skill_util_random_target_attack(charactorNum, multiplier, range = 0, hitCount = 1)
+#DIM charactorNum
+#DIM multiplier
+#DIM range
+#DIM hitCount
+
+#DIM targetEnemyNum
+#DIM lcount1
+#DIM lcount2
+
+; 複数回攻撃のループ
+FOR lcount2, 0, hitCount
+    ; ランダムなターゲットを設定
+    targetEnemyNum = RAND:(battle_enemy_count())
+    ; 範囲攻撃の中心
+    CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
+    FOR lcount1, 1, range + 1
+        ; 中心から左右に攻撃を当てていく
+        IF (targetEnemyNum - lcount1) >= 0
+            CALL battle_attack_to_enemy(targetEnemyNum - lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
+        ENDIF
+        IF (targetEnemyNum + lcount1) < battle_enemy_count()
+            CALL battle_attack_to_enemy(targetEnemyNum + lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
+        ENDIF
+    NEXT
+NEXT
+
+@skill_util_heal_all_member(amount)
+#DIM amount
+#DIM lcount
+FOR lcount, 0, party_get_member_count()
+    CALL charactor_heal_hp(lcount, amount)
+NEXT

@@ -1,0 +1,14 @@
+﻿; 元素スキル
+@do_skill_8(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL skill_util_attack(charactorNum, targetEnemyNum, 54)
+CALL skill_util_heal_all_member(385 + BASE:(charactorNum):0 * 4 / 100)
+
+; 元素爆発
+@do_burst_8(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL skill_util_heal_all_member(1694 + BASE:(charactorNum):0 * 17 / 100)

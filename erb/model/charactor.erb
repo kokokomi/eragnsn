@@ -232,3 +232,14 @@ IF BASE:(charactorNum):4 == 0
     LOCAL:0 = damage / MAXBASE:(charactorNum):4
     CALL charactor_ecstasy(charactorNum, LOCAL:0, part)
 ENDIF
+
+@charactor_heal_hp(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+; キャラが弱っている場合は回復量を減らす
+IF charactor_is_weak(charactorNum)
+    amount /= 10
+ENDIF
+
+CALL message_player_hp_heal(charactorNum, amount)
+BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)

@@ -1,0 +1,14 @@
+﻿; 元素スキル
+@do_skill_12(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL skill_util_attack(charactorNum, targetEnemyNum, 115)
+CALL skill_util_random_target_attack(charactorNum, 88, 0, 3)
+
+; 元素爆発
+@do_burst_12(charactorNum, targetEnemyNum)
+#DIM charactorNum
+#DIM targetEnemyNum
+
+CALL skill_util_attack(charactorNum, targetEnemyNum, 208, 1)
