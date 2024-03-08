@@ -99,11 +99,11 @@ ENDIF
 #DIM ecstasyLevel ;何回分の絶頂か
 #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
 ; 絶頂経験+1
-EXP:(charactorNum):24 += 1
+EXP:(charactorNum):絶頂経験++
 
 CALL message_player_ecstasy(charactorNum, ecstasyLevel, part)
 ; 絶頂によって精神が削られる
-CALL charactor_damage_mp(charactorNum, 100)
+CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
 
 ; 状態の判定 ----------------------------------------------------------------------------------
 ; 倒れているか
@@ -159,7 +159,15 @@ RETURNF CFLAG:(charactorNum):元素爆発クールタイム == 0 && CFLAG:(chara
 #DIM charactorNum
 #DIM damage
 CALL message_player_mp_damage(charactorNum, damage)
+; すでに喪失
+IF BASE:(charactorNum):2 == 0
+    RETURN
+ENDIF
 BASE:(charactorNum):2 = MAX(0, BASE:(charactorNum):2 - damage)
+; ここで喪失になったら敗北経験追加
+IF BASE:(charactorNum):2 == 0
+    EXP:(charactorNum):敗北経験++
+ENDIF
 
 ; CPにダメージを与える
 @charactor_damage_cp(charactorNum, damage)
@@ -180,7 +188,7 @@ BASE:(charactorNum):0 = MAX(0, BASE:(charactorNum):0 - damage)
 #DIM charactorNum
 #DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
 #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
-
+#DIM damageBonus;性経験によるダメージボーナス
 ; ダメージ量計算
 ; 部位ごとに倍率
 IF part_has_b(part)
@@ -201,6 +209,8 @@ IF part_has_b(part)
     IF TALENT:(charactorNum):110
         damage = damage * 8 / 10
     ENDIF
+    ; 最大10倍のダメージが加算
+    damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｂ経験") / 1000
 ENDIF
 
 IF part_has_c(part)
@@ -212,6 +222,7 @@ IF part_has_c(part)
         CASE 2 ; 過敏
             damage = damage * 16 / 10
     ENDSELECT
+    damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｃ経験") / 1000
 ENDIF
 
 IF part_has_v(part)
@@ -223,6 +234,7 @@ IF part_has_v(part)
         CASE 2 ; 過敏
             damage = damage * 16 / 10
     ENDSELECT
+    damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｖ経験") / 1000
 ENDIF
 
 IF part_has_a(part)
@@ -234,7 +246,11 @@ IF part_has_a(part)
         CASE 2 ; 過敏
             damage = damage * 16 / 10
     ENDSELECT
+    damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ａ経験") / 1000
 ENDIF
+PRINTFORML damage0: {damage} {damageBonus}
+damage += damageBonus
+PRINTFORML damage1: {damage}
 
 ; 快感に素直
 IF TALENT:(charactorNum):70
@@ -249,6 +265,7 @@ ENDIF
 IF charactor_is_nude()
     damage = damage * 12 / 10
 ENDIF
+PRINTFORML damage2: {damage}
 
 ; ここまででダメージを確定
 
@@ -261,6 +278,24 @@ IF BASE:(charactorNum):4 == 0
     CALL charactor_ecstasy(charactorNum, LOCAL:0, part)
 ENDIF
 
+; 経験値を加算
+IF part_has_b(part)
+    EXP:(charactorNum):Ｂ経験 += (damage / 10)
+    CALL message_exp_up(charactorNum, "Ｂ経験", (damage / 10))
+ENDIF
+IF part_has_c(part)
+    EXP:(charactorNum):Ｃ経験 += (damage / 10)
+    CALL message_exp_up(charactorNum, "Ｃ経験", (damage / 10))
+ENDIF
+IF part_has_v(part)
+    EXP:(charactorNum):Ｖ経験 += (damage / 10)
+    CALL message_exp_up(charactorNum, "Ｖ経験", (damage / 10))
+ENDIF
+IF part_has_a(part)
+    EXP:(charactorNum):Ａ経験 += (damage / 10)
+    CALL message_exp_up(charactorNum, "Ａ経験", (damage / 10))
+ENDIF
+
 @charactor_heal_hp(charactorNum, amount)
 #DIM charactorNum
 #DIM amount
@@ -271,3 +306,10 @@ ENDIF
 
 CALL message_player_hp_heal(charactorNum, amount)
 BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
+
+@charactor_ep_damage_bonus(charactorNum, expType)
+#FUNCTION
+#DIM charactorNum
+#DIMS expType
+; expが上がるにつれて10000に収束していく
+RETURNF 1000*10000/(10000+(EXP:(charactorNum):(GETNUM(EXP, expType))))
