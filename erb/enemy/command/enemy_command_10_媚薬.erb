@@ -1,0 +1,11 @@
+﻿@enemy_command_10(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+CFLAG:(charactorNum):発情 = 10
+
+@enemy_command_10_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+RESULTS = %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に媚薬入りの瓶を投げつけた！

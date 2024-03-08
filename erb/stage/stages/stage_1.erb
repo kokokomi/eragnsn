@@ -36,11 +36,20 @@ RETURN true
 ; 先へ進む場合呼び出される
 ; 探索度を加算したり、イベントを発生させる
 @stage_foward_1
+#DIM lcount
+; 20%で戦闘なし
+IF RAND:100 < 20
+    ステージ探索度 += 10 + RAND:10
+ENDIF
 
 CALL battle_setup
-CALL battle_setup_add_enemy(1, 10)
-CALL battle_setup_add_enemy(1, 12)
-CALL battle_setup_add_enemy(1, 11)
-CALL battle_setup_add_enemy(1, 12)
+FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 1
+    SELECTCASE RAND:3
+        CASE 0, 1
+            CALL battle_setup_add_enemy(1, RAND:3 + 7)
+        CASE 2
+            CALL battle_setup_add_enemy(2, RAND:3 + 7)
+    ENDSELECT
+NEXT
 CALL battle
-ステージ探索度 += 10
+ステージ探索度 += 10+ RAND:20
