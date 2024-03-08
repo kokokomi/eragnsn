@@ -89,6 +89,9 @@ BASE:(charactorNum):4 = 1
 #DIM charactorNum
 IF BASE:(charactorNum):4 == 0
     BASE:(charactorNum):4 = MAXBASE:(charactorNum):4
+    ; 絶頂したターンの次に恍惚を持ち越したいので足しておく
+    ; 絶頂は1ターンで複数回発生することがあるのでここでやる必要がある
+    CFLAG:(charactorNum):恍惚++
 ENDIF
 
 ; キャラクターへの操作 ----------------------------------------------------------------------------------
@@ -104,6 +107,10 @@ EXP:(charactorNum):絶頂経験++
 CALL message_player_ecstasy(charactorNum, ecstasyLevel, part)
 ; 絶頂によって精神が削られる
 CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
+
+; 絶頂レベルによって行動不能ターンを増やす
+CFLAG:(charactorNum):恍惚 += (ecstasyLevel + 1)
+
 
 ; 状態の判定 ----------------------------------------------------------------------------------
 ; 倒れているか
@@ -262,10 +269,14 @@ IF TALENT:(charactorNum):70
 ENDIF
 
 ; 全裸状態の場合はEPダメージを1.2倍する
-IF charactor_is_nude()
+IF charactor_is_nude(charactorNum)
     damage = damage * 12 / 10
 ENDIF
-PRINTFORML damage2: {damage}
+
+; 恍惚になったあとは1.1倍
+IF CFLAG:(charactorNum):恍惚 > 0
+    damage *= 11 / 10
+ENDIF
 
 ; ここまででダメージを確定
 

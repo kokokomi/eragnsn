@@ -1,6 +1,7 @@
 ﻿; キャラクターのHPなどの各種ステータスを簡易表示する
 @view_component_statusbar(charactorNum)
 #DIM charactorNum
+#DIM lcount
 
 ; HP
 PRINTFORM HP　%UNICODE(0x208D)%
@@ -33,3 +34,31 @@ PRINTFORM ER　%UNICODE(0x208D)%
 CALL view_component_colorbar(CFLAG:(charactorNum):元素エネルギー量, ABL:(charactorNum):元素エネルギー, 5, 0x0000CD, 0x000080)
 PRINTFORM %UNICODE(0x208E)%
 PRINTFORM \({CFLAG:(charactorNum):元素エネルギー量,6}/{ABL:(charactorNum):元素エネルギー,6}\)
+
+PRINTL
+
+PRINTFORM 状態: 
+FOR lcount, 100, 150
+    IF CFLAG:(charactorNum):(lcount) < 1
+        CONTINUE
+    ENDIF
+
+    SELECTCASE lcount
+        CASE 100
+            PRINT 【拘束】　
+        CASE 101
+            PRINT 【丸呑み】　
+        CASE 102
+            PRINT 【恍惚】　
+        CASE 103
+            PRINT 【発情】　
+        CASE 104
+            PRINT 【麻痺】　
+        CASE 105
+            PRINT 【凍結】　
+        CASE 106
+            PRINT 【羞恥】　
+    ENDSELECT
+NEXT 
+
+PRINTL

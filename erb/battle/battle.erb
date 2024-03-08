@@ -86,11 +86,17 @@ FOR lcount, 0, memberCount
     ; 放心チェック
     IF charactor_is_faint(lcount)
         CALL message_skip_player_turn_faint(lcount)
+        WAIT
         CONTINUE
     ENDIF
     ; 体力が尽きている場合、ランダムな確率で行動不能
     IF charactor_is_weak(lcount) && RAND:5 < 1
         CALL message_skip_player_turn_weak(lcount)
+        WAIT
+        CONTINUE
+    ENDIF
+    IF CFLAG:(lcount):恍惚 > 0
+        CALL message_skip_player_turn_ecstasy(lcount)
         WAIT
         CONTINUE
     ENDIF
