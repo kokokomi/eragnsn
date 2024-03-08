@@ -1,0 +1,11 @@
+﻿@enemy_command_4(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
+    PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首を刺激している！
+    CALL charactor_damage_ep(charactorNum, 150, part_build(true, false, false, false))
+ELSE
+    PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の胸の柔らかさを楽しんでいる！
+    CALL charactor_damage_ep(charactorNum, 100, part_build(true, false, false, false))
+ENDIF

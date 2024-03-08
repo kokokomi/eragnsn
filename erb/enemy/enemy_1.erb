@@ -10,8 +10,10 @@
 ; 行動選択
 @enemy_select_command_1(enemyNum)
 #DIM enemyNum
-#DIM commandTarget
-#DIM enemyCommands = 1, 2, 3, 5, 6
+#DIM hpCommands = 1, 2, 3
+#DIM epCommands = 4, 5, 6, 7
+#DIM capturedTargetCommands = 9, 4, 5, 6, 7
+#DIM captureCommand = 8
 
-CALL enemy_strategy_random(enemyCommands)
+CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
 RETURN RESULT:0, RESULT:1

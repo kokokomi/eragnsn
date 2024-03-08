@@ -1,0 +1,5 @@
+﻿@enemy_command_9(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカに大量の精を放った！
+CALL charactor_damage_mp(charactorNum, 150)

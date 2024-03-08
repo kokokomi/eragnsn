@@ -1,4 +1,40 @@
 ﻿; 狙う相手とコマンド完全にランダム
 @enemy_strategy_random(enemyCommands)
 #DIM REF enemyCommands
-RETURN RAND:(party_get_member_count()), array_get_random_element(enemyCommands)
+RETURN enemy_target_strategy_random(), array_get_random_element(enemyCommands)
+
+@enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+#DIM enemyNum
+#DIM REF hpCommands
+#DIM REF epCommands
+#DIM REF capturedTargetCommands
+#DIM captureCommand
+#DIM targetResult
+
+; 捕獲しているときは捕獲キャラを優先
+targetResult = enemy_target_strategy_random_self_captured()
+IF targetResult != -1
+    RETURN targetResult, array_get_random_element(capturedTargetCommands)
+ENDIF
+
+; 50%の確率で他に捕獲されているキャラを狙う
+IF RAND:10 < 5
+    targetResult = enemy_target_strategy_random_captured_exclude_self(enemyNum)
+    IF targetResult != -1
+        RETURN targetResult, array_get_random_element(epCommands)
+    ENDIF
+ENDIF
+
+; 10%の確率で捕獲を狙う
+IF RAND:10 < 1
+    targetResult = enemy_target_strategy_random_not_captured()
+    IF targetResult != -1
+        RETURN targetResult, captureCommand
+    ENDIF
+ENDIF
+
+IF RAND:2 == 0
+    RETURN enemy_target_strategy_random(), array_get_random_element(hpCommands)
+ENDIF
+
+RETURN enemy_target_strategy_random(), array_get_random_element(epCommands)

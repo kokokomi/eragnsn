@@ -138,6 +138,8 @@ RETURNF BASE:(charactorNum):3 <= 0
 CFLAG:(charactorNum):元素エネルギー量 = 0
 CFLAG:(charactorNum):元素スキルクールタイム = 0
 CFLAG:(charactorNum):元素爆発クールタイム = 0
+CFLAG:(charactorNum):拘束 = -1
+CFLAG:(charactorNum):丸呑み = -1
 
 @charactor_charge_energy(charactorNum, amount)
 #DIM charactorNum
@@ -255,9 +257,7 @@ IF part_has_a(part)
     ENDSELECT
     damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ａ経験") / 1000
 ENDIF
-PRINTFORML damage0: {damage} {damageBonus}
 damage += damageBonus
-PRINTFORML damage1: {damage}
 
 ; 快感に素直
 IF TALENT:(charactorNum):70
