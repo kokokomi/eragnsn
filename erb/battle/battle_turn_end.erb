@@ -1,0 +1,27 @@
+﻿@battle_turn_end
+#DIM lcount
+FOR lcount, 0, party_get_member_count()
+    ; 状態異常の残りターン数更新
+    CFLAG:(lcount):恍惚 = MAX(0, CFLAG:(lcount):恍惚 - 1)
+    CFLAG:(lcount):麻痺 = MAX(0, CFLAG:(lcount):麻痺 - 1)
+    CFLAG:(lcount):凍結 = MAX(0, CFLAG:(lcount):凍結 - 1)
+    CFLAG:(lcount):羞恥 = MAX(0, CFLAG:(lcount):羞恥 - 1)
+
+    ; クールタイム更新
+    CALL charactor_decrease_cooltime(lcount)
+NEXT
+
+
+CALL party_reset_ep_if_ecstasy
+; PT全滅
+IF party_is_defeat()
+    CALL print_debug("@battle PT全滅")
+    RETURN true
+ENDIF
+; 敵全滅
+IF battle_is_enemy_dead_all()
+    CALL print_debug("@battle 勝利！")
+    RETURN true
+ENDIF
+
+RETURN false

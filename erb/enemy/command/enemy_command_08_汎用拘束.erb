@@ -7,3 +7,9 @@ IF RAND:100 < 33
     CFLAG:(charactorNum):拘束 = enemyNum
     PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%に捕まってしまった！
 ENDIF
+
+@enemy_command_8_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+RESULTS = %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた

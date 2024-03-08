@@ -1,0 +1,13 @@
+﻿@battle_finalize
+#DIM lcount
+
+CALL print_debug("battle finish")
+CALL battle_cleanup
+FOR lcount, 0, party_get_member_count()
+    CFLAG:(lcount):拘束 = -1
+    CFLAG:(lcount):丸呑み = -1
+    CFLAG:(lcount):恍惚 = 0
+    CFLAG:(lcount):麻痺 = 0
+    CFLAG:(lcount):凍結 = 0
+    CFLAG:(lcount):羞恥 = 0
+NEXT

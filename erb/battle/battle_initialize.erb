@@ -1,0 +1,5 @@
+﻿@battle_init
+#DIM lcount
+FOR lcount, 0, party_get_member_count()
+    CALL charactor_reset_for_battle_start(lcount)
+NEXT

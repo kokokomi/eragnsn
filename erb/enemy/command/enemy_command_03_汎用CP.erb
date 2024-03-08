@@ -1,6 +1,10 @@
 ﻿@enemy_command_3(enemyNum, charactorNum)
 #DIM enemyNum
 #DIM charactorNum
-PRINTFORML %battle_enemy_name(enemyNum)%は激しい攻撃によって%charactor_get_charactor_name(charactorNum)%の服を引き裂いてきた！
 
 CALL charactor_damage_cp(charactorNum, 20 + RAND:30)
+
+@enemy_command_3_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+RESULTS = %battle_enemy_name(enemyNum)%は激しい攻撃によって%charactor_get_charactor_name(charactorNum)%の服を引き裂いてきた！

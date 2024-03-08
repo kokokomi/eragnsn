@@ -1,0 +1,25 @@
+﻿; 敵やプレイヤーのステータス表示
+@show_battle_gui
+#DIM lcount
+#DIM enemy_count
+#DIM memberCount
+
+#DIM enemyLv
+DRAWLINE
+
+enemy_count = battle_enemy_count()
+FOR lcount, 0, enemy_count
+    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    PRINTFORM {battle_enemy_hp(lcount)} / {battle_enemy_max_hp(lcount)} 
+    CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
+    PRINTL
+NEXT
+
+DRAWLINE
+
+memberCount = party_get_member_count()
+FOR lcount, 0, memberCount
+    PRINTFORML 【%charactor_get_charactor_name(lcount)%】
+    CALL view_component_statusbar(lcount)
+    PRINTL
+NEXT

@@ -3,9 +3,13 @@
 #DIM enemyNum
 #DIM charactorNum
 #DIM lcount
-PRINTFORML %battle_enemy_name(enemyNum)%は棍棒を振り回しながら%charactor_get_charactor_name(charactorNum)%に突進した
 
 FOR lcount, 0, 1 + RAND:3
     CALL charactor_damage_hp(charactorNum, calculate_hp_damage_to_player(charactorNum, enemyNum, 60))
     CALL charactor_damage_cp(charactorNum, 10 + RAND:30)
 NEXT
+
+@enemy_command_2_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+RESULTS = %battle_enemy_name(enemyNum)%は棍棒を振り回しながら%charactor_get_charactor_name(charactorNum)%に突進した

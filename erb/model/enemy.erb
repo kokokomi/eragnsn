@@ -32,4 +32,9 @@ CALLFORM enemy_select_command_{enemyId}(enemyNum)
 targetCharactor = RESULT:0
 enemyCommand = RESULT:1
 
+CALLFORM enemy_command_{enemyCommand}_message(enemyNum, targetCharactor)
+SETCOLOR COLOR_EP
+PRINTFORML %RESULTS%
+RESETCOLOR
+
 CALLFORM enemy_command_{enemyCommand}(enemyNum, targetCharactor)

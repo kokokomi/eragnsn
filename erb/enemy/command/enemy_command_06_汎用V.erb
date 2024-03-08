@@ -3,9 +3,16 @@
 #DIM charactorNum
 
 IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
-    PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカの浅い部分を刺激している！
     CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, true, false))
 ELSE
-    PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！
     CALL charactor_damage_ep(charactorNum, 100, part_build(false, false, true, false))
+ENDIF
+
+@enemy_command_6_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
+    RESULTS = %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカの浅い部分を刺激している！
+ELSE
+    RESULTS = %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！
 ENDIF
