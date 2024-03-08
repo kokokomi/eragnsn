@@ -2,7 +2,7 @@
 @stage_initialize_1(stageId)
 #DIM stageId
 ステージ名:(stageId) = 始まりの秘境
-ステージ定義:(stageId):最大階層 = 10
+ステージ定義:(stageId):最大階層 = 5
 
 @stage_1_can_challenge
 RETURN true
@@ -53,3 +53,14 @@ FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 1
 NEXT
 CALL battle
 ステージ探索度 += 10+ RAND:20
+
+@stage_clear_1(isFirstClear)
+#DIM isFirstClear
+IF isFirstClear
+    ; ジン
+    ADDCHARA 2
+    ; リサ
+    ADDCHARA 7
+
+    PRINTFORML 本格的な調査のため、%CALLNAME:2%と%CALLNAME:7%が仲間に加わった！
+ENDIF

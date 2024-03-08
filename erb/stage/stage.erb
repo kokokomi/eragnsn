@@ -36,9 +36,11 @@ ENDIF
 
 IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && ステージ探索度 >= 100
     ; ステージクリア！
+    LOCAL:0 = ステージ実績:(stageId):クリア
     ステージ実績:(stageId):クリア = true
     ステージ実績:(stageId):最高クリア階層 = ステージ定義:(stageId):最大階層
     CALL message_stage_clear(stageId)
+    CALLFORM stage_clear_{stageId}(LOCAL:0 == false)
     GOTO STAGE_FINISH
 ENDIF
 
