@@ -322,5 +322,5 @@ BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
 #FUNCTION
 #DIM charactorNum
 #DIMS expType
-; expが上がるにつれて10000に収束していく
-RETURNF 1000*10000/(10000+(EXP:(charactorNum):(GETNUM(EXP, expType))))
+; expが上がるにつれて1000に収束していく
+RETURNF 1000-(1000*1000/(1000+(EXP:(charactorNum):(GETNUM(EXP, expType) / 15))))
