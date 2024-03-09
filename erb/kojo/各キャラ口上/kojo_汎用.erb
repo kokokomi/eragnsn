@@ -1,0 +1,135 @@
+﻿; チーム加入時
+@kojo_チーム加入_汎用(charactorNum)
+#DIM charactorNum
+
+; 編成入り
+@kojo_編成に入った時_汎用(charactorNum)
+#DIM charactorNum
+
+; ステージ攻略系 ---------------------------------------
+; 秘境に入った時
+@kojo_ステージ_秘境に入った_汎用(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 秘境に入った時
+@kojo_ステージ_次のフロア_汎用(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 周囲を探索を選んだ時
+@kojo_ステージ_周囲を探索_汎用(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 先へ進むを選んだ時
+@kojo_ステージ_先へ進む_汎用(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 全滅
+@kojo_ステージ_全滅_汎用(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 秘境クリア
+@kojo_ステージ_クリア_汎用(charactorNum, stageId, isFirstClear)
+#DIM charactorNum
+#DIM stageId
+#DIM isFirstClear
+
+; 秘境内でイベント発生時
+@kojo_ステージ_イベント_汎用(charactorNum, stageId, eventId)
+#DIM charactorNum
+#DIM stageId
+#DIM eventId
+
+; 戦闘系 -------------------------------------------------------------------
+@kojo_戦闘_開始_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_敗北_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_通常攻撃使用_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_元素スキル使用_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_元素爆発使用_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_ターン開始_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_ターン終了_汎用(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_自分のターン開始_汎用(charactorNum)
+#DIM charactorNum
+
+; ダメージ系
+@kojo_ダメージ_HP_汎用(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_MP_汎用(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_CP_汎用(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_EP_汎用(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel)
+#DIM charactorNum
+#DIM ecstasyLevel
+
+; 状態異常
+@kojo_状態異常_追加_汎用(charactorNum, flagId)
+#DIM charactorNum
+;cflagのid
+#DIM flagId
+
+SELECTCASE flagId
+    ; 拘束
+    CASE 100
+    ; 丸呑み
+    CASE 101
+    ; 恍惚
+    CASE 102
+    ; 発情
+    CASE 103
+    ; 麻痺
+    CASE 104
+    ; 凍結
+    CASE 104
+    ; 羞恥
+    CASE 104
+ENDSELECT
+
+@kojo_状態異常_回復_汎用(charactorNum, flagId)
+#DIM charactorNum
+;cflagのid
+#DIM flagId
+SELECTCASE flagId
+    ; 拘束
+    CASE 100
+    ; 丸呑み
+    CASE 101
+    ; 恍惚
+    CASE 102
+    ; 発情
+    CASE 103
+    ; 麻痺
+    CASE 104
+    ; 凍結
+    CASE 104
+    ; 羞恥
+    CASE 104
+ENDSELECT

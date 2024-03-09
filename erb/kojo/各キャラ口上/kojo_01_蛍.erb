@@ -1,0 +1,161 @@
+﻿; チーム加入時
+@kojo_チーム加入_1(charactorNum)
+#DIM charactorNum
+
+; 編成入り
+@kojo_編成に入った時_1(charactorNum)
+#DIM charactorNum
+#DIMS texts = 次は何に会えるかな？, 世界は、謎だらけだね, やるべきことは、まだたくさんある
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+; ステージ攻略系 ---------------------------------------
+; 秘境に入った時
+@kojo_ステージ_秘境に入った_1(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 秘境に入った時
+@kojo_ステージ_次のフロア_1(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 周囲を探索を選んだ時
+@kojo_ステージ_周囲を探索_1(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 先へ進むを選んだ時
+@kojo_ステージ_先へ進む_1(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 全滅
+@kojo_ステージ_全滅_1(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 秘境クリア
+@kojo_ステージ_クリア_1(charactorNum, stageId, isFirstClear)
+#DIM charactorNum
+#DIM stageId
+#DIM isFirstClear
+
+; 秘境内でイベント発生時
+@kojo_ステージ_イベント_1(charactorNum, stageId, eventId)
+#DIM charactorNum
+#DIM stageId
+#DIM eventId
+
+; 戦闘系 -------------------------------------------------------------------
+@kojo_戦闘_開始_1(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_敗北_1(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_通常攻撃使用_1(charactorNum)
+#DIM charactorNum
+#DIMS texts = ...ハァ！, ...セイ！, ヤァッ！
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_元素スキル使用_1(charactorNum)
+#DIM charactorNum
+#DIMS texts = 風刃！, ...ハァ！, ...セイ！
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_元素爆発使用_1(charactorNum)
+#DIM charactorNum
+#DIMS texts = フッ—, 消えるんだ。, 風と共に去れ。
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_ターン開始_1(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_ターン終了_1(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_自分のターン開始_1(charactorNum)
+#DIM charactorNum
+
+; ダメージ系
+@kojo_ダメージ_HP_1(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+#DIMS texts = ...んっ, ...くっ, ...あっ
+#DIMS texts2 = うぅッ, くぁッ！, きゃぁ！
+; 10%未満のダメージ
+IF amount * 100 / MAXBASE:(charactorNum):0 < 10
+    PRINTFORML 「%array_get_random_element_str(texts)%」
+ELSE
+    PRINTFORML 「%array_get_random_element_str(texts2)%」
+ENDIF
+
+@kojo_ダメージ_MP_1(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+#DIMS texts = ...んっ, ...くっ, ...あっ
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_ダメージ_CP_1(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_EP_1(charactorNum, amount, parts)
+#DIM charactorNum
+#DIM amount
+#DIM parts
+
+@kojo_ダメージ_絶頂_1(charactorNum, ecstasyLevel, parts)
+#DIM charactorNum
+#DIM ecstasyLevel
+#DIM parts
+#DIMS texts = ...イㇰ!, だ、だめぇ！
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+; 状態異常
+@kojo_状態異常_追加_1(charactorNum, flagId)
+#DIM charactorNum
+;cflagのid
+#DIM flagId
+
+SELECTCASE flagId
+    ; 拘束
+    CASE 100
+        PRINTFORML 「離して！」
+    ; 丸呑み
+    CASE 101
+        PRINTFORML 「やめ…ッ！」
+    ; 恍惚
+    CASE 102
+        PRINTFORML 「んッ…！」
+    ; 発情
+    CASE 103
+        PRINTFORML 「ハァ…　ハァ…」
+    ; 麻痺
+    CASE 104
+    ; 凍結
+    CASE 104
+    ; 羞恥
+    CASE 104
+ENDSELECT
+
+@kojo_状態異常_回復_1(charactorNum, flagId)
+#DIM charactorNum
+;cflagのid
+#DIM flagId
+SELECTCASE flagId
+    ; 拘束
+    CASE 100
+    ; 丸呑み
+    CASE 101
+    ; 恍惚
+    CASE 102
+    ; 発情
+    CASE 103
+    ; 麻痺
+    CASE 104
+    ; 凍結
+    CASE 104
+    ; 羞恥
+    CASE 104
+ENDSELECT
