@@ -7,6 +7,9 @@ FOR lcount, 0, party_get_member_count()
 NEXT
 
 FOR lcount, 0, party_get_member_count()
+    IF battle_is_enemy_dead_all()
+        CONTINUE
+    ENDIF
     ; 放心チェック
     IF charactor_is_faint(lcount)
         SETCOLOR COLOR_CP
@@ -34,10 +37,6 @@ FOR lcount, 0, party_get_member_count()
         CALL message_skip_player_turn_ecstasy(lcount)
         PRINTL
         WAIT
-        CONTINUE
-    ENDIF
-
-    IF battle_is_enemy_dead_all()
         CONTINUE
     ENDIF
 

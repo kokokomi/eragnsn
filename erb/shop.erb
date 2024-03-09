@@ -5,6 +5,13 @@ CALL print_debug("EVENTSHOP")
 DRAWLINE
 
 @SHOW_SHOP
+#DIM lcount
+#DIM lcount2
+FOR lcount, 0, party_get_member_count()
+    FOR lcount2, 0, VARSIZE("BAD_STATUS")
+        CALL charactor_reset_bad_status(lcount, BAD_STATUS:(lcount2), true)
+    NEXT
+NEXT
 CALL print_debug("SHOW_SHOP")
 CALL show_home_gui
 

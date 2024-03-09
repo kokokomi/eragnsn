@@ -5,6 +5,8 @@
 ; おそらくあふれることはないが、足りなくなったらここを増やす
 #DIM CONST MAX_STAGE_ID = 100
 
+#DIMS CONST BAD_STATUS = "拘束", "丸呑み", "恍惚", "発情", "麻痺", "凍結", "羞恥"
+
 ; 部位の判定に使うフラグ
 #DIM CONST PART_FLAG_B = 0x01
 #DIM CONST PART_FLAG_C = 0x02

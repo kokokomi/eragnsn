@@ -346,7 +346,7 @@ RETURNF 1000-(1000*1000/(1000+(EXP:(charactorNum):(GETNUM(EXP, expType) / 15))))
 #DIMS flagId
 ; 拘束系は-1なら存在しない
 IF flagId == "拘束" || flagId == "丸呑み"
-    RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) >= 0
+    RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) != -1
 ENDIF
 ; それ以外は残りターン数が入るので1以上であれば存在する
 RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) > 0

@@ -3,15 +3,24 @@
 #DIM lcount
 #DIM enemy_count
 #DIM memberCount
-
+#DIM lcount2
 #DIM enemyLv
 DRAWLINE
 
 enemy_count = battle_enemy_count()
 FOR lcount, 0, enemy_count
-    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
-    PRINTFORM {battle_enemy_hp(lcount)} / {battle_enemy_max_hp(lcount)} 
+    PRINTFORM 【%battle_enemy_name(lcount), 15, LEFT% {battle_enemy_level(lcount), 3}Lv】
+    PRINTFORM {battle_enemy_hp(lcount), 6} / {battle_enemy_max_hp(lcount), 6} 
     CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
+    FOR lcount2, 0, party_get_member_count()
+        IF CFLAG:(lcount2):拘束 == lcount
+            PRINTFORM 【%CALLNAME:(lcount2)%拘束中】
+        ENDIF
+        IF CFLAG:(lcount2):丸呑み == lcount
+            PRINTFORM 【%CALLNAME:(lcount2)%丸呑み中】
+        ENDIF
+    NEXT
+    
     PRINTL
 NEXT
 

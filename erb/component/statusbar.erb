@@ -38,27 +38,10 @@ PRINTFORM \({CFLAG:(charactorNum):元素エネルギー量,6}/{ABL:(charactorNum
 PRINTL
 
 PRINTFORM 状態: 
-FOR lcount, 100, 150
-    IF CFLAG:(charactorNum):(lcount) < 1
-        CONTINUE
+FOR lcount, 0, VARSIZE("BAD_STATUS")
+    IF charactor_has_bad_status(charactorNum, BAD_STATUS:(lcount))
+        PRINTFORM 【%BAD_STATUS:(lcount)%】
     ENDIF
-
-    SELECTCASE lcount
-        CASE 100
-            PRINT 【拘束】　
-        CASE 101
-            PRINT 【丸呑み】　
-        CASE 102
-            PRINT 【恍惚】　
-        CASE 103
-            PRINT 【発情】　
-        CASE 104
-            PRINT 【麻痺】　
-        CASE 105
-            PRINT 【凍結】　
-        CASE 106
-            PRINT 【羞恥】　
-    ENDSELECT
 NEXT 
 
 PRINTL
