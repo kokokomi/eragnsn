@@ -1,0 +1,12 @@
+﻿@enemy_command_11(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+CALL charactor_damage_hp(charactorNum, calculate_hp_damage_to_player(charactorNum, enemyNum, 70))
+CALL charactor_damage_cp(charactorNum, 15 + RAND:30)
+
+@enemy_command_11_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+RESULTS = %battle_enemy_name(enemyNum)%は触手をしならせ%charactor_get_charactor_name(charactorNum)%に叩きつけた！

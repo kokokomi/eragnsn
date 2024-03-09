@@ -1,0 +1,21 @@
+﻿@enemy_command_12(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE RAND:4
+    CASE 0
+        CALL charactor_damage_ep(charactorNum, 150, part_build(true, false, false, false))
+    CASE 1
+        CALL charactor_damage_ep(charactorNum, 150, part_build(false, true, false, false))
+    CASE 2
+        CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, true, false))
+    CASE 3
+        CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, false, true))
+ENDSELECT
+
+
+@enemy_command_12_message(enemyNum, charactorNum)
+#DIM enemyNum
+#DIM charactorNum
+
+RESULTS = %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に向けてピンク色のレーザーを放った！
