@@ -1,0 +1,25 @@
+﻿@汎用技メッセージ_V(enemyNum, charactorNum)
+#FUNCTIONS
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE
+; ヒルチャール系
+CASE 1, 2, 3
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部に指を入れてかき回した！
+CASEELSE
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！
+ENDSELECT
+
+@汎用技メッセージ_V_拘束(enemyNum, charactorNum)
+#FUNCTIONS
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE
+; ヒルチャール系
+CASE 1, 2, 3
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の腰を掴み、秘部に男根を押し当てると一気に奥まで貫いた！
+CASEELSE
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカの浅い部分を刺激している！
+ENDSELECT

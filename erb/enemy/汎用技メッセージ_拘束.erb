@@ -1,0 +1,12 @@
+﻿@汎用技メッセージ_拘束(enemyNum, charactorNum)
+#FUNCTIONS
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE
+; ヒルチャール系
+CASE 1, 2, 3
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかり押し倒した！
+CASEELSE
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた
+ENDSELECT

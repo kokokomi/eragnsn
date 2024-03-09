@@ -1,0 +1,25 @@
+﻿@汎用技メッセージ_C(enemyNum, charactorNum)
+#FUNCTIONS
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE
+; ヒルチャール系
+CASE 1, 2, 3
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを乱暴にこすっている！
+CASEELSE
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！
+ENDSELECT
+
+@汎用技メッセージ_C_拘束(enemyNum, charactorNum)
+#FUNCTIONS
+#DIM enemyNum
+#DIM charactorNum
+
+SELECTCASE
+; ヒルチャール系
+CASE 1, 2, 3
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスをざらざらとした舌で舐めている！
+CASEELSE
+    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを吸いあげている！
+ENDSELECT
