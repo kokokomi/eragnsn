@@ -12,7 +12,7 @@ ENDIF
 #DIM enemyNum
 #DIM charactorNum
 IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
-    RESULTS = 汎用技メッセージ_C_拘束(enemyNum, charactorNum)
+    RESULTS = %汎用技メッセージ_C_拘束(enemyNum, charactorNum)%
 ELSE
-    RESULTS = 汎用技メッセージ_C(enemyNum, charactorNum)
+    RESULTS = %汎用技メッセージ_C(enemyNum, charactorNum)%
 ENDIF

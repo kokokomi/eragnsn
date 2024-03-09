@@ -43,7 +43,7 @@ IF RAND:100 < 20
 ENDIF
 
 CALL battle_setup
-FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 1
+FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 10
     SELECTCASE RAND:3
         CASE 0, 1
             CALL battle_setup_add_enemy(1, RAND:3 + 7)

@@ -1,13 +1,14 @@
-﻿#DIMS 快楽ダメ1_parts = "くっ……ふぅっ", "ぐっ、くぅっ！", "はぁ、はぁ……"
-#DIMS 快楽ダメ2_parts = "はっ、はあっ……♡", "あ、ああぁッ……", "くっ、あぁぁっ", "あぁっ", "ううっ……！", "あぁっ……んんっ……！", "んっ……♡", "はぁ……♡ "
-#DIMS 快楽ダメ3_parts = "あ゛あ゛ぁ……♡", "お゛っ……♡", "はぁーっ♡ はぁーっ♡", "んぐぅっ！？"
-
-@喘ぎ声_快楽(level, length = 2)
+﻿@喘ぎ声_快楽(level, length = 2)
 #FUNCTIONS
 #DIM level
 #DIM lcount
 #DIM length
-RESULTS = {}
+
+#DIMS 快楽ダメ1_parts = "くっ……ふぅっ", "ぐっ、くぅっ！", "はぁ、はぁ……"
+#DIMS 快楽ダメ2_parts = "はっ、はあっ……♡", "あ、ああぁッ……", "くっ、あぁぁっ", "あぁっ", "ううっ……！", "あぁっ……んんっ……！", "んっ……♡", "はぁ……♡ "
+#DIMS 快楽ダメ3_parts = "あ゛あ゛ぁ……♡", "お゛っ……♡", "はぁーっ♡ はぁーっ♡", "んぐぅっ！？"
+
+RESULTS = 
 FOR lcount, 0, length
     SELECTCASE level
         CASE 1
@@ -26,7 +27,12 @@ RETURNF RESULTS
 #DIM level
 #DIM lcount
 #DIM length
-RESULTS = {}
+
+#DIMS 快楽ダメ1_parts = "くっ……ふぅっ", "ぐっ、くぅっ！", "はぁ、はぁ……"
+#DIMS 快楽ダメ2_parts = "はっ、はあっ……♡", "あ、ああぁッ……", "くっ、あぁぁっ", "あぁっ", "ううっ……！", "あぁっ……んんっ……！", "んっ……♡", "はぁ……♡ "
+#DIMS 快楽ダメ3_parts = "あ゛あ゛ぁ……♡", "お゛っ……♡", "はぁーっ♡ はぁーっ♡", "んぐぅっ！？"
+
+RESULTS = 
 FOR lcount, 0, length
     SELECTCASE level
         CASE 1

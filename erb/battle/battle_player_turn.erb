@@ -37,6 +37,10 @@ FOR lcount, 0, party_get_member_count()
         CONTINUE
     ENDIF
 
+    IF battle_is_enemy_dead_all()
+        CONTINUE
+    ENDIF
+
     CALL battle_charactor_command(lcount)
 NEXT
 
@@ -115,14 +119,15 @@ SELECTCASE command
         ENDIF
     CASE 4
         IF RAND:5 == 0
-            PRINTFORM 拘束を振りほどくことに成功した！
+            PRINTFORML 拘束を振りほどくことに成功した！
             CFLAG:(charactorNum):拘束 = -1
             CFLAG:(charactorNum):丸呑み = -1
         ELSE
-            PRINTFORM 抵抗を封じられてしまった！
+            PRINTFORML 抵抗を封じられてしまった！
         ENDIF
     CASE 5
-        PRINTFORM 抵抗をやめ、されるがままになっている
+        PRINTFORML 抵抗をやめ、されるがままになっている
 ENDSELECT
 
+WAIT
 PRINTL

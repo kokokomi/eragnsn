@@ -139,9 +139,9 @@ RESETCOLOR
 @kojo_戦闘_通常攻撃使用(charactorNum)
 #DIM charactorNum
 CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_敗北_{NO:(charactorNum)}(charactorNum)
+TRYCCALLFORM kojo_戦闘_通常攻撃使用_{NO:(charactorNum)}(charactorNum)
 CATCH
-    CALL kojo_戦闘_敗北_汎用(charactorNum)
+    CALL kojo_戦闘_通常攻撃使用_汎用(charactorNum)
 ENDCATCH
 RESETCOLOR
 

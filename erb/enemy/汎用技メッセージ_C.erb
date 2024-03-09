@@ -3,12 +3,12 @@
 #DIM enemyNum
 #DIM charactorNum
 
-SELECTCASE
+SELECTCASE battle_enemy_id(enemyNum)
 ; ヒルチャール系
 CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを乱暴にこすっている！
+    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを乱暴にこすっている！"
 CASEELSE
-    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！
+    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！"
 ENDSELECT
 
 @汎用技メッセージ_C_拘束(enemyNum, charactorNum)
@@ -16,10 +16,10 @@ ENDSELECT
 #DIM enemyNum
 #DIM charactorNum
 
-SELECTCASE
+SELECTCASE battle_enemy_id(enemyNum)
 ; ヒルチャール系
 CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスをざらざらとした舌で舐めている！
+    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスをざらざらとした舌で舐めている！"
 CASEELSE
-    RETURNF %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを吸いあげている！
+    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを吸いあげている！"
 ENDSELECT
