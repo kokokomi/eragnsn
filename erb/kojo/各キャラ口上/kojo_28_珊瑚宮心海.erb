@@ -1,0 +1,296 @@
+﻿; チーム加入時
+@kojo_チーム加入_28(charactorNum)
+#DIM charactorNum
+PRINTFORML 「ご安心を。私に良い策があります。」
+
+; 編成入り
+@kojo_編成に入った時_28(charactorNum)
+#DIM charactorNum
+#DIMS texts = "そうですね、今回の作戦は…", "準備万端、出発しましょう。"
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+; ステージ攻略系 ---------------------------------------
+; 秘境に入った時
+@kojo_ステージ_秘境に入った_28(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+PRINTFORML 「慎重に参りましょう。」
+
+; 秘境に入った時
+@kojo_ステージ_次のフロア_28(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 周囲を探索を選んだ時
+@kojo_ステージ_周囲を探索_28(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+PRINTFORML 「なにか、作戦に役立つものが見つかるとよいのですが。」
+
+; 先へ進むを選んだ時
+@kojo_ステージ_先へ進む_28(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+
+; 全滅
+@kojo_ステージ_全滅_28(charactorNum, stageId)
+#DIM charactorNum
+#DIM stageId
+PRINTFORML 「策を見誤りました…」
+
+; 秘境クリア
+@kojo_ステージ_クリア_28(charactorNum, stageId, isFirstClear)
+#DIM charactorNum
+#DIM stageId
+#DIM isFirstClear
+
+; 秘境内でイベント発生時
+@kojo_ステージ_イベント_28(charactorNum, stageId, eventId)
+#DIM charactorNum
+#DIM stageId
+#DIM eventId
+
+; 戦闘系 -------------------------------------------------------------------
+@kojo_戦闘_開始_28(charactorNum)
+#DIM charactorNum
+PRINTFORML 「作戦開始です。」
+
+@kojo_戦闘_敗北_28(charactorNum)
+#DIM charactorNum
+PRINTFORML 「こんなはずでは…」
+
+@kojo_戦闘_勝利_28(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_通常攻撃使用_28(charactorNum)
+#DIM charactorNum
+#DIMS texts = "ふっ", "はっ", "やっ", "せいっ", "たぁっ", "それっ"
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_元素スキル使用_28(charactorNum)
+#DIM charactorNum
+#DIMS texts = "ご助力を！", "ご安心を。", "騒乱の憩い。"
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_元素爆発使用_28(charactorNum)
+#DIM charactorNum
+#DIMS texts = "海の契りよ。", "荒れ狂いなさい！", "深海の加護！"
+PRINTFORML 「%array_get_random_element_str(texts)%」
+
+@kojo_戦闘_ターン開始_28(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_ターン終了_28(charactorNum)
+#DIM charactorNum
+
+@kojo_戦闘_自分のターン開始_28(charactorNum)
+#DIM charactorNum
+
+; ダメージ系
+@kojo_ダメージ_HP_28(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_MP_28(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_CP_28(charactorNum, amount)
+#DIM charactorNum
+#DIM amount
+
+@kojo_ダメージ_EP_28(charactorNum, amount, parts)
+#DIM charactorNum
+#DIM amount
+#DIM parts
+
+; 喪失状態
+IF charactor_is_faint(charactorNum)
+    ; 喪失状態は喘ぎ声が漏れ出るくらいで良い
+    SELECTCASE RAND:3
+    CASE 0
+        PRINTL 「あっ…♡」
+    CASE 1
+        PRINTL 「やぁっ…♡」
+    CASE 2
+        PRINTL 「あっ…♡ もういやぁ…」
+    ENDSELECT
+    RETURN
+ENDIF
+
+IF charactor_has_bad_status(charactorNum, "恍惚")
+    SELECTCASE RAND:3
+    CASE 0
+        PRINTL 「あっ…♡今は敏感なのでやめｔ んんん！♡♡♡」
+    CASE 1
+        PRINTL 「やぁっ…♡やらぁ♡」
+    CASE 2
+        PRINTL 「あっ…♡ もういやぁ…」
+    ENDSELECT
+    RETURN
+ENDIF
+
+SELECTCASE amount
+    CASE IS <= 1000
+        PRINTFORML 「%喘ぎ声_快楽(1, 3)%」
+    CASE IS <= 7000
+        PRINTFORML 「%喘ぎ声_快楽(2, 3)%」
+    CASEELSE
+        PRINTFORML 「%喘ぎ声_快楽(3, 3)%」
+ENDIF
+
+@kojo_ダメージ_絶頂_28(charactorNum, ecstasyLevel, parts)
+#DIM charactorNum
+#DIM ecstasyLevel
+#DIM parts
+
+; 喪失状態
+IF charactor_is_faint(charactorNum)
+    ; 喪失状態は喘ぎ声が漏れ出るくらいで良い
+    SELECTCASE RAND:3
+    CASE 0
+        PRINTL 「んんッ…♡ ゆるして…」
+    CASE 1
+        PRINTL 「やぁっ…♡」
+    CASE 2
+        PRINTL 「イクっ…♡ もういやぁ…」
+    ENDSELECT
+    RETURN
+ENDIF
+
+; 連続絶頂
+IF charactor_has_bad_status(charactorNum, "恍惚")
+    PRINT 「もうイ゛ッ゛て゛る゛♡イ゛ッ゛て゛ます♡♡♡
+    IF part_has_v(charactorNum)
+        SELECTCASE RAND:3
+        CASE 0
+            PRINT おまんここ゛わ゛れ゛ま゛す゛
+        CASE 1
+            PRINT おまんこも゛う゛た゛め゛
+        CASE 2
+            PRINT おまんこイク゛ゥゥゥゥゥ♡♡♡
+        ENDSELECT
+    ELSEIF part_has_b(charactorNum)	
+        SELECTCASE RAND:3
+        CASE 0
+            PRINT おっぱいい゛や゛て゛す゛♡
+        CASE 1
+            PRINT おっぱいやめてぇぇッ！
+        CASE 2
+            PRINT おっぱいでイク゛ゥゥゥゥゥ♡♡♡
+        ENDSELECT
+    ELSEIF part_has_c(charactorNum)	
+        SELECTCASE RAND:3
+        CASE 0
+            PRINT そこは敏感なんれす♡
+        CASE 1
+            PRINT そこをさわるのやめれください♡
+        CASE 2
+            PRINT イクッ　またイキます♡
+        ENDSELECT
+    ELSEIF part_has_a(charactorNum)	
+        SELECTCASE RAND:3
+        CASE 0
+            PRINT おしりでイクゥ♡
+        CASE 1
+            PRINT おしりでイキたくないのに…♡
+        CASE 2
+            PRINT イクッ　またイキます♡
+        ENDSELECT
+    ENDIF
+
+    SELECTCASE RAND:4
+        CASE 0
+            PRINT 許してぇ……♡
+        CASE 1
+            PRINT お゛っ……♡
+        CASE 2
+            PRINT もう…だめ……♡
+        CASE 3
+            PRINT あ゛あ゛ぁ……♡
+    ENDSELECT
+    PRINTL 」
+    RETURN
+ENDIF
+
+PRINT 「
+IF part_has_v(charactorNum)
+    SELECTCASE RAND:3
+    CASE 0
+        PRINT 動かないでっ　イクッ♡いやぁ♡♡♡
+    CASE 1
+        PRINT 駄目です！あっ♡あっ♡あっ♡んんんん♡♡♡
+    CASE 2
+        PRINT とまってっイクッ♡
+    ENDSELECT
+ELSEIF part_has_b(charactorNum)	
+    SELECTCASE RAND:3
+    CASE 0
+        PRINT おっぱいやだ♡イキます♡
+    CASE 1
+        PRINT おっぱいやぁ♡
+    CASE 2
+        PRINT おっぱいでイクイクイク♡♡♡
+    ENDSELECT
+ELSEIF part_has_c(charactorNum)	
+    SELECTCASE RAND:3
+    CASE 0
+        PRINT そこやだ♡イクイクイク♡♡♡
+    CASE 1
+        PRINT そこやめてください♡あっ♡あっ♡あっ♡んんんん♡♡♡
+    CASE 2
+        PRINT あっ♡あっ♡あっ♡んんんん♡♡♡
+    ENDSELECT
+ELSEIF part_has_a(charactorNum)	
+    SELECTCASE RAND:3
+    CASE 0
+        PRINT そこやだ♡イクイクイク♡♡♡
+    CASE 1
+        PRINT そこやめてください♡あっ♡あっ♡あっ♡んんんん♡♡♡
+    CASE 2
+        PRINT あっ♡あっ♡あっ♡んんんん♡♡♡
+    ENDSELECT
+ELSE
+    SELECTCASE RAND:3
+    CASE 0
+        PRINT そこやだ♡イクイクイク♡♡♡
+    CASE 1
+        PRINT そこやめてください♡あっ♡あっ♡あっ♡んんんん♡♡♡
+    CASE 2
+        PRINT あっ♡あっ♡あっ♡んんんん♡♡♡
+    ENDSELECT
+ENDIF
+PRINTL 」
+; 状態異常
+@kojo_状態異常_追加_28(charactorNum, statusName)
+#DIM charactorNum
+#DIMS statusName
+
+SELECTCASE statusName
+    CASE "拘束"
+        PRINTFORML 「いやっ　離してください！」
+    CASE "丸呑み"
+        PRINTFORML 「いやっ　近寄らないで！」
+    CASE "恍惚"
+        PRINTFORML 「あっ…♡ うぅ…♡」
+    CASE "発情"
+        PRINTFORML 「はぁ……♡」
+    CASE "麻痺"
+    CASE "凍結"
+    CASE "羞恥"
+        PRINTFORML 「み、見ないでください……」
+ENDSELECT
+
+@kojo_状態異常_回復_28(charactorNum, statusName)
+#DIM charactorNum
+#DIMS statusName
+
+SELECTCASE statusName
+    CASE "拘束"
+    CASE "丸呑み"
+    CASE "恍惚"
+    CASE "発情"
+    CASE "麻痺"
+    CASE "凍結"
+    CASE "羞恥"
+ENDSELECT

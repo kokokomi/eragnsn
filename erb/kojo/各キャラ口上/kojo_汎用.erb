@@ -90,10 +90,14 @@
 #DIM amount
 #DIM parts
 
+PRINTFORML 「%喘ぎ声_快楽(1, RAND:2 + 1)%」
+
 @kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel, parts)
 #DIM charactorNum
 #DIM ecstasyLevel
 #DIM parts
+
+PRINTFORML 「%喘ぎ声_絶頂(math_clamp(ecstasyLevel, 1, 3), RAND:2 + 1)%」
 
 ; 状態異常
 @kojo_状態異常_追加_汎用(charactorNum, statusName)
