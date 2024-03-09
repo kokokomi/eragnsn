@@ -1,5 +1,6 @@
 ﻿@kojo_set_charactor_color(charactorNum)
-SETCOLOR CFLAG:(NO:(charactorNum)):キャラの色
+#DIM charactorNum
+SETCOLOR CFLAG:(charactorNum):キャラの色
 
 ; チーム加入時
 @kojo_チーム加入(charactorNum)
@@ -88,7 +89,7 @@ RESETCOLOR
 #DIM isFirstClear
 
 CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_クリア_{NO:(charactorNum)}(charactorNum, stageId. isFirstClear)
+TRYCCALLFORM kojo_ステージ_クリア_{NO:(charactorNum)}(charactorNum, stageId, isFirstClear)
 CATCH
     CALL kojo_ステージ_クリア_汎用(charactorNum, stageId, isFirstClear)
 ENDCATCH
@@ -123,6 +124,15 @@ CALL kojo_set_charactor_color(charactorNum)
 TRYCCALLFORM kojo_戦闘_敗北_{NO:(charactorNum)}(charactorNum)
 CATCH
     CALL kojo_戦闘_敗北_汎用(charactorNum)
+ENDCATCH
+RESETCOLOR
+
+@kojo_戦闘_勝利(charactorNum)
+#DIM charactorNum
+CALL kojo_set_charactor_color(charactorNum)
+TRYCCALLFORM kojo_戦闘_勝利_{NO:(charactorNum)}(charactorNum)
+CATCH
+    CALL kojo_戦闘_勝利_汎用(charactorNum)
 ENDCATCH
 RESETCOLOR
 
@@ -237,7 +247,7 @@ RESETCOLOR
 @kojo_状態異常_追加(charactorNum, flagId)
 #DIM charactorNum
 ;cflagのid
-#DIM flagId
+#DIMS flagId
 CALL kojo_set_charactor_color(charactorNum)
 TRYCCALLFORM kojo_状態異常_追加_{NO:(charactorNum)}(charactorNum, flagId)
 CATCH
@@ -248,7 +258,7 @@ RESETCOLOR
 @kojo_状態異常_回復(charactorNum, flagId)
 #DIM charactorNum
 ;cflagのid
-#DIM flagId
+#DIMS flagId
 
 CALL kojo_set_charactor_color(charactorNum)
 TRYCCALLFORM kojo_状態異常_回復_{NO:(charactorNum)}(charactorNum, flagId)

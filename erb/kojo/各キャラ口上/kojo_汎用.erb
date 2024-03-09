@@ -51,6 +51,9 @@
 @kojo_戦闘_敗北_汎用(charactorNum)
 #DIM charactorNum
 
+@kojo_戦闘_勝利_汎用(charactorNum)
+#DIM charactorNum
+
 @kojo_戦闘_通常攻撃使用_汎用(charactorNum)
 #DIM charactorNum
 
@@ -82,54 +85,41 @@
 #DIM charactorNum
 #DIM amount
 
-@kojo_ダメージ_EP_汎用(charactorNum, amount)
+@kojo_ダメージ_EP_汎用(charactorNum, amount, parts)
 #DIM charactorNum
 #DIM amount
+#DIM parts
 
-@kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel)
+@kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel, parts)
 #DIM charactorNum
 #DIM ecstasyLevel
+#DIM parts
 
 ; 状態異常
-@kojo_状態異常_追加_汎用(charactorNum, flagId)
+@kojo_状態異常_追加_汎用(charactorNum, statusName)
 #DIM charactorNum
-;cflagのid
-#DIM flagId
+#DIMS statusName
 
-SELECTCASE flagId
-    ; 拘束
-    CASE 100
-    ; 丸呑み
-    CASE 101
-    ; 恍惚
-    CASE 102
-    ; 発情
-    CASE 103
-    ; 麻痺
-    CASE 104
-    ; 凍結
-    CASE 104
-    ; 羞恥
-    CASE 104
+SELECTCASE statusName
+    CASE "拘束"
+    CASE "丸呑み"
+    CASE "恍惚"
+    CASE "発情"
+    CASE "麻痺"
+    CASE "凍結"
+    CASE "羞恥"
 ENDSELECT
 
-@kojo_状態異常_回復_汎用(charactorNum, flagId)
+@kojo_状態異常_回復_汎用(charactorNum, statusName)
 #DIM charactorNum
-;cflagのid
-#DIM flagId
-SELECTCASE flagId
-    ; 拘束
-    CASE 100
-    ; 丸呑み
-    CASE 101
-    ; 恍惚
-    CASE 102
-    ; 発情
-    CASE 103
-    ; 麻痺
-    CASE 104
-    ; 凍結
-    CASE 104
-    ; 羞恥
-    CASE 104
+#DIMS statusName
+
+SELECTCASE statusName
+    CASE "拘束"
+    CASE "丸呑み"
+    CASE "恍惚"
+    CASE "発情"
+    CASE "麻痺"
+    CASE "凍結"
+    CASE "羞恥"
 ENDSELECT

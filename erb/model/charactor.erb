@@ -1,4 +1,13 @@
-﻿; キャラクターについての操作
+﻿; 加入
+@charactor_add_member(charactorId)
+#DIM charactorId
+IF GETCHARA(charactorId) != -1
+    ; すでに加入している場合は無視
+ENDIF
+ADDCHARA charactorId
+CALL kojo_チーム加入(GETCHARA(charactorId))
+
+; キャラクターについての操作
 ; 元素名
 @charactor_get_element_type_name(charactorId)
 #FUNCTIONS
@@ -105,11 +114,12 @@ ENDIF
 EXP:(charactorNum):絶頂経験++
 
 CALL message_player_ecstasy(charactorNum, ecstasyLevel, part)
+CALL kojo_ダメージ_絶頂(charactorNum, ecstasyLevel, part)
 ; 絶頂によって精神が削られる
 CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
 
 ; 絶頂レベルによって行動不能ターンを増やす
-CFLAG:(charactorNum):恍惚 += (ecstasyLevel + 1)
+CALL charactor_increase_bad_status(charactorNum, "恍惚", ecstasyLevel + 1)
 
 
 ; 状態の判定 ----------------------------------------------------------------------------------
@@ -168,6 +178,7 @@ RETURNF CFLAG:(charactorNum):元素爆発クールタイム == 0 && CFLAG:(chara
 #DIM charactorNum
 #DIM damage
 CALL message_player_mp_damage(charactorNum, damage)
+CALL kojo_ダメージ_MP(charactorNum, damage)
 ; すでに喪失
 IF BASE:(charactorNum):2 == 0
     RETURN
@@ -183,6 +194,7 @@ ENDIF
 #DIM charactorNum
 #DIM damage
 CALL message_player_cp_damage(charactorNum, damage)
+CALL kojo_ダメージ_CP(charactorNum, damage)
 BASE:(charactorNum):3 = MAX(0, BASE:(charactorNum):3 - damage)
 
 ; HPにダメージを与える
@@ -190,6 +202,7 @@ BASE:(charactorNum):3 = MAX(0, BASE:(charactorNum):3 - damage)
 #DIM charactorNum
 #DIM damage
 CALL message_player_hp_damage(charactorNum, damage)
+CALL kojo_ダメージ_HP(charactorNum, damage)
 BASE:(charactorNum):0 = MAX(0, BASE:(charactorNum):0 - damage)
 
 ; EPダメージを与える
@@ -274,13 +287,14 @@ IF charactor_is_nude(charactorNum)
 ENDIF
 
 ; 恍惚になったあとは1.1倍
-IF CFLAG:(charactorNum):恍惚 > 0
+IF charactor_has_bad_status(charactorNum, "恍惚")
     damage *= 11 / 10
 ENDIF
 
 ; ここまででダメージを確定
 
 CALL message_player_ep_damage(charactorNum, damage)
+CALL kojo_ダメージ_EP(charactorNum, damage, part)
 BASE:(charactorNum):4 = MAX(0, BASE:(charactorNum):4 - damage)
 ; 快感が0になったら絶頂
 IF BASE:(charactorNum):4 == 0
@@ -324,3 +338,64 @@ BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
 #DIMS expType
 ; expが上がるにつれて1000に収束していく
 RETURNF 1000-(1000*1000/(1000+(EXP:(charactorNum):(GETNUM(EXP, expType) / 15))))
+
+; 指定のステータスを持っているか
+@charactor_has_bad_status(charactorNum, flagId)
+#FUNCTION
+#DIM charactorNum
+#DIMS flagId
+; 拘束系は-1なら存在しない
+IF flagId == "拘束" || flagId == "丸呑み"
+    RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) >= 0
+ENDIF
+; それ以外は残りターン数が入るので1以上であれば存在する
+RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) > 0
+
+; 指定のステータスにamountを加算
+; 拘束系は値をset
+@charactor_increase_bad_status(charactorNum, flagId, amount)
+#DIM charactorNum
+#DIMS flagId
+#DIM amount
+
+IF !charactor_has_bad_status(charactorNum, flagId)
+    CALL kojo_状態異常_追加(charactorNum, flagId)
+ENDIF
+
+IF flagId == "拘束" || flagId == "丸呑み"
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = amount
+ELSE
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) += amount
+ENDIF
+
+; 指定のステータスにamountを加算
+; 拘束系は-1を強制的に設定して開放
+@charactor_decrease_bad_status(charactorNum, flagId, amount)
+#DIM charactorNum
+#DIMS flagId
+#DIM amount
+
+IF flagId == "拘束" || flagId == "丸呑み"
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = -1
+ELSE
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = MAX(0, CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) - amount)
+ENDIF
+
+IF !charactor_has_bad_status(charactorNum, flagId)
+    CALL kojo_状態異常_回復(charactorNum, flagId)
+ENDIF
+
+@charactor_reset_bad_status(charactorNum, flagId, skipMessage = true)
+#DIM charactorNum
+#DIMS flagId
+#DIM skipMessage
+
+IF flagId == "拘束" || flagId == "丸呑み"
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = -1
+ELSE
+    CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = 0
+ENDIF
+
+IF !skipMessage
+    CALL kojo_状態異常_回復(charactorNum, flagId)
+ENDIF

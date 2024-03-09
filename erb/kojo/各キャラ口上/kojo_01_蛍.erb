@@ -5,7 +5,7 @@
 ; 編成入り
 @kojo_編成に入った時_1(charactorNum)
 #DIM charactorNum
-#DIMS texts = 次は何に会えるかな？, 世界は、謎だらけだね, やるべきことは、まだたくさんある
+#DIMS texts = "次は何に会えるかな？", "世界は、謎だらけだね", "やるべきことは、まだたくさんある"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 ; ステージ攻略系 ---------------------------------------
@@ -53,19 +53,22 @@ PRINTFORML 「%array_get_random_element_str(texts)%」
 @kojo_戦闘_敗北_1(charactorNum)
 #DIM charactorNum
 
+@kojo_戦闘_勝利_1(charactorNum)
+#DIM charactorNum
+
 @kojo_戦闘_通常攻撃使用_1(charactorNum)
 #DIM charactorNum
-#DIMS texts = ...ハァ！, ...セイ！, ヤァッ！
+#DIMS texts = "...ハァ！", "...セイ！", "ヤァッ！"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 @kojo_戦闘_元素スキル使用_1(charactorNum)
 #DIM charactorNum
-#DIMS texts = 風刃！, ...ハァ！, ...セイ！
+#DIMS texts = "風刃！", "...ハァ！", "...セイ！"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 @kojo_戦闘_元素爆発使用_1(charactorNum)
 #DIM charactorNum
-#DIMS texts = フッ—, 消えるんだ。, 風と共に去れ。
+#DIMS texts = "フッ—", "消えるんだ。", "風と共に去れ。"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 @kojo_戦闘_ターン開始_1(charactorNum)
@@ -81,8 +84,8 @@ PRINTFORML 「%array_get_random_element_str(texts)%」
 @kojo_ダメージ_HP_1(charactorNum, amount)
 #DIM charactorNum
 #DIM amount
-#DIMS texts = ...んっ, ...くっ, ...あっ
-#DIMS texts2 = うぅッ, くぁッ！, きゃぁ！
+#DIMS texts = "...んっ", "...くっ", "...あっ"
+#DIMS texts2 = "うぅッ", "くぁッ！", "きゃぁ！"
 ; 10%未満のダメージ
 IF amount * 100 / MAXBASE:(charactorNum):0 < 10
     PRINTFORML 「%array_get_random_element_str(texts)%」
@@ -93,7 +96,7 @@ ENDIF
 @kojo_ダメージ_MP_1(charactorNum, amount)
 #DIM charactorNum
 #DIM amount
-#DIMS texts = ...んっ, ...くっ, ...あっ
+#DIMS texts = "...んっ", "...くっ", "...あっ"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 @kojo_ダメージ_CP_1(charactorNum, amount)
@@ -109,53 +112,53 @@ PRINTFORML 「%array_get_random_element_str(texts)%」
 #DIM charactorNum
 #DIM ecstasyLevel
 #DIM parts
-#DIMS texts = ...イㇰ!, だ、だめぇ！
+#DIMS texts = "...イㇰ!", "だ、だめぇ！"
 PRINTFORML 「%array_get_random_element_str(texts)%」
 
 ; 状態異常
 @kojo_状態異常_追加_1(charactorNum, flagId)
 #DIM charactorNum
 ;cflagのid
-#DIM flagId
+#DIMS flagId
 
 SELECTCASE flagId
     ; 拘束
-    CASE 100
+    CASE "拘束"
         PRINTFORML 「離して！」
     ; 丸呑み
-    CASE 101
+    CASE "丸呑み"
         PRINTFORML 「やめ…ッ！」
     ; 恍惚
-    CASE 102
+    CASE "恍惚"
         PRINTFORML 「んッ…！」
     ; 発情
-    CASE 103
+    CASE "発情"
         PRINTFORML 「ハァ…　ハァ…」
     ; 麻痺
-    CASE 104
+    CASE "麻痺"
     ; 凍結
-    CASE 104
+    CASE "凍結"
     ; 羞恥
-    CASE 104
+    CASE "羞恥"
 ENDSELECT
 
 @kojo_状態異常_回復_1(charactorNum, flagId)
 #DIM charactorNum
-;cflagのid
-#DIM flagId
+#DIMS flagId
+
 SELECTCASE flagId
     ; 拘束
-    CASE 100
+    CASE "拘束"
     ; 丸呑み
-    CASE 101
+    CASE "丸呑み"
     ; 恍惚
-    CASE 102
+    CASE "恍惚"
     ; 発情
-    CASE 103
+    CASE "発情"
     ; 麻痺
-    CASE 104
+    CASE "麻痺"
     ; 凍結
-    CASE 104
+    CASE "凍結"
     ; 羞恥
-    CASE 104
+    CASE "羞恥"
 ENDSELECT

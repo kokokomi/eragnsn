@@ -3,6 +3,10 @@
 #DIM lcount
 
 FOR lcount, 0, party_get_member_count()
+    CALL kojo_戦闘_ターン開始(lcount)
+NEXT
+
+FOR lcount, 0, party_get_member_count()
     ; 放心チェック
     IF charactor_is_faint(lcount)
         SETCOLOR COLOR_CP
@@ -23,7 +27,7 @@ FOR lcount, 0, party_get_member_count()
         WAIT
         CONTINUE
     ENDIF
-    IF CFLAG:(lcount):恍惚 > 0
+    IF charactor_has_bad_status(lcount, "恍惚")
         SETCOLOR COLOR_CP
         PRINTFORML ━━━━　<< %charactor_get_charactor_name(lcount)%のターン >>　━━━━━━━━━━━━
         RESETCOLOR
@@ -47,12 +51,9 @@ NEXT
 
 CALL show_battle_gui
 DRAWLINE
-
-IF CFLAG:(charactorNum):拘束 != -1 || CFLAG:(charactorNum):丸呑み != -1
-ENDIF
-
 PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
-IF CFLAG:(charactorNum):拘束 == -1 && CFLAG:(charactorNum):丸呑み == -1
+CALL kojo_戦闘_自分のターン開始(charactorNum)
+IF !charactor_has_bad_status(charactorNum, "拘束") && !charactor_has_bad_status(charactorNum, "丸呑み")
     PRINTFORML [1] 通常攻撃 
     IF charactor_can_use_skill(charactorNum)
         PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
@@ -67,7 +68,7 @@ IF CFLAG:(charactorNum):拘束 == -1 && CFLAG:(charactorNum):丸呑み == -1
     ENDIF
 ELSE
     PRINTFORML [4] 拘束を振りほどく
-    PRINTFORML [5] 流されるままに
+    PRINTFORML [5] されるがままに
 ENDIF
 
 INPUT
@@ -90,9 +91,11 @@ PRINTFORML ━━━━　<< %charactor_get_charactor_name(charactorNum)%のタ�
 RESETCOLOR
 SELECTCASE command
     CASE 1
+        CALL kojo_戦闘_通常攻撃使用(charactorNum)
         CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
     CASE 2
         IF charactor_can_use_skill(charactorNum)
+            CALL kojo_戦闘_元素スキル使用(charactorNum)
             CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
             ; スキルを発動したキャラに元素エネルギーを入れる
             CALL charactor_charge_energy(charactorNum, RAND:3 + 5)
@@ -105,6 +108,7 @@ SELECTCASE command
         ENDIF
     CASE 3
         IF charactor_can_use_burst(charactorNum)
+            CALL kojo_戦闘_元素爆発使用(charactorNum)
             CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
             CFLAG:(charactorNum):元素爆発クールタイム = ABL:(charactorNum):元素爆発クールタイム
             CFLAG:(charactorNum):元素エネルギー量 = 0

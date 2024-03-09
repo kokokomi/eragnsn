@@ -58,9 +58,11 @@ CALL battle
 #DIM isFirstClear
 IF isFirstClear
     ; ジン
-    ADDCHARA 2
+    CALL charactor_add_member(2)
     ; リサ
-    ADDCHARA 7
+    CALL charactor_add_member(7)
 
     PRINTFORML 本格的な調査のため、%CSVCALLNAME(2)%と%CSVCALLNAME(7)%が仲間に加わった！
+    PRINTL
+    WAIT
 ENDIF

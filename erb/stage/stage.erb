@@ -4,8 +4,13 @@
 @stage(stageId)
 #DIM stageId
 #DIM command
+#DIM lcount
+
 ステージ探索度 = 0
 ステージ現在フロア = 1
+FOR lcount, 0, party_get_member_count()
+    CALL kojo_ステージ_秘境に入った(lcount, stageId)
+NEXT
 
 $INPUT_LOOP
 CALL show_floor_gui(stageId)
@@ -40,6 +45,10 @@ IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && �
     ステージ実績:(stageId):クリア = true
     ステージ実績:(stageId):最高クリア階層 = ステージ定義:(stageId):最大階層
     CALL message_stage_clear(stageId)
+    FOR lcount, 0, party_get_member_count()
+        CALL kojo_ステージ_クリア(lcount, stageId, LOCAL:0 == false)
+    NEXT
+
     CALLFORM stage_clear_{stageId}(LOCAL:0 == false)
     GOTO STAGE_FINISH
 ENDIF
@@ -48,6 +57,9 @@ IF ステージ探索度 >= 100
     ステージ探索度 = 0
     ステージ実績:(stageId):最高クリア階層 = MAX(ステージ実績:(stageId):最高クリア階層, ステージ現在フロア)
     ステージ現在フロア++
+    FOR lcount, 0, party_get_member_count()
+        CALL kojo_ステージ_次のフロア(lcount, stageId)
+    NEXT
     ; 次の階層へ
 ENDIF
 
@@ -59,12 +71,22 @@ $STAGE_FINISH
 
 @stage_command_foward(stageId)
 #DIM stageId
+#DIM lcount
 CALL message_stage_select_foward
+FOR lcount, 0, party_get_member_count()
+    CALL kojo_ステージ_先へ進む(lcount, stageId)
+NEXT
+
 CALLFORM stage_foward_{stageId}
 
 @stage_command_explore(stageId)
 #DIM stageId
+#DIM lcount
 CALL message_stage_select_explore
+FOR lcount, 0, party_get_member_count()
+    CALL kojo_ステージ_周囲を探索(lcount, stageId)
+NEXT
+
 CALLFORM stage_explore_{stageId}
 IF !RESULT
     PRINTFORML 何も見つからなかった
