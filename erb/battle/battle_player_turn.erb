@@ -98,6 +98,7 @@ SELECTCASE command
         CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
     CASE 2
         IF charactor_can_use_skill(charactorNum)
+            CALL message_command_skill(charactorNum)
             CALL kojo_戦闘_元素スキル使用(charactorNum)
             CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
             ; スキルを発動したキャラに元素エネルギーを入れる
@@ -111,21 +112,25 @@ SELECTCASE command
         ENDIF
     CASE 3
         IF charactor_can_use_burst(charactorNum)
+            CALL message_command_burst(charactorNum)
             CALL kojo_戦闘_元素爆発使用(charactorNum)
             CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
             CFLAG:(charactorNum):元素爆発クールタイム = ABL:(charactorNum):元素爆発クールタイム
             CFLAG:(charactorNum):元素エネルギー量 = 0
         ENDIF
     CASE 4
+        LOCAL:0 = CFLAG:(charactorNum):拘束 > -1 ? CFLAG:(charactorNum):拘束 # CFLAG:(charactorNum):丸呑み
+        CALL message_command_shake(charactorNum, LOCAL:0)
         IF RAND:5 == 0
-            PRINTFORML 拘束を振りほどくことに成功した！
+            CALL message_shake_success(charactorNum, LOCAL:0)
             CFLAG:(charactorNum):拘束 = -1
             CFLAG:(charactorNum):丸呑み = -1
         ELSE
-            PRINTFORML 抵抗を封じられてしまった！
+            CALL message_shake_failure(charactorNum, LOCAL:0)
         ENDIF
     CASE 5
-        PRINTFORML 抵抗をやめ、されるがままになっている
+        LOCAL:0 = CFLAG:(charactorNum):拘束 > -1 ? CFLAG:(charactorNum):拘束 # CFLAG:(charactorNum):丸呑み
+        CALL message_command_none(charactorNum, LOCAL:0)
 ENDSELECT
 
 WAIT

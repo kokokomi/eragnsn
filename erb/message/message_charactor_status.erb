@@ -1,0 +1,58 @@
+﻿@message_charactor_on_faint(charactorNum)
+#DIM charactorNum
+PRINTFORML %charactor_get_charactor_name(charactorNum)%の瞳から光が消えた。
+
+@message_charactor_on_ecstasy(charactorNum, ecstasyLevel, parts)
+#DIM charactorNum
+#DIM ecstasyLevel
+#DIM parts
+#DIM partCount
+IF charactor_has_bad_status(charactorNum, "恍惚")
+    PRINTFORM 絶頂から降りられない
+ENDIF
+
+partCount = 0
+IF part_has_b(parts)
+    partCount++
+ENDIF
+IF part_has_c(parts)
+    partCount++
+ENDIF
+IF part_has_v(parts)
+    partCount++
+ENDIF
+IF part_has_a(parts)
+    partCount++
+ENDIF
+
+IF part_has_b(parts) && part_has_c(parts) && part_has_v(parts) && part_has_a(parts)
+    PRINTFORM %charactor_get_charactor_name(charactorNum)%の敏感な突起だけでなく両穴まで責められ、
+ELSEIF part_has_b(parts) && part_has_c(parts)
+    PRINTFORM %charactor_get_charactor_name(charactorNum)%の敏感な突起を責められ、
+ELSEIF part_has_v(parts) && part_has_a(parts)
+    PRINTFORM %charactor_get_charactor_name(charactorNum)%の両穴をえぐられ、
+ELSEIF partCount > 1
+    PRINTFORM %charactor_get_charactor_name(charactorNum)%の複数の敏感な部分を責められ、
+ELSE
+    IF part_has_b(parts)
+        PRINTFORM %charactor_get_charactor_name(charactorNum)%の胸を責められ、
+    ENDIF
+    IF part_has_c(parts)
+        PRINTFORM %charactor_get_charactor_name(charactorNum)%の陰核を責められ、
+    ENDIF
+    IF part_has_v(parts)
+        PRINTFORM %charactor_get_charactor_name(charactorNum)%の秘所を責められ、
+    ENDIF
+    IF part_has_a(parts)
+        PRINTFORM %charactor_get_charactor_name(charactorNum)%の尻穴を責められ、
+    ENDIF
+ENDIF
+
+SELECTCASE ecstasyLevel
+    CASE 0
+        PRINTFORML イッてしまった！
+    CASE 1
+        PRINTFORML 背中をのけぞらせてイッてしまった！
+    CASEELSE
+        PRINTFORML 愛液を吹き出しながらイッてしまった！
+ENDSELECT

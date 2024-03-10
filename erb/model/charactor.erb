@@ -113,7 +113,7 @@ ENDIF
 ; 絶頂経験+1
 EXP:(charactorNum):絶頂経験++
 
-CALL message_player_ecstasy(charactorNum, ecstasyLevel, part)
+CALL message_charactor_on_ecstasy(charactorNum, ecstasyLevel, part)
 CALL kojo_ダメージ_絶頂(charactorNum, ecstasyLevel, part)
 ; 絶頂によって精神が削られる
 CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
@@ -187,6 +187,8 @@ BASE:(charactorNum):2 = MAX(0, BASE:(charactorNum):2 - damage)
 ; ここで喪失になったら敗北経験追加
 IF BASE:(charactorNum):2 == 0
     EXP:(charactorNum):敗北経験++
+    CALL message_charactor_on_faint(charactorNum)
+    CALL kojo_喪失(charactorNum)
 ENDIF
 
 ; CPにダメージを与える

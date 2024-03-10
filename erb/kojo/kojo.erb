@@ -243,6 +243,15 @@ CATCH
 ENDCATCH
 RESETCOLOR
 
+@kojo_喪失(charactorNum)
+#DIM charactorNum
+CALL kojo_set_charactor_color(charactorNum)
+TRYCCALLFORM kojo_喪失_{NO:(charactorNum)}(charactorNum)
+CATCH
+    CALL kojo_喪失_汎用(charactorNum)
+ENDCATCH
+RESETCOLOR
+
 ; 状態異常
 @kojo_状態異常_追加(charactorNum, flagId)
 #DIM charactorNum

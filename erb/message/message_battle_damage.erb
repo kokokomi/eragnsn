@@ -43,13 +43,6 @@ RESETCOLOR
 
 PRINTL 破られた！
 
-@message_player_ecstasy(charactorNum, ecstasyLevel, part)
-#DIM charactorNum
-#DIM ecstasyLevel ;何回分の絶頂か
-#DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
-
-PRINTFORML %charactor_get_charactor_name(charactorNum)%はイッてしまった！
-
 @message_enemy_damage(enemyNum, damageAmount)
 #DIM damageAmount
 #DIM enemyNum

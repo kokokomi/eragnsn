@@ -1,0 +1,48 @@
+﻿; 元素スキル選択
+@message_command_skill(charactorNum)
+#DIM charactorNum
+PRINTFORML %charactor_get_charactor_name(charactorNum)%の%CSTR:(charactorNum):元素スキル%！
+
+; 元素爆発選択
+@message_command_burst(charactorNum)
+#DIM charactorNum
+PRINTFORML %charactor_get_charactor_name(charactorNum)%の%CSTR:(charactorNum):元素爆発%！
+
+; 振りほどく選択
+@message_command_shake(charactorNum, enemyNum)
+#DIM charactorNum
+#DIM enemyNum
+
+IF CFLAG:(charactorNum):拘束 > -1
+    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%の拘束を振りほどこうとした！
+ELSEIF CFLAG:(charactorNum):丸呑み > -1
+    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%の中から逃れようとした！
+ENDIF
+
+; されるがままに
+@message_command_none(charactorNum, enemyNum)
+#DIM charactorNum
+#DIM enemyNum
+PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%のされるがままになっている！
+
+; 振りほどく成功
+@message_shake_success(charactorNum, enemyNum)
+#DIM charactorNum
+#DIM enemyNum
+
+IF CFLAG:(charactorNum):拘束 > -1
+    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%を振り払った！
+ELSEIF CFLAG:(charactorNum):丸呑み > -1
+    PRINTFORML %charactor_get_charactor_name(charactorNum)%は何とか%battle_enemy_name(CFLAG:(enemyNum):丸呑み)%の中から這い出した！
+ENDIF
+
+; 振りほどく失敗
+@message_shake_failure(charactorNum, enemyNum)
+#DIM charactorNum
+#DIM enemyNum
+
+IF CFLAG:(charactorNum):拘束 > -1
+    PRINTFORML しかし、%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を離さない！
+ELSEIF CFLAG:(charactorNum):丸呑み > -1
+    PRINTFORML しかし、%battle_enemy_name(enemyNum)%から抜け出すことはできなかった！
+ENDIF
