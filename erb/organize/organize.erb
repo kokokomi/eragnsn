@@ -1,0 +1,45 @@
+﻿@organize
+#DIM lcount
+PRINTFORML << 編成中 >>
+FOR lcount, 0, party_get_member_count()
+    PRINTFORML %CALLNAME:(lcount)%
+    CALL view_component_statusbar(lcount)
+NEXT
+PRINTFORML << 控え >>
+
+lcount = party_get_member_count() + 1
+WHILE lcount < CHARANUM
+    PRINTFORML [{lcount}] %CALLNAME:(lcount)%
+    lcount++
+WEND
+PRINTFORML [999] 編成完了
+$INPUT_LOOP
+INPUT
+IF RESULT == 999
+    RETURN
+ENDIF
+IF party_get_member_count() < RESULT && RESULT < CHARANUM
+    CALL organize_swap(RESULT)
+    RETURN
+ENDIF
+
+GOTO INPUT_LOOP
+
+@organize_swap(member)
+#DIM member
+#DIM lcount
+
+PRINTFORML 誰と交代する？
+FOR lcount, 0, party_get_member_count()
+    PRINTFORML [{lcount}] %CALLNAME:(lcount)%
+NEXT
+$SWAP_INPUT_LOOP
+
+INPUT
+IF RESULT < party_get_member_count()
+    SWAPCHARA RESULT, member
+    CALL kojo_編成に入った時(RESULT)
+    RETURN
+ENDIF
+
+GOTO SWAP_INPUT_LOOP

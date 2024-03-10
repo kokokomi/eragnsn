@@ -17,6 +17,7 @@ CALL show_home_gui
 
 ; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
 PRINTFORML [100] - 探索へ向かう
+PRINTFORML [101] - 編成
 
 @USERSHOP
 #DIM command
@@ -27,6 +28,8 @@ CALL print_debug("USERSHOP")
 SELECTCASE command
 CASE 100
     CALL select_stage
+CASE 101
+    CALL organize
 ENDSELECT
 
 @show_home_gui
