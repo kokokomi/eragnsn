@@ -7,6 +7,9 @@ DRAWLINE
 @SHOW_SHOP
 #DIM lcount
 #DIM lcount2
+
+CALL AUTO_SAVE
+
 FOR lcount, 0, party_get_member_count()
     FOR lcount2, 0, VARSIZE("BAD_STATUS")
         CALL charactor_reset_bad_status(lcount, BAD_STATUS:(lcount2), true)
@@ -18,6 +21,8 @@ CALL show_home_gui
 ; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
 PRINTFORML [100] - 探索へ向かう
 PRINTFORML [101] - 編成
+PRINTFORML [200] - セーブ
+PRINTFORML [300] - ロード
 
 @USERSHOP
 #DIM command
@@ -30,6 +35,10 @@ CASE 100
     CALL select_stage
 CASE 101
     CALL organize
+CASE 200
+    CALL SAVEGAME_EX
+CASE 300
+    CALL LOADGAME_EX
 ENDSELECT
 
 @show_home_gui

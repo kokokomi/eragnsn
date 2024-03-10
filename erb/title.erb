@@ -1,6 +1,5 @@
 ﻿@SYSTEM_TITLE
 CALL print_debug("SYSTEM_TITLE")
-CALL initialize_global
 ;@SYSTEM_TITLEが定義されていると、標準のタイトル画面の代わりにSYSTEM_TITLEが呼ばれる。
 
 ;このタイミングでグローバル変数を読んでおけば取りこぼしが無くなる。
@@ -47,6 +46,7 @@ IF RESULT == 0
 	BEGIN FIRST
 	RETURN
 ELSEIF RESULT == 1
+	RESETDATA
     CALL initialize_global
 	CALL LOADGAME_EX
 	RESTART
