@@ -1,0 +1,19 @@
+﻿@enemy_initialize_202(enemyId)
+#DIM enemyId
+
+敵の名前:(enemyId) = 宝盗団・薬剤師
+敵ステータス:(enemyId):攻撃力 = 20
+敵ステータス:(enemyId):攻撃力加算値 = 30
+敵ステータス:(enemyId):体力 = 500
+敵ステータス:(enemyId):体力加算値 = 12
+
+; 行動選択
+@enemy_select_command_202(enemyNum)
+#DIM enemyNum
+#DIM hpCommands = 1
+#DIM epCommands = 4, 5, 6, 7, 10
+#DIM capturedTargetCommands = 4, 5, 6, 7, 9
+#DIM captureCommand = 8
+
+CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+RETURN RESULT:0, RESULT:1

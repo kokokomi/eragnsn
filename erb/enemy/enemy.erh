@@ -1,2 +1,2 @@
-﻿#DIMS GLOBAL 敵の名前, 100
-#DIM GLOBAL 敵ステータス, 100, 4
+﻿#DIMS GLOBAL 敵の名前, 1000
+#DIM GLOBAL 敵ステータス, 1000, 4

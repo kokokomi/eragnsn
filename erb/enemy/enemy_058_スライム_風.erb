@@ -1,0 +1,19 @@
+﻿@enemy_initialize_58(enemyId)
+#DIM enemyId
+
+敵の名前:(enemyId) = 風スライム
+敵ステータス:(enemyId):攻撃力 = 18
+敵ステータス:(enemyId):攻撃力加算値 = 26
+敵ステータス:(enemyId):体力 = 400
+敵ステータス:(enemyId):体力加算値 = 8
+
+; 行動選択
+@enemy_select_command_58(enemyNum)
+#DIM enemyNum
+#DIM hpCommands = 2
+#DIM epCommands = 4, 5, 6, 7
+#DIM capturedTargetCommands = 9, 4, 5, 6, 7, 14
+#DIM captureCommand = 8
+
+CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+RETURN RESULT:0, RESULT:1

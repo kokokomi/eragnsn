@@ -1,0 +1,19 @@
+﻿@enemy_initialize_51(enemyId)
+#DIM enemyId
+
+敵の名前:(enemyId) = 大型 炎スライム
+敵ステータス:(enemyId):攻撃力 = 20
+敵ステータス:(enemyId):攻撃力加算値 = 28
+敵ステータス:(enemyId):体力 = 500
+敵ステータス:(enemyId):体力加算値 = 11
+
+; 行動選択
+@enemy_select_command_51(enemyNum)
+#DIM enemyNum
+#DIM hpCommands = 2
+#DIM epCommands = 4, 5, 6, 7
+#DIM capturedTargetCommands = 9, 4, 5, 6, 7, 14
+#DIM captureCommand = 8
+
+CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+RETURN RESULT:0, RESULT:1
