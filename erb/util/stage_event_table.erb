@@ -1,0 +1,22 @@
+﻿@use_stage_event_table(lambda)
+#DIMS lambda
+DT_CREATE "stage_event_table"
+DT_COLUMN_ADD "stage_event_table", "eventId", "int16"
+DT_COLUMN_ADD "stage_event_table", "rarity", "int16"
+
+CALLFORM %lambda%
+
+DT_RELEASE "stage_event_table"
+
+@add_stage_event_table_record(eventId, rarity)
+#DIM eventId
+#DIM rarity
+DT_ROW_ADD "stage_event_table", "eventId", eventId, "rarity", rarity
+
+@get_random_from_stage_event_table(rarity)
+#FUNCTION
+#DIM rarity
+#DIM queryCount
+#DIM queryResult, 100
+queryCount = DT_SELECT("stage_event_table", @"rarity = {rarity}", "eventId ASC", queryResult)
+RETURNF DT_CELL_GET("stage_event_table", queryResult:(RAND:(queryCount)), "eventId", true)

@@ -11,46 +11,25 @@ RETURN true
 ; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
 ; 何かしらのイベントが発生した場合はtrueを返す
 @stage_explore_1
-#DIM queryCount
-DT_CREATE "stage_events"
-DT_COLUMN_ADD "stage_events", "event_id", "int16"
-DT_COLUMN_ADD "stage_events", "rarity", "int16"
-
-DT_ROW_ADD "stage_events", "event_id", 1, "rarity", 1
-DT_ROW_ADD "stage_events", "event_id", 2, "rarity", 1
-
-LOCAL:0 = RAND:100
-
 ; 20%でイベントなし
-IF LOCAL:0 < 20
-    DT_RELEASE "stage_events"
+IF RAND:100 < 20
     RETURN false
 ENDIF
-queryCount = DT_SELECT("stage_events", "rarity = 1", "event_id ASC")
-LOCAL:1 = RAND:(queryCount)
-CALLFORM stage_event_{DT_CELL_GET("stage_events", LOCAL:1, "event_id")}
-DT_RELEASE "stage_events"
+
+CALL use_stage_event_table("explore_event_table_1")
 
 RETURN true
 
 ; 先へ進む場合呼び出される
 ; 探索度を加算したり、イベントを発生させる
 @stage_foward_1
-#DIM lcount
 ; 20%で戦闘なし
 IF RAND:100 < 20
     ステージ探索度 += 10 + RAND:10
 ENDIF
 
 CALL battle_setup
-FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 10
-    SELECTCASE RAND:3
-        CASE 0, 1
-            CALL battle_setup_add_enemy(1, RAND:3 + 7)
-        CASE 2
-            CALL battle_setup_add_enemy(2, RAND:3 + 7)
-    ENDSELECT
-NEXT
+CALL use_enemy_table("enemy_table_1")
 CALL battle
 ステージ探索度 += 10+ RAND:20
 
@@ -66,3 +45,19 @@ IF isFirstClear
     PRINTL
     WAIT
 ENDIF
+
+@explore_event_table_1
+CALL add_stage_event_table_record(1, 1)
+CALL add_stage_event_table_record(2, 1)
+
+CALLFORM stage_event_{get_random_from_stage_event_table(1)}
+
+@enemy_table_1
+#DIM lcount
+
+CALL add_enemy_table_record(1, 1)
+CALL add_enemy_table_record(2, 1)
+
+FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 2
+    CALL battle_setup_add_enemy(get_random_from_enemy_table(1), RAND:3 + 5)
+NEXT

@@ -1,0 +1,37 @@
+﻿; 敵の出現テーブルを作る
+; use_enemy_tableに関数名を渡すとDataTableの作成と後片付けを行ってくれる
+; example:
+; CALL use_enemy_table(enemy_table_example)
+;
+; @enemy_table_example
+; #DIM rare
+; ;ここで敵のID, レアリティを渡してテーブルを作る
+; CALL add_enemy_table_record(1, 1)
+; CALL add_enemy_table_record(2, 1)
+; CALL add_enemy_table_record(3, 2)
+; ; レアリティ
+; rare = RAND:100 < 1 ? 2 # 1
+; ; レアリティの中でランダムな敵のIDを取る
+; PRINTFORML 出現する敵は {get_random_from_enemy_table(rare)}
+@use_enemy_table(lambda)
+#DIMS lambda
+DT_CREATE "enemy_table"
+DT_COLUMN_ADD "enemy_table", "enemyId", "int16"
+DT_COLUMN_ADD "enemy_table", "rarity", "int16"
+
+CALLFORM %lambda%
+
+DT_RELEASE "enemy_table"
+
+@add_enemy_table_record(enemyId, rarity)
+#DIM enemyId
+#DIM rarity
+DT_ROW_ADD "enemy_table", "enemyId", enemyId, "rarity", rarity
+
+@get_random_from_enemy_table(rarity)
+#FUNCTION
+#DIM rarity
+#DIM queryCount
+#DIM queryResult, 100
+queryCount = DT_SELECT("enemy_table", @"rarity = {rarity}", "enemyId ASC", queryResult)
+RETURNF DT_CELL_GET("enemy_table", queryResult:(RAND:(queryCount)), "enemyId", true)
