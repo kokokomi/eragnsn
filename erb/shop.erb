@@ -14,6 +14,11 @@ FOR lcount, 0, party_get_member_count()
     FOR lcount2, 0, VARSIZE("BAD_STATUS")
         CALL charactor_reset_bad_status(lcount, BAD_STATUS:(lcount2), true)
     NEXT
+    BASE:(lcount):0 = MAXBASE:(lcount):0
+    BASE:(lcount):1 = MAXBASE:(lcount):1
+    BASE:(lcount):2 = MAXBASE:(lcount):2
+    BASE:(lcount):3 = MAXBASE:(lcount):3
+    BASE:(lcount):4 = MAXBASE:(lcount):4
 NEXT
 CALL print_debug("SHOW_SHOP")
 CALL show_home_gui
