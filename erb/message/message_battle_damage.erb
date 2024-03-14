@@ -1,61 +1,61 @@
 ﻿; {キャラクター名}は{123}のダメージをうけた！
 @message_player_hp_damage(charactorNum, damageAmount)
-#DIM damageAmount
-#DIM charactorNum
-PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  #DIM damageAmount
+  #DIM charactorNum
+  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
 
-SETCOLOR COLOR_HP
-PRINTFORM {damageAmount}
-RESETCOLOR
+  SETCOLOR COLOR_HP
+  PRINTFORM {damageAmount}
+  RESETCOLOR
 
-PRINTL のダメージを受けた！
+  PRINTL のダメージを受けた！
 
 @message_player_mp_damage(charactorNum, damageAmount)
-#DIM damageAmount
-#DIM charactorNum
-PRINTFORM %charactor_get_charactor_name(charactorNum)%の精神力が
+  #DIM damageAmount
+  #DIM charactorNum
+  PRINTFORM %charactor_get_charactor_name(charactorNum)%の精神力が
 
-SETCOLOR COLOR_MP
-PRINTFORM {damageAmount}
-RESETCOLOR
+  SETCOLOR COLOR_MP
+  PRINTFORM {damageAmount}
+  RESETCOLOR
 
-PRINTL 削られた！
+  PRINTL 削られた！
 
 @message_player_ep_damage(charactorNum, damageAmount)
-#DIM damageAmount
-#DIM charactorNum
-PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  #DIM damageAmount
+  #DIM charactorNum
+  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
 
-SETCOLOR COLOR_EP
-PRINTFORM {damageAmount}
-RESETCOLOR
+  SETCOLOR COLOR_EP
+  PRINTFORM {damageAmount}
+  RESETCOLOR
 
-PRINTL の快感を得た！
+  PRINTL の快感を得た！
 
 @message_player_cp_damage(charactorNum, damageAmount)
-#DIM damageAmount
-#DIM charactorNum
-PRINTFORM %charactor_get_charactor_name(charactorNum)%の服が
+  #DIM damageAmount
+  #DIM charactorNum
+  PRINTFORM %charactor_get_charactor_name(charactorNum)%の服が
 
-SETCOLOR COLOR_CP
-PRINTFORM {damageAmount}
-RESETCOLOR
+  SETCOLOR COLOR_CP
+  PRINTFORM {damageAmount}
+  RESETCOLOR
 
-PRINTL 破られた！
+  PRINTL 破られた！
 
 @message_enemy_damage(enemyNum, damageAmount)
-#DIM damageAmount
-#DIM enemyNum
-PRINTFORML %battle_enemy_name(enemyNum)%に{damageAmount}ダメージを与えた！
+  #DIM damageAmount
+  #DIM enemyNum
+  PRINTFORML %battle_enemy_name(enemyNum)%に{damageAmount}ダメージを与えた！
 
 @message_player_hp_heal(charactorNum, amount)
-#DIM amount
-#DIM charactorNum
+  #DIM amount
+  #DIM charactorNum
 
-PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
 
-SETCOLOR COLOR_HEAL
-PRINTFORM {amount}
-RESETCOLOR
+  SETCOLOR COLOR_HEAL
+  PRINTFORM {amount}
+  RESETCOLOR
 
-PRINTL 回復した
+  PRINTL 回復した

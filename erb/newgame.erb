@@ -1,24 +1,24 @@
 ﻿; titleで[0]最初からはじめるを選択したときの画面
 @EVENTFIRST
-CALL print_debug("EVENTFIRST")
-CALL InitializeCharacters
-CALL show_newgame_story
+  CALL print_debug("EVENTFIRST")
+  CALL InitializeCharacters
+  CALL show_newgame_story
 
-BEGIN SHOP
+  BEGIN SHOP
 
-; 初期キャラ
+  ; 初期キャラ
 @InitializeCharacters
 
-; ほたちん
-ADDCHARA 1
-; アンバー
-ADDCHARA 6
+  ; ほたちん
+  ADDCHARA 1
+  ; アンバー
+  ADDCHARA 6
 
-ADDCHARA 28
+  ADDCHARA 28
 
 @show_newgame_story
-PRINTFORML 「このヒルチャール、いつものやつとなにか違うような…」
-PRINTFORML 旅人とアンバーは近頃モンドの僻地で発見された新しい秘境の調査に訪れていた
-PRINTFORML 秘境を発見した商人いわく、怪しいピンク色のもやが漏れ出ており
-PRINTFORML 気味が悪いということで西風騎士団に調査の依頼が届いたのだ
-PRINTFORML 偵察騎士のアンバーが調査に行く途中、偶然旅人と出会い二人での調査が始まった
+  PRINTFORML 「このヒルチャール、いつものやつとなにか違うような…」
+  PRINTFORML 旅人とアンバーは近頃モンドの僻地で発見された新しい秘境の調査に訪れていた
+  PRINTFORML 秘境を発見した商人いわく、怪しいピンク色のもやが漏れ出ており
+  PRINTFORML 気味が悪いということで西風騎士団に調査の依頼が届いたのだ
+  PRINTFORML 偵察騎士のアンバーが調査に行く途中、偶然旅人と出会い二人での調査が始まった

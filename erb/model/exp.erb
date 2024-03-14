@@ -53,7 +53,7 @@
     RETURN
   ENDIF
 
-    ; レベルアップ処理
+  ; レベルアップ処理
   IF required_adult_exp(charactorNum, ablNum) < (amount + EXP:(charactorNum):(expNum))
     amount = (amount + EXP:(charactorNum):(expNum)) - required_adult_exp(charactorNum, ablNum)
     ; 感度を上昇
@@ -63,7 +63,7 @@
     RETURN
   ENDIF
 
-    ; レベルアップしない場合
+  ; レベルアップしない場合
   EXP:(charactorNum):(expNum) += amount
 
 @required_adult_exp(charactorNum, ablNum)

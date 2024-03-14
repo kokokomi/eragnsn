@@ -1,15 +1,15 @@
 ﻿@enemy_command_8(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
-PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた
+  #DIM enemyNum
+  #DIM charactorNum
+  PRINTFORML %battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた
 
-IF RAND:100 < 33
+  IF RAND:100 < 33
     CFLAG:(charactorNum):拘束 = enemyNum
     PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%に捕まってしまった！
-ENDIF
+  ENDIF
 
 @enemy_command_8_message(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
+  #DIM enemyNum
+  #DIM charactorNum
 
-RESULTS = %汎用技メッセージ_拘束(enemyNum, charactorNum)%
+  RESULTS = %汎用技メッセージ_拘束(enemyNum, charactorNum)%

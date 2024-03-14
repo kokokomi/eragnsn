@@ -1,10 +1,10 @@
 ﻿@enemy_command_3(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
+  #DIM enemyNum
+  #DIM charactorNum
 
-CALL charactor_damage_cp(charactorNum, 20 + RAND:30)
+  CALL charactor_damage_cp(charactorNum, 20 + RAND:30)
 
 @enemy_command_3_message(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
-RESULTS = %汎用技メッセージ_CP(enemyNum, charactorNum)%
+  #DIM enemyNum
+  #DIM charactorNum
+  RESULTS = %汎用技メッセージ_CP(enemyNum, charactorNum)%

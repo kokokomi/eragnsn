@@ -1,4 +1,10 @@
 {
     "files.autoGuessEncoding": true,
-    "files.encoding": "utf8bom"
+    "files.encoding": "utf8bom",
+    "editor.tabSize": 2,
+    "erabasic.codeBlock": true,
+    "erabasic.commentIndent": true,
+    "erabasic.functionIndent": true,
+    "erabasic.completionWorkspaceSymbols": true,
+    "erabasic.completionWorkspaceByMultiProcess": true
 }

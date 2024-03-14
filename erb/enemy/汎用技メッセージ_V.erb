@@ -1,47 +1,47 @@
 ﻿@汎用技メッセージ_V(enemyNum, charactorNum)
-#FUNCTIONS
-#DIM enemyNum
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM enemyNum
+  #DIM charactorNum
 
-SELECTCASE battle_enemy_id(enemyNum)
-; ヒルチャール系
-CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部に指を入れてかき回した！"
-; スライム系
-CASE 50 TO 63
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の下半身を覆うと秘部に入り込もうとした！"
-CASEELSE
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！"
-ENDSELECT
+  SELECTCASE battle_enemy_id(enemyNum)
+      ; ヒルチャール系
+    CASE 1, 2, 3, 4, 5, 6, 7
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部に指を入れてかき回した！"
+      ; スライム系
+    CASE 50 TO 63
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の下半身を覆うと秘部に入り込もうとした！"
+    CASEELSE
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！"
+  ENDSELECT
 
 @汎用技メッセージ_V_拘束(enemyNum, charactorNum)
-#FUNCTIONS
-#DIM enemyNum
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM enemyNum
+  #DIM charactorNum
 
-SELECTCASE battle_enemy_id(enemyNum)
-; ヒルチャール系
-CASE 1, 2, 4
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の腰を掴み、秘部に男根を押し当てると一気に奥まで貫いた！"
-; 大型ヒルチャール系
-CASE 3, 5, 6, 7
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の腰を掴み、秘部に巨根を押し当てると一気に奥まで貫いた！"
-; 人間系
-CASE 200 TO 203
-    RESULTS = @"%charactor_get_charactor_name(charactorNum)%を"
-    SELECTCASE RAND:3
-    CASE 0
-        RESULTS += 四つん這いにさせると
-    CASE 1
-        RESULTS += 仰向けに押し倒すと
-    CASE 2
-        RESULTS += 自身の上に跨がらせると
-    ENDSELECT
-    RESULTS += @"%battle_enemy_name(enemyNum)%は男根を秘部に挿入した！"
-    RETURNF RESULTS
-; スライム系
-CASE 50 TO 63
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部にスライムが入り込む！"
-CASEELSE
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカの浅い部分を刺激している！"
-ENDSELECT
+  SELECTCASE battle_enemy_id(enemyNum)
+      ; ヒルチャール系
+    CASE 1, 2, 4
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の腰を掴み、秘部に男根を押し当てると一気に奥まで貫いた！"
+      ; 大型ヒルチャール系
+    CASE 3, 5, 6, 7
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の腰を掴み、秘部に巨根を押し当てると一気に奥まで貫いた！"
+      ; 人間系
+    CASE 200 TO 203
+      RESULTS = @"%charactor_get_charactor_name(charactorNum)%を"
+      SELECTCASE RAND:3
+        CASE 0
+          RESULTS += 四つん這いにさせると
+        CASE 1
+          RESULTS += 仰向けに押し倒すと
+        CASE 2
+          RESULTS += 自身の上に跨がらせると
+      ENDSELECT
+      RESULTS += @"%battle_enemy_name(enemyNum)%は男根を秘部に挿入した！"
+      RETURNF RESULTS
+      ; スライム系
+    CASE 50 TO 63
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部にスライムが入り込む！"
+    CASEELSE
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカの浅い部分を刺激している！"
+  ENDSELECT

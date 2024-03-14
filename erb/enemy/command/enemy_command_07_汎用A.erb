@@ -1,17 +1,17 @@
 ﻿@enemy_command_7(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
-IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
+  #DIM enemyNum
+  #DIM charactorNum
+  IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
     CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, true, false))
-ELSE
+  ELSE
     CALL charactor_damage_ep(charactorNum, 100, part_build(false, false, true, false))
-ENDIF
+  ENDIF
 
 @enemy_command_7_message(enemyNum, charactorNum)
-#DIM enemyNum
-#DIM charactorNum
-IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
+  #DIM enemyNum
+  #DIM charactorNum
+  IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
     RESULTS = %汎用技メッセージ_A_拘束(enemyNum, charactorNum)%
-ELSE
+  ELSE
     RESULTS = %汎用技メッセージ_A(enemyNum, charactorNum)%
-ENDIF
+  ENDIF

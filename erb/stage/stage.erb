@@ -2,108 +2,108 @@
 ; erb/stage/stages/stage_{stageId}.erbを攻略する対象とする
 ; ステージの実装は/erb/stage/stages/doc.mdを参照
 @stage(stageId)
-#DIM stageId
-#DIM command
-#DIM lcount
+  #DIM stageId
+  #DIM command
+  #DIM lcount
 
-ステージ探索度 = 0
-ステージ現在フロア = 1
-FOR lcount, 0, party_get_member_count()
+  ステージ探索度 = 0
+  ステージ現在フロア = 1
+  FOR lcount, 0, party_get_member_count()
     CALL kojo_ステージ_秘境に入った(lcount, stageId)
-NEXT
+  NEXT
 
-$INPUT_LOOP
-CALL show_floor_gui(stageId)
-PRINTFORML [1] - 探索を進める
-PRINTFORML [2] - 周辺を探索
+  $INPUT_LOOP
+  CALL show_floor_gui(stageId)
+  PRINTFORML [1] - 探索を進める
+  PRINTFORML [2] - 周辺を探索
 
-INPUT
-command = RESULT
+  INPUT
+  command = RESULT
 
-SELECTCASE command
-CASE 1
-    ; 探索を進める
-    CALL stage_command_foward(stageId)
-CASE 2
-    ; 周辺を探索
-    CALL stage_command_explore(stageId)
-ENDSELECT
+  SELECTCASE command
+    CASE 1
+      ; 探索を進める
+      CALL stage_command_foward(stageId)
+    CASE 2
+      ; 周辺を探索
+      CALL stage_command_explore(stageId)
+  ENDSELECT
 
-; ターンが終わったとき
-; 必要に応じてEPリセット
-CALL party_reset_ep_if_ecstasy
+  ; ターンが終わったとき
+  ; 必要に応じてEPリセット
+  CALL party_reset_ep_if_ecstasy
 
-; 全滅チェック
-IF party_is_defeat()
+  ; 全滅チェック
+  IF party_is_defeat()
     CALL message_stage_defeat(stageId, ステージ現在フロア)
     GOTO STAGE_FINISH
-ENDIF 
+  ENDIF 
 
-IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && ステージ探索度 >= 100
+  IF ステージ現在フロア >= ステージ定義:(stageId):最大階層 && ステージ探索度 >= 100
     ; ステージクリア！
     LOCAL:0 = ステージ実績:(stageId):クリア
     ステージ実績:(stageId):クリア = true
     ステージ実績:(stageId):最高クリア階層 = ステージ定義:(stageId):最大階層
     CALL message_stage_clear(stageId)
     FOR lcount, 0, party_get_member_count()
-        CALL kojo_ステージ_クリア(lcount, stageId, LOCAL:0 == false)
+      CALL kojo_ステージ_クリア(lcount, stageId, LOCAL:0 == false)
     NEXT
 
     CALLFORM stage_clear_{stageId}(LOCAL:0 == false)
     GOTO STAGE_FINISH
-ENDIF
+  ENDIF
 
-IF ステージ探索度 >= 100
+  IF ステージ探索度 >= 100
     ステージ探索度 = 0
     ステージ実績:(stageId):最高クリア階層 = MAX(ステージ実績:(stageId):最高クリア階層, ステージ現在フロア)
     ステージ現在フロア++
     FOR lcount, 0, party_get_member_count()
-        CALL kojo_ステージ_次のフロア(lcount, stageId)
+      CALL kojo_ステージ_次のフロア(lcount, stageId)
     NEXT
     ; 次の階層へ
-ENDIF
+  ENDIF
 
-GOTO INPUT_LOOP
+  GOTO INPUT_LOOP
 
-$STAGE_FINISH
-ステージ探索度 = 0
-ステージ現在フロア = 0
+  $STAGE_FINISH
+  ステージ探索度 = 0
+  ステージ現在フロア = 0
 
 @stage_command_foward(stageId)
-#DIM stageId
-#DIM lcount
-CALL message_stage_select_foward
-FOR lcount, 0, party_get_member_count()
+  #DIM stageId
+  #DIM lcount
+  CALL message_stage_select_foward
+  FOR lcount, 0, party_get_member_count()
     CALL kojo_ステージ_先へ進む(lcount, stageId)
-NEXT
+  NEXT
 
-CALLFORM stage_foward_{stageId}
+  CALLFORM stage_foward_{stageId}
 
 @stage_command_explore(stageId)
-#DIM stageId
-#DIM lcount
-CALL message_stage_select_explore
-FOR lcount, 0, party_get_member_count()
+  #DIM stageId
+  #DIM lcount
+  CALL message_stage_select_explore
+  FOR lcount, 0, party_get_member_count()
     CALL kojo_ステージ_周囲を探索(lcount, stageId)
-NEXT
+  NEXT
 
-CALLFORM stage_explore_{stageId}
-IF !RESULT
+  CALLFORM stage_explore_{stageId}
+  IF !RESULT
     PRINTFORML 何も見つからなかった
-ENDIF
+  ENDIF
 
 @show_floor_gui(stageId)
-#DIM lcount
-#DIM memberCount
-#DIM stageId
+  #DIM lcount
+  #DIM memberCount
+  #DIM stageId
 
-DRAWLINE
-PRINTFORML << %ステージ名:(stageId)%攻略中 >>
-PRINTFORML {ステージ現在フロア}F {ステージ探索度}\%
-memberCount = party_get_member_count()
-FOR lcount, 0, memberCount
+  DRAWLINE
+  PRINTFORML << %ステージ名:(stageId)%攻略中 >>
+  PRINTFORML {ステージ現在フロア}F {ステージ探索度}\%
+  memberCount = party_get_member_count()
+  FOR lcount, 0, memberCount
     PRINTFORML %charactor_get_charactor_name(lcount)%
     CALL view_component_statusbar(lcount)
     PRINTL
-NEXT
-DRAWLINE
+  NEXT
+  DRAWLINE

@@ -1,19 +1,19 @@
 ﻿@enemy_initialize_50(enemyId)
-#DIM enemyId
+  #DIM enemyId
 
-敵の名前:(enemyId) = 炎スライム
-敵ステータス:(enemyId):攻撃力 = 18
-敵ステータス:(enemyId):攻撃力加算値 = 26
-敵ステータス:(enemyId):体力 = 400
-敵ステータス:(enemyId):体力加算値 = 8
+  敵の名前:(enemyId) = 炎スライム
+  敵ステータス:(enemyId):攻撃力 = 18
+  敵ステータス:(enemyId):攻撃力加算値 = 26
+  敵ステータス:(enemyId):体力 = 400
+  敵ステータス:(enemyId):体力加算値 = 8
 
-; 行動選択
+  ; 行動選択
 @enemy_select_command_50(enemyNum)
-#DIM enemyNum
-#DIM hpCommands = 2
-#DIM epCommands = 4, 5, 6, 7
-#DIM capturedTargetCommands = 9, 4, 5, 6, 7, 14
-#DIM captureCommand = 8
+  #DIM enemyNum
+  #DIM hpCommands = 2
+  #DIM epCommands = 4, 5, 6, 7
+  #DIM capturedTargetCommands = 9, 4, 5, 6, 7, 14
+  #DIM captureCommand = 8
 
-CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
-RETURN RESULT:0, RESULT:1
+  CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+  RETURN RESULT:0, RESULT:1

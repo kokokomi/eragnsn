@@ -1,402 +1,402 @@
 ﻿; 加入
 @charactor_add_member(charactorId)
-#DIM charactorId
-IF GETCHARA(charactorId) != -1
+  #DIM charactorId
+  IF GETCHARA(charactorId) != -1
     ; すでに加入している場合は無視
-ENDIF
-ADDCHARA charactorId
-CALL kojo_チーム加入(GETCHARA(charactorId))
+  ENDIF
+  ADDCHARA charactorId
+  CALL kojo_チーム加入(GETCHARA(charactorId))
 
-; キャラクターについての操作
-; 元素名
+  ; キャラクターについての操作
+  ; 元素名
 @charactor_get_element_type_name(charactorId)
-#FUNCTIONS
-#DIM charactorId
-RETURNF STR:(CFLAG:(charactorId):0)
+  #FUNCTIONS
+  #DIM charactorId
+  RETURNF STR:(CFLAG:(charactorId):0)
 
-; 武器の種類名
+  ; 武器の種類名
 @charactor_get_weapon_type_name(charactorId)
-#FUNCTIONS
-#DIM charactorId
-RETURNF STR:(CFLAG:(charactorId):1)
+  #FUNCTIONS
+  #DIM charactorId
+  RETURNF STR:(CFLAG:(charactorId):1)
 
-; キャラクター名
+  ; キャラクター名
 @charactor_get_charactor_name(charactorNum)
-#FUNCTIONS
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM charactorNum
 
-RETURNF CALLNAME:charactorNum
+  RETURNF CALLNAME:charactorNum
 
-; hp
+  ; hp
 @charactor_get_hp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):0
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):0
 
-; max hp
+  ; max hp
 @charactor_get_max_hp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF MAXBASE:(charactorNum):0
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF MAXBASE:(charactorNum):0
 
-; スタミナ
+  ; スタミナ
 @charactor_get_sp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):1
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):1
 
-; max スタミナ
+  ; max スタミナ
 @charactor_get_max_sp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF MAXBASE:(charactorNum):1
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF MAXBASE:(charactorNum):1
 
-; 精神
+  ; 精神
 @charactor_get_mp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):2
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):2
 
-; max 精神
+  ; max 精神
 @charactor_get_max_mp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF MAXBASE:(charactorNum):2
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF MAXBASE:(charactorNum):2
 
-; 衣装
+  ; 衣装
 @charactor_get_cp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):3
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):3
 
-; max 衣装
+  ; max 衣装
 @charactor_get_max_cp(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF MAXBASE:(charactorNum):3
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF MAXBASE:(charactorNum):3
 
-; 快楽
+  ; 快楽
 @charactor_get_ep(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):4
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):4
 
-; max 快楽
+  ; max 快楽
 @charactor_get_max_ep(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF MAXBASE:(charactorNum):4
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF MAXBASE:(charactorNum):4
 
-; ステータス操作系 ----------------------------------------------------------------------------------
-; 強制的にEPを1にする
+  ; ステータス操作系 ----------------------------------------------------------------------------------
+  ; 強制的にEPを1にする
 @charactor_set_ep_1(charactorNum)
-#DIM charactorNum
-BASE:(charactorNum):4 = 1
+  #DIM charactorNum
+  BASE:(charactorNum):4 = 1
 
-; EPをリセット
+  ; EPをリセット
 @charactor_reset_ep_if_ecstasy(charactorNum)
-#DIM charactorNum
-IF BASE:(charactorNum):4 == 0
+  #DIM charactorNum
+  IF BASE:(charactorNum):4 == 0
     BASE:(charactorNum):4 = MAXBASE:(charactorNum):4
     ; 絶頂したターンの次に恍惚を持ち越したいので足しておく
     ; 絶頂は1ターンで複数回発生することがあるのでここでやる必要がある
     CFLAG:(charactorNum):恍惚++
-ENDIF
+  ENDIF
 
-; キャラクターへの操作 ----------------------------------------------------------------------------------
+  ; キャラクターへの操作 ----------------------------------------------------------------------------------
 
-; 絶頂させる
+  ; 絶頂させる
 @charactor_ecstasy(charactorNum, ecstasyLevel, part)
-#DIM charactorNum
-#DIM ecstasyLevel ;何回分の絶頂か
-#DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
-; 絶頂経験+1
-EXP:(charactorNum):絶頂経験++
+  #DIM charactorNum
+  #DIM ecstasyLevel ;何回分の絶頂か
+  #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
+  ; 絶頂経験+1
+  EXP:(charactorNum):絶頂経験++
 
-CALL message_charactor_on_ecstasy(charactorNum, ecstasyLevel, part)
-CALL kojo_ダメージ_絶頂(charactorNum, ecstasyLevel, part)
-; 絶頂によって精神が削られる
-CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
+  CALL message_charactor_on_ecstasy(charactorNum, ecstasyLevel, part)
+  CALL kojo_ダメージ_絶頂(charactorNum, ecstasyLevel, part)
+  ; 絶頂によって精神が削られる
+  CALL charactor_damage_mp(charactorNum, 100 + (ecstasyLevel * 10))
 
-; 絶頂レベルによって行動不能ターンを増やす
-CALL charactor_increase_bad_status(charactorNum, "恍惚", ecstasyLevel + 1)
+  ; 絶頂レベルによって行動不能ターンを増やす
+  CALL charactor_increase_bad_status(charactorNum, "恍惚", ecstasyLevel + 1)
 
 
-; 状態の判定 ----------------------------------------------------------------------------------
-; 倒れているか
+  ; 状態の判定 ----------------------------------------------------------------------------------
+  ; 倒れているか
 @charactor_is_faint(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):2 <= 0
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):2 <= 0
 
-; HPが尽きて弱っているか
+  ; HPが尽きて弱っているか
 @charactor_is_weak(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):0 <= 0
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):0 <= 0
 
 
-; 服が破れて全裸か
+  ; 服が破れて全裸か
 @charactor_is_nude(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF BASE:(charactorNum):3 <= 0
-; 戦闘系操作 ----------------------------------------------------------------------------------
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF BASE:(charactorNum):3 <= 0
+  ; 戦闘系操作 ----------------------------------------------------------------------------------
 @charactor_reset_for_battle_start(charactorNum)
-#DIM charactorNum
-#DIM lcount
-CFLAG:(charactorNum):元素スキルクールタイム = 0
-CFLAG:(charactorNum):元素爆発クールタイム = 0
-CFLAG:(charactorNum):拘束 = -1
-CFLAG:(charactorNum):丸呑み = -1
+  #DIM charactorNum
+  #DIM lcount
+  CFLAG:(charactorNum):元素スキルクールタイム = 0
+  CFLAG:(charactorNum):元素爆発クールタイム = 0
+  CFLAG:(charactorNum):拘束 = -1
+  CFLAG:(charactorNum):丸呑み = -1
 
 @charactor_charge_energy(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
-amount = amount * ABL:(charactorNum):元素チャージ / 100
-CFLAG:(charactorNum):元素エネルギー量 = MIN(ABL:(charactorNum):元素エネルギー, CFLAG:(charactorNum):元素エネルギー量 + amount)
+  #DIM charactorNum
+  #DIM amount
+  amount = amount * ABL:(charactorNum):元素チャージ / 100
+  CFLAG:(charactorNum):元素エネルギー量 = MIN(ABL:(charactorNum):元素エネルギー, CFLAG:(charactorNum):元素エネルギー量 + amount)
 
 @charactor_decrease_cooltime(charactorNum)
-#DIM charactorNum
-CFLAG:(charactorNum):元素スキルクールタイム = MAX(0, CFLAG:(charactorNum):元素スキルクールタイム - 2)
-CFLAG:(charactorNum):元素爆発クールタイム = MAX(0, CFLAG:(charactorNum):元素爆発クールタイム - 2)
+  #DIM charactorNum
+  CFLAG:(charactorNum):元素スキルクールタイム = MAX(0, CFLAG:(charactorNum):元素スキルクールタイム - 2)
+  CFLAG:(charactorNum):元素爆発クールタイム = MAX(0, CFLAG:(charactorNum):元素爆発クールタイム - 2)
 
 @charactor_can_use_skill(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF CFLAG:(charactorNum):元素スキルクールタイム == 0
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF CFLAG:(charactorNum):元素スキルクールタイム == 0
 
 @charactor_can_use_burst(charactorNum)
-#FUNCTION
-#DIM charactorNum
-RETURNF CFLAG:(charactorNum):元素爆発クールタイム == 0 && CFLAG:(charactorNum):元素エネルギー量 == ABL:(charactorNum):元素エネルギー
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF CFLAG:(charactorNum):元素爆発クールタイム == 0 && CFLAG:(charactorNum):元素エネルギー量 == ABL:(charactorNum):元素エネルギー
 
-; ダメージ系操作 ----------------------------------------------------------------------------------
-; MPにダメージを与える
+  ; ダメージ系操作 ----------------------------------------------------------------------------------
+  ; MPにダメージを与える
 @charactor_damage_mp(charactorNum, damage)
-#DIM charactorNum
-#DIM damage
-CALL message_player_mp_damage(charactorNum, damage)
-CALL kojo_ダメージ_MP(charactorNum, damage)
-; すでに喪失
-IF BASE:(charactorNum):2 == 0
+  #DIM charactorNum
+  #DIM damage
+  CALL message_player_mp_damage(charactorNum, damage)
+  CALL kojo_ダメージ_MP(charactorNum, damage)
+  ; すでに喪失
+  IF BASE:(charactorNum):2 == 0
     RETURN
-ENDIF
-BASE:(charactorNum):2 = MAX(0, BASE:(charactorNum):2 - damage)
-; ここで喪失になったら敗北経験追加
-IF BASE:(charactorNum):2 == 0
+  ENDIF
+  BASE:(charactorNum):2 = MAX(0, BASE:(charactorNum):2 - damage)
+  ; ここで喪失になったら敗北経験追加
+  IF BASE:(charactorNum):2 == 0
     EXP:(charactorNum):敗北経験++
     CALL message_charactor_on_faint(charactorNum)
     CALL kojo_喪失(charactorNum)
-ENDIF
+  ENDIF
 
-; CPにダメージを与える
+  ; CPにダメージを与える
 @charactor_damage_cp(charactorNum, damage)
-#DIM charactorNum
-#DIM damage
-CALL message_player_cp_damage(charactorNum, damage)
-CALL kojo_ダメージ_CP(charactorNum, damage)
-BASE:(charactorNum):3 = MAX(0, BASE:(charactorNum):3 - damage)
+  #DIM charactorNum
+  #DIM damage
+  CALL message_player_cp_damage(charactorNum, damage)
+  CALL kojo_ダメージ_CP(charactorNum, damage)
+  BASE:(charactorNum):3 = MAX(0, BASE:(charactorNum):3 - damage)
 
-; HPにダメージを与える
+  ; HPにダメージを与える
 @charactor_damage_hp(charactorNum, damage)
-#DIM charactorNum
-#DIM damage
-CALL message_player_hp_damage(charactorNum, damage)
-CALL kojo_ダメージ_HP(charactorNum, damage)
-BASE:(charactorNum):0 = MAX(0, BASE:(charactorNum):0 - damage)
+  #DIM charactorNum
+  #DIM damage
+  CALL message_player_hp_damage(charactorNum, damage)
+  CALL kojo_ダメージ_HP(charactorNum, damage)
+  BASE:(charactorNum):0 = MAX(0, BASE:(charactorNum):0 - damage)
 
-; EPダメージを与える
+  ; EPダメージを与える
 @charactor_damage_ep(charactorNum, damage, part)
-#DIM charactorNum
-#DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
-#DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
-#DIM damageBonus;性経験によるダメージボーナス
-; ダメージ量計算
-; 部位ごとに倍率
-IF part_has_b(part)
+  #DIM charactorNum
+  #DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
+  #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
+  #DIM damageBonus;性経験によるダメージボーナス
+  ; ダメージ量計算
+  ; 部位ごとに倍率
+  IF part_has_b(part)
     SELECTCASE TALENT:(charactorNum):102
-        CASE -1 ; 鈍感
-            damage = damage * 4 / 10
-        CASE 1 ; 敏感
-            damage = damage * 14 / 10
-        CASE 2 ; 過敏
-            damage = damage * 16 / 10
+      CASE -1 ; 鈍感
+        damage = damage * 4 / 10
+      CASE 1 ; 敏感
+        damage = damage * 14 / 10
+      CASE 2 ; 過敏
+        damage = damage * 16 / 10
     ENDSELECT
 
     ;貧乳
     IF TALENT:(charactorNum):109
-        damage = damage * 11 / 10
+      damage = damage * 11 / 10
     ENDIF
     ;巨乳
     IF TALENT:(charactorNum):110
-        damage = damage * 8 / 10
+      damage = damage * 8 / 10
     ENDIF
     ; 最大10倍のダメージが加算
     damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｂ経験") / 1000
-ENDIF
+  ENDIF
 
-IF part_has_c(part)
+  IF part_has_c(part)
     SELECTCASE TALENT:(charactorNum):103
-        CASE -1 ; 鈍感
-            damage = damage * 4 / 10
-        CASE 1 ; 敏感
-            damage = damage * 14 / 10
-        CASE 2 ; 過敏
-            damage = damage * 16 / 10
+      CASE -1 ; 鈍感
+        damage = damage * 4 / 10
+      CASE 1 ; 敏感
+        damage = damage * 14 / 10
+      CASE 2 ; 過敏
+        damage = damage * 16 / 10
     ENDSELECT
     damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｃ経験") / 1000
-ENDIF
+  ENDIF
 
-IF part_has_v(part)
+  IF part_has_v(part)
     SELECTCASE TALENT:(charactorNum):104
-        CASE -1 ; 鈍感
-            damage = damage * 4 / 10
-        CASE 1 ; 敏感
-            damage = damage * 14 / 10
-        CASE 2 ; 過敏
-            damage = damage * 16 / 10
+      CASE -1 ; 鈍感
+        damage = damage * 4 / 10
+      CASE 1 ; 敏感
+        damage = damage * 14 / 10
+      CASE 2 ; 過敏
+        damage = damage * 16 / 10
     ENDSELECT
     damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ｖ経験") / 1000
-ENDIF
+  ENDIF
 
-IF part_has_a(part)
+  IF part_has_a(part)
     SELECTCASE TALENT:(charactorNum):101
-        CASE -1 ; 鈍感
-            damage = damage * 4 / 10
-        CASE 1 ; 敏感
-            damage = damage * 14 / 10
-        CASE 2 ; 過敏
-            damage = damage * 16 / 10
+      CASE -1 ; 鈍感
+        damage = damage * 4 / 10
+      CASE 1 ; 敏感
+        damage = damage * 14 / 10
+      CASE 2 ; 過敏
+        damage = damage * 16 / 10
     ENDSELECT
     damageBonus += damage * charactor_ep_damage_bonus(charactorNum, "Ａ経験") / 1000
-ENDIF
-damage += damageBonus
+  ENDIF
+  damage += damageBonus
 
-; 快感に素直
-IF TALENT:(charactorNum):70
+  ; 快感に素直
+  IF TALENT:(charactorNum):70
     damage = damage * 11 / 10
-ENDIF
-; 快感の否定
-IF TALENT:(charactorNum):70
+  ENDIF
+  ; 快感の否定
+  IF TALENT:(charactorNum):70
     damage = damage * 9 / 10
-ENDIF
+  ENDIF
 
-; 全裸状態の場合はEPダメージを1.2倍する
-IF charactor_is_nude(charactorNum)
+  ; 全裸状態の場合はEPダメージを1.2倍する
+  IF charactor_is_nude(charactorNum)
     damage = damage * 12 / 10
-ENDIF
+  ENDIF
 
-; 恍惚になったあとは1.1倍
-IF charactor_has_bad_status(charactorNum, "恍惚")
+  ; 恍惚になったあとは1.1倍
+  IF charactor_has_bad_status(charactorNum, "恍惚")
     damage *= 11 / 10
-ENDIF
+  ENDIF
 
-; ここまででダメージを確定
+  ; ここまででダメージを確定
 
-CALL message_player_ep_damage(charactorNum, damage)
-CALL kojo_ダメージ_EP(charactorNum, damage, part)
-BASE:(charactorNum):4 = MAX(0, BASE:(charactorNum):4 - damage)
-; 快感が0になったら絶頂
-IF BASE:(charactorNum):4 == 0
+  CALL message_player_ep_damage(charactorNum, damage)
+  CALL kojo_ダメージ_EP(charactorNum, damage, part)
+  BASE:(charactorNum):4 = MAX(0, BASE:(charactorNum):4 - damage)
+  ; 快感が0になったら絶頂
+  IF BASE:(charactorNum):4 == 0
     ; 絶頂何回分？
     LOCAL:0 = damage / MAXBASE:(charactorNum):4
     CALL charactor_ecstasy(charactorNum, LOCAL:0, part)
-ENDIF
+  ENDIF
 
-; 経験値を加算
-IF part_has_b(part)
+  ; 経験値を加算
+  IF part_has_b(part)
     EXP:(charactorNum):Ｂ経験 += (damage / 10)
     CALL message_exp_up(charactorNum, "Ｂ経験", (damage / 10))
-ENDIF
-IF part_has_c(part)
+  ENDIF
+  IF part_has_c(part)
     EXP:(charactorNum):Ｃ経験 += (damage / 10)
     CALL message_exp_up(charactorNum, "Ｃ経験", (damage / 10))
-ENDIF
-IF part_has_v(part)
+  ENDIF
+  IF part_has_v(part)
     EXP:(charactorNum):Ｖ経験 += (damage / 10)
     CALL message_exp_up(charactorNum, "Ｖ経験", (damage / 10))
-ENDIF
-IF part_has_a(part)
+  ENDIF
+  IF part_has_a(part)
     EXP:(charactorNum):Ａ経験 += (damage / 10)
     CALL message_exp_up(charactorNum, "Ａ経験", (damage / 10))
-ENDIF
+  ENDIF
 
 @charactor_heal_hp(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
-; キャラが弱っている場合は回復量を減らす
-IF charactor_is_weak(charactorNum)
+  #DIM charactorNum
+  #DIM amount
+  ; キャラが弱っている場合は回復量を減らす
+  IF charactor_is_weak(charactorNum)
     amount /= 10
-ENDIF
+  ENDIF
 
-CALL message_player_hp_heal(charactorNum, amount)
-BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
+  CALL message_player_hp_heal(charactorNum, amount)
+  BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
 
 @charactor_ep_damage_bonus(charactorNum, expType)
-#FUNCTION
-#DIM charactorNum
-#DIMS expType
-; expが上がるにつれて10000に収束していく
-RETURNF 10000-(10000*1000/(1000+(EXP:(charactorNum):(GETNUM(EXP, expType)) / 20)))
+  #FUNCTION
+  #DIM charactorNum
+  #DIMS expType
+  ; expが上がるにつれて10000に収束していく
+  RETURNF 10000-(10000*1000/(1000+(EXP:(charactorNum):(GETNUM(EXP, expType)) / 20)))
 
-; 指定のステータスを持っているか
+  ; 指定のステータスを持っているか
 @charactor_has_bad_status(charactorNum, flagId)
-#FUNCTION
-#DIM charactorNum
-#DIMS flagId
-; 拘束系は-1なら存在しない
-IF flagId == "拘束" || flagId == "丸呑み"
+  #FUNCTION
+  #DIM charactorNum
+  #DIMS flagId
+  ; 拘束系は-1なら存在しない
+  IF flagId == "拘束" || flagId == "丸呑み"
     RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) != -1
-ENDIF
-; それ以外は残りターン数が入るので1以上であれば存在する
-RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) > 0
+  ENDIF
+  ; それ以外は残りターン数が入るので1以上であれば存在する
+  RETURNF CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) > 0
 
-; 指定のステータスにamountを加算
-; 拘束系は値をset
+  ; 指定のステータスにamountを加算
+  ; 拘束系は値をset
 @charactor_increase_bad_status(charactorNum, flagId, amount)
-#DIM charactorNum
-#DIMS flagId
-#DIM amount
+  #DIM charactorNum
+  #DIMS flagId
+  #DIM amount
 
-IF !charactor_has_bad_status(charactorNum, flagId)
+  IF !charactor_has_bad_status(charactorNum, flagId)
     CALL kojo_状態異常_追加(charactorNum, flagId)
-ENDIF
+  ENDIF
 
-IF flagId == "拘束" || flagId == "丸呑み"
+  IF flagId == "拘束" || flagId == "丸呑み"
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = amount
-ELSE
+  ELSE
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) += amount
-ENDIF
+  ENDIF
 
-; 指定のステータスにamountを加算
-; 拘束系は-1を強制的に設定して開放
+  ; 指定のステータスにamountを加算
+  ; 拘束系は-1を強制的に設定して開放
 @charactor_decrease_bad_status(charactorNum, flagId, amount)
-#DIM charactorNum
-#DIMS flagId
-#DIM amount
+  #DIM charactorNum
+  #DIMS flagId
+  #DIM amount
 
-IF flagId == "拘束" || flagId == "丸呑み"
+  IF flagId == "拘束" || flagId == "丸呑み"
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = -1
-ELSE
+  ELSE
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = MAX(0, CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) - amount)
-ENDIF
+  ENDIF
 
-IF !charactor_has_bad_status(charactorNum, flagId)
+  IF !charactor_has_bad_status(charactorNum, flagId)
     CALL kojo_状態異常_回復(charactorNum, flagId)
-ENDIF
+  ENDIF
 
 @charactor_reset_bad_status(charactorNum, flagId, skipMessage = true)
-#DIM charactorNum
-#DIMS flagId
-#DIM skipMessage
+  #DIM charactorNum
+  #DIMS flagId
+  #DIM skipMessage
 
-IF flagId == "拘束" || flagId == "丸呑み"
+  IF flagId == "拘束" || flagId == "丸呑み"
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = -1
-ELSE
+  ELSE
     CFLAG:(charactorNum):(GETNUM(CFLAG, flagId)) = 0
-ENDIF
+  ENDIF
 
-IF !skipMessage
+  IF !skipMessage
     CALL kojo_状態異常_回復(charactorNum, flagId)
-ENDIF
+  ENDIF

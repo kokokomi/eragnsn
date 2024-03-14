@@ -1,14 +1,14 @@
 ﻿; 敵のターン
 @battle_enemy_turn
-#DIM enemy_count
-#DIM enemyId
-#DIM lcount
-#DIM enemyLv
-enemy_count = battle_enemy_count()
-FOR lcount, 0, enemy_count
+  #DIM enemy_count
+  #DIM enemyId
+  #DIM lcount
+  #DIM enemyLv
+  enemy_count = battle_enemy_count()
+  FOR lcount, 0, enemy_count
     ; 敵が死んでいる場合行動スキップ
     IF battle_is_enemy_dead(lcount)
-        CONTINUE
+      CONTINUE
     ENDIF
 
     SETCOLOR COLOR_CP
@@ -17,4 +17,4 @@ FOR lcount, 0, enemy_count
     CALL enemy_select_command(battle_enemy_id(lcount), lcount)
     PRINTL
     WAIT
-NEXT
+  NEXT

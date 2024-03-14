@@ -1,40 +1,40 @@
 ﻿; 敵の名前
 @enemy_name(enemyId)
-#DIM enemyId
-#FUNCTIONS
-CALLFORMF enemy_name_{enemyId}
-RETURNF RESULTS
+  #DIM enemyId
+  #FUNCTIONS
+  CALLFORMF enemy_name_{enemyId}
+  RETURNF RESULTS
 
-; 敵のHP
+  ; 敵のHP
 @enemy_max_hp(enemyId, enemyLevel)
-#FUNCTION
-#DIM enemyId
-#DIM enemyLevel
-CALLFORMF enemy_max_hp_{enemyId}(enemyLevel)
-RETURNF RESULT:0
+  #FUNCTION
+  #DIM enemyId
+  #DIM enemyLevel
+  CALLFORMF enemy_max_hp_{enemyId}(enemyLevel)
+  RETURNF RESULT:0
 
-; 敵の攻撃力
+  ; 敵の攻撃力
 @enemy_atk(enemyId, enemyLevel)
-#FUNCTION
-#DIM enemyId
-#DIM enemyLevel
-CALLFORMF enemy_max_hp_{enemyId}(enemyLevel)
-RETURNF RESULT:0
+  #FUNCTION
+  #DIM enemyId
+  #DIM enemyLevel
+  CALLFORMF enemy_max_hp_{enemyId}(enemyLevel)
+  RETURNF RESULT:0
 
-; 敵の行動
+  ; 敵の行動
 @enemy_select_command(enemyId, enemyNum)
-#DIM enemyId
-#DIM enemyNum
-#DIM targetCharactor
-#DIM enemyCommand
+  #DIM enemyId
+  #DIM enemyNum
+  #DIM targetCharactor
+  #DIM enemyCommand
 
-CALLFORM enemy_select_command_{enemyId}(enemyNum)
-targetCharactor = RESULT:0
-enemyCommand = RESULT:1
+  CALLFORM enemy_select_command_{enemyId}(enemyNum)
+  targetCharactor = RESULT:0
+  enemyCommand = RESULT:1
 
-CALLFORM enemy_command_{enemyCommand}_message(enemyNum, targetCharactor)
-SETCOLOR COLOR_EP
-PRINTFORML %RESULTS%
-RESETCOLOR
+  CALLFORM enemy_command_{enemyCommand}_message(enemyNum, targetCharactor)
+  SETCOLOR COLOR_EP
+  PRINTFORML %RESULTS%
+  RESETCOLOR
 
-CALLFORM enemy_command_{enemyCommand}(enemyNum, targetCharactor)
+  CALLFORM enemy_command_{enemyCommand}(enemyNum, targetCharactor)

@@ -2,43 +2,43 @@
 ; 1bit目からB/C/V/Aの順でフラグが設定されている
 ; 生のまま扱うと可読性が悪いので関数で名前をつけておく
 @part_has_b(part)
-#DIM part
-#FUNCTION
-RETURNF part & PART_FLAG_B
+  #DIM part
+  #FUNCTION
+  RETURNF part & PART_FLAG_B
 
 @part_has_c(part)
-#DIM part
-#FUNCTION
-RETURNF part & PART_FLAG_C
+  #DIM part
+  #FUNCTION
+  RETURNF part & PART_FLAG_C
 
 @part_has_v(part)
-#DIM part
-#FUNCTION
-RETURNF part & PART_FLAG_V
+  #DIM part
+  #FUNCTION
+  RETURNF part & PART_FLAG_V
 
 @part_has_a(part)
-#DIM part
-#FUNCTION
-RETURNF part & PART_FLAG_A
+  #DIM part
+  #FUNCTION
+  RETURNF part & PART_FLAG_A
 
-; 部位のフラグからpartを組み立てる
+  ; 部位のフラグからpartを組み立てる
 @part_build(part_b, part_c, part_v, part_a)
-#FUNCTION
-#DIM part_b
-#DIM part_c
-#DIM part_v
-#DIM part_a
-LOCAL:0 = 0
-IF part_b
+  #FUNCTION
+  #DIM part_b
+  #DIM part_c
+  #DIM part_v
+  #DIM part_a
+  LOCAL:0 = 0
+  IF part_b
     LOCAL:0 |= PART_FLAG_B
-ENDIF
-IF part_c
+  ENDIF
+  IF part_c
     LOCAL:0 |= PART_FLAG_C
-ENDIF
-IF part_v
+  ENDIF
+  IF part_v
     LOCAL:0 |= PART_FLAG_V
-ENDIF
-IF part_a
+  ENDIF
+  IF part_a
     LOCAL:0 |= PART_FLAG_A
-ENDIF
-RETURNF LOCAL:0
+  ENDIF
+  RETURNF LOCAL:0

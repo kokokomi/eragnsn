@@ -1,74 +1,74 @@
 ﻿; ステージ初期化処理
 @stage_initialize_2(stageId)
-#DIM stageId
-ステージ名:(stageId) = 風立ちの地の秘境
-ステージ定義:(stageId):最大階層 = 5
+  #DIM stageId
+  ステージ名:(stageId) = 風立ちの地の秘境
+  ステージ定義:(stageId):最大階層 = 5
 
 @stage_2_can_challenge
-RETURN ステージ実績:1:クリア
+  RETURN ステージ実績:1:クリア
 
-; 周辺探索時のイベントを呼び出す
-; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
-; 何かしらのイベントが発生した場合はtrueを返す
+  ; 周辺探索時のイベントを呼び出す
+  ; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
+  ; 何かしらのイベントが発生した場合はtrueを返す
 @stage_explore_2
-; 20%でイベントなし
-IF RAND:100 < 20
+  ; 20%でイベントなし
+  IF RAND:100 < 20
     RETURN false
-ENDIF
+  ENDIF
 
-CALL use_stage_event_table("explore_event_table_2")
-RETURN true
+  CALL use_stage_event_table("explore_event_table_2")
+  RETURN true
 
-; 先へ進む場合呼び出される
-; 探索度を加算したり、イベントを発生させる
+  ; 先へ進む場合呼び出される
+  ; 探索度を加算したり、イベントを発生させる
 @stage_foward_2
-; 20%で戦闘なし
-IF RAND:100 < 20
+  ; 20%で戦闘なし
+  IF RAND:100 < 20
     ステージ探索度 += 10 + RAND:10
-ENDIF
+  ENDIF
 
-CALL battle_setup
-CALL use_enemy_table("enemy_table_2")
-CALL battle
-ステージ探索度 += 10+ RAND:20
+  CALL battle_setup
+  CALL use_enemy_table("enemy_table_2")
+  CALL battle
+  ステージ探索度 += 10+ RAND:20
 
 @stage_clear_2(isFirstClear)
-#DIM isFirstClear
-IF isFirstClear
-ENDIF
+  #DIM isFirstClear
+  IF isFirstClear
+  ENDIF
 
 @explore_event_table_2
-CALL add_stage_event_table_record(1, 1)
-CALL add_stage_event_table_record(2, 1)
+  CALL add_stage_event_table_record(1, 1)
+  CALL add_stage_event_table_record(2, 1)
 
-CALLFORM stage_event_{get_random_from_stage_event_table(1)}
+  CALLFORM stage_event_{get_random_from_stage_event_table(1)}
 
 @enemy_table_2
-#DIM lcount
+  #DIM lcount
 
-CALL add_enemy_table_record(1, 1)
-CALL add_enemy_table_record(2, 1)
-CALL add_enemy_table_record(50, 1)
-CALL add_enemy_table_record(52, 1)
-CALL add_enemy_table_record(54, 1)
-CALL add_enemy_table_record(56, 1)
-CALL add_enemy_table_record(58, 1)
-CALL add_enemy_table_record(60, 1)
-CALL add_enemy_table_record(62, 1)
+  CALL add_enemy_table_record(1, 1)
+  CALL add_enemy_table_record(2, 1)
+  CALL add_enemy_table_record(50, 1)
+  CALL add_enemy_table_record(52, 1)
+  CALL add_enemy_table_record(54, 1)
+  CALL add_enemy_table_record(56, 1)
+  CALL add_enemy_table_record(58, 1)
+  CALL add_enemy_table_record(60, 1)
+  CALL add_enemy_table_record(62, 1)
 
-CALL add_enemy_table_record(51, 2)
-CALL add_enemy_table_record(53, 2)
-CALL add_enemy_table_record(55, 2)
-CALL add_enemy_table_record(57, 2)
-CALL add_enemy_table_record(59, 2)
-CALL add_enemy_table_record(61, 2)
-CALL add_enemy_table_record(63, 2)
+  CALL add_enemy_table_record(51, 2)
+  CALL add_enemy_table_record(53, 2)
+  CALL add_enemy_table_record(55, 2)
+  CALL add_enemy_table_record(57, 2)
+  CALL add_enemy_table_record(59, 2)
+  CALL add_enemy_table_record(61, 2)
+  CALL add_enemy_table_record(63, 2)
 
-FOR lcount, 0, (RAND:(ステージ現在フロア)) + 3
+  FOR lcount, 0, (RAND:(ステージ現在フロア)) + 3
     SELECTCASE RAND:100
-        CASE IS < 90
-            CALL battle_setup_add_enemy(get_random_from_enemy_table(1), RAND:3 + 9)
-        CASEELSE
-            CALL battle_setup_add_enemy(get_random_from_enemy_table(2), RAND:3 + 9)
+      CASE IS < 90
+        CALL battle_setup_add_enemy(get_random_from_enemy_table(1), RAND:3 + 9)
+      CASEELSE
+        CALL battle_setup_add_enemy(get_random_from_enemy_table(2), RAND:3 + 9)
     ENDSELECT
-NEXT
+  NEXT

@@ -1,113 +1,113 @@
 ﻿; チーム加入時
 @kojo_チーム加入_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
-; 編成入り
+  ; 編成入り
 @kojo_編成に入った時_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
-; ステージ攻略系 ---------------------------------------
-; 秘境に入った時
+  ; ステージ攻略系 ---------------------------------------
+  ; 秘境に入った時
 @kojo_ステージ_秘境に入った_汎用(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-; 秘境に入った時
+  ; 秘境に入った時
 @kojo_ステージ_次のフロア_汎用(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-; 周囲を探索を選んだ時
+  ; 周囲を探索を選んだ時
 @kojo_ステージ_周囲を探索_汎用(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-; 先へ進むを選んだ時
+  ; 先へ進むを選んだ時
 @kojo_ステージ_先へ進む_汎用(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-; 全滅
+  ; 全滅
 @kojo_ステージ_全滅_汎用(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-; 秘境クリア
+  ; 秘境クリア
 @kojo_ステージ_クリア_汎用(charactorNum, stageId, isFirstClear)
-#DIM charactorNum
-#DIM stageId
-#DIM isFirstClear
+  #DIM charactorNum
+  #DIM stageId
+  #DIM isFirstClear
 
-; 秘境内でイベント発生時
+  ; 秘境内でイベント発生時
 @kojo_ステージ_イベント_汎用(charactorNum, stageId, eventId)
-#DIM charactorNum
-#DIM stageId
-#DIM eventId
+  #DIM charactorNum
+  #DIM stageId
+  #DIM eventId
 
-; 戦闘系 -------------------------------------------------------------------
+  ; 戦闘系 -------------------------------------------------------------------
 @kojo_戦闘_開始_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_敗北_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_勝利_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_通常攻撃使用_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_元素スキル使用_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_元素爆発使用_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_ターン開始_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_ターン終了_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_戦闘_自分のターン開始_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
-; ダメージ系
+  ; ダメージ系
 @kojo_ダメージ_HP_汎用(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
+  #DIM charactorNum
+  #DIM amount
 
 @kojo_ダメージ_MP_汎用(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
+  #DIM charactorNum
+  #DIM amount
 
 @kojo_ダメージ_CP_汎用(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
+  #DIM charactorNum
+  #DIM amount
 
 @kojo_ダメージ_EP_汎用(charactorNum, amount, parts)
-#DIM charactorNum
-#DIM amount
-#DIM parts
+  #DIM charactorNum
+  #DIM amount
+  #DIM parts
 
-PRINTFORML 「%喘ぎ声_快楽(1, RAND:2 + 1)%」
+  PRINTFORML 「%喘ぎ声_快楽(1, RAND:2 + 1)%」
 
 @kojo_喪失_汎用(charactorNum)
-#DIM charactorNum
+  #DIM charactorNum
 
 @kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel, parts)
-#DIM charactorNum
-#DIM ecstasyLevel
-#DIM parts
+  #DIM charactorNum
+  #DIM ecstasyLevel
+  #DIM parts
 
-PRINTFORML 「%喘ぎ声_絶頂(math_clamp(ecstasyLevel, 1, 3), RAND:2 + 1)%」
+  PRINTFORML 「%喘ぎ声_絶頂(math_clamp(ecstasyLevel, 1, 3), RAND:2 + 1)%」
 
-; 状態異常
+  ; 状態異常
 @kojo_状態異常_追加_汎用(charactorNum, statusName)
-#DIM charactorNum
-#DIMS statusName
+  #DIM charactorNum
+  #DIMS statusName
 
-SELECTCASE statusName
+  SELECTCASE statusName
     CASE "拘束"
     CASE "丸呑み"
     CASE "恍惚"
@@ -115,13 +115,13 @@ SELECTCASE statusName
     CASE "麻痺"
     CASE "凍結"
     CASE "羞恥"
-ENDSELECT
+  ENDSELECT
 
 @kojo_状態異常_回復_汎用(charactorNum, statusName)
-#DIM charactorNum
-#DIMS statusName
+  #DIM charactorNum
+  #DIMS statusName
 
-SELECTCASE statusName
+  SELECTCASE statusName
     CASE "拘束"
     CASE "丸呑み"
     CASE "恍惚"
@@ -129,4 +129,4 @@ SELECTCASE statusName
     CASE "麻痺"
     CASE "凍結"
     CASE "羞恥"
-ENDSELECT
+  ENDSELECT

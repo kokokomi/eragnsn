@@ -1,31 +1,31 @@
 ﻿@汎用技メッセージ_B(enemyNum, charactorNum)
-#FUNCTIONS
-#DIM enemyNum
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM enemyNum
+  #DIM charactorNum
 
-SELECTCASE battle_enemy_id(enemyNum)
-; ヒルチャール系
-CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかり胸を揉みしだいた！"
-; スライム系
-CASE 50 TO 63
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の胸に張り付いた！"
-CASEELSE
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の胸の柔らかさを楽しんでいる！"
-ENDSELECT
+  SELECTCASE battle_enemy_id(enemyNum)
+      ; ヒルチャール系
+    CASE 1, 2, 3, 4, 5, 6, 7
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかり胸を揉みしだいた！"
+      ; スライム系
+    CASE 50 TO 63
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の胸に張り付いた！"
+    CASEELSE
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の胸の柔らかさを楽しんでいる！"
+  ENDSELECT
 
 @汎用技メッセージ_B_拘束(enemyNum, charactorNum)
-#FUNCTIONS
-#DIM enemyNum
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM enemyNum
+  #DIM charactorNum
 
-SELECTCASE battle_enemy_id(enemyNum)
-; ヒルチャール系
-CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首に吸い付いた！"
-; スライム系
-CASE 50 TO 63
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首に吸い付いた！"
-CASEELSE
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首を刺激している！"
-ENDSELECT
+  SELECTCASE battle_enemy_id(enemyNum)
+      ; ヒルチャール系
+    CASE 1, 2, 3, 4, 5, 6, 7
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首に吸い付いた！"
+      ; スライム系
+    CASE 50 TO 63
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首に吸い付いた！"
+    CASEELSE
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の乳首を刺激している！"
+  ENDSELECT

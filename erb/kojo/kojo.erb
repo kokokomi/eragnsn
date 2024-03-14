@@ -1,277 +1,277 @@
 ﻿@kojo_set_charactor_color(charactorNum)
-#DIM charactorNum
-SETCOLOR CFLAG:(charactorNum):キャラの色
+  #DIM charactorNum
+  SETCOLOR CFLAG:(charactorNum):キャラの色
 
-; チーム加入時
+  ; チーム加入時
 @kojo_チーム加入(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_チーム加入_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_チーム加入_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_チーム加入_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 編成入り
+  ; 編成入り
 @kojo_編成に入った時(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_編成に入った時_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_編成に入った時_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_編成に入った時_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; ステージ攻略系 ---------------------------------------
-; 秘境に入った時
+  ; ステージ攻略系 ---------------------------------------
+  ; 秘境に入った時
 @kojo_ステージ_秘境に入った(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_秘境に入った_{NO:(charactorNum)}(charactorNum, stageId)
-CATCH
+  #DIM charactorNum
+  #DIM stageId
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_秘境に入った_{NO:(charactorNum)}(charactorNum, stageId)
+  CATCH
     CALL kojo_ステージ_秘境に入った_汎用(charactorNum, stageId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 秘境に入った時
+  ; 秘境に入った時
 @kojo_ステージ_次のフロア(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_次のフロア_{NO:(charactorNum)}(charactorNum, stageId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_次のフロア_{NO:(charactorNum)}(charactorNum, stageId)
+  CATCH
     CALL kojo_ステージ_次のフロア_汎用(charactorNum, stageId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 周囲を探索を選んだ時
+  ; 周囲を探索を選んだ時
 @kojo_ステージ_周囲を探索(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_周囲を探索_{NO:(charactorNum)}(charactorNum, stageId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_周囲を探索_{NO:(charactorNum)}(charactorNum, stageId)
+  CATCH
     CALL kojo_ステージ_周囲を探索_汎用(charactorNum, stageId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 先へ進むを選んだ時
+  ; 先へ進むを選んだ時
 @kojo_ステージ_先へ進む(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_先へ進む_{NO:(charactorNum)}(charactorNum, stageId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_先へ進む_{NO:(charactorNum)}(charactorNum, stageId)
+  CATCH
     CALL kojo_ステージ_先へ進む_汎用(charactorNum, stageId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 全滅
+  ; 全滅
 @kojo_ステージ_全滅(charactorNum, stageId)
-#DIM charactorNum
-#DIM stageId
+  #DIM charactorNum
+  #DIM stageId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_全滅_{NO:(charactorNum)}(charactorNum, stageId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_全滅_{NO:(charactorNum)}(charactorNum, stageId)
+  CATCH
     CALL kojo_ステージ_全滅_汎用(charactorNum, stageId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 秘境クリア
+  ; 秘境クリア
 @kojo_ステージ_クリア(charactorNum, stageId, isFirstClear)
-#DIM charactorNum
-#DIM stageId
-#DIM isFirstClear
+  #DIM charactorNum
+  #DIM stageId
+  #DIM isFirstClear
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_クリア_{NO:(charactorNum)}(charactorNum, stageId, isFirstClear)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_クリア_{NO:(charactorNum)}(charactorNum, stageId, isFirstClear)
+  CATCH
     CALL kojo_ステージ_クリア_汎用(charactorNum, stageId, isFirstClear)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 秘境内でイベント発生時
+  ; 秘境内でイベント発生時
 @kojo_ステージ_イベント(charactorNum, stageId, eventId)
-#DIM charactorNum
-#DIM stageId
-#DIM eventId
+  #DIM charactorNum
+  #DIM stageId
+  #DIM eventId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ステージ_イベント_{NO:(charactorNum)}(charactorNum, stageId, eventId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ステージ_イベント_{NO:(charactorNum)}(charactorNum, stageId, eventId)
+  CATCH
     CALL kojo_ステージ_イベント_汎用(charactorNum, stageId, eventId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 戦闘系 -------------------------------------------------------------------
+  ; 戦闘系 -------------------------------------------------------------------
 @kojo_戦闘_開始(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_開始_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_開始_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_開始_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_敗北(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_敗北_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_敗北_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_敗北_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_勝利(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_勝利_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_勝利_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_勝利_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_通常攻撃使用(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_通常攻撃使用_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_通常攻撃使用_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_通常攻撃使用_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_元素スキル使用(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_元素スキル使用_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_元素スキル使用_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_元素スキル使用_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_元素爆発使用(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_元素爆発使用_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_元素爆発使用_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_元素爆発使用_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_ターン開始(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_ターン開始_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_ターン開始_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_ターン開始_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_ターン終了(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_ターン終了_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_ターン終了_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_ターン終了_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_戦闘_自分のターン開始(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_戦闘_自分のターン開始_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_戦闘_自分のターン開始_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_戦闘_自分のターン開始_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; ダメージ系
+  ; ダメージ系
 @kojo_ダメージ_HP(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ダメージ_HP_{NO:(charactorNum)}(charactorNum, amount)
-CATCH
+  #DIM charactorNum
+  #DIM amount
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ダメージ_HP_{NO:(charactorNum)}(charactorNum, amount)
+  CATCH
     CALL kojo_ダメージ_HP_汎用(charactorNum, amount)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_ダメージ_MP(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ダメージ_MP_{NO:(charactorNum)}(charactorNum, amount)
-CATCH
+  #DIM charactorNum
+  #DIM amount
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ダメージ_MP_{NO:(charactorNum)}(charactorNum, amount)
+  CATCH
     CALL kojo_ダメージ_MP_汎用(charactorNum, amount)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_ダメージ_CP(charactorNum, amount)
-#DIM charactorNum
-#DIM amount
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ダメージ_CP_{NO:(charactorNum)}(charactorNum, amount)
-CATCH
+  #DIM charactorNum
+  #DIM amount
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ダメージ_CP_{NO:(charactorNum)}(charactorNum, amount)
+  CATCH
     CALL kojo_ダメージ_CP_汎用(charactorNum, amount)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_ダメージ_EP(charactorNum, amount, parts)
-#DIM charactorNum
-#DIM amount
-#DIM parts
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ダメージ_EP_{NO:(charactorNum)}(charactorNum, amount, parts)
-CATCH
+  #DIM charactorNum
+  #DIM amount
+  #DIM parts
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ダメージ_EP_{NO:(charactorNum)}(charactorNum, amount, parts)
+  CATCH
     CALL kojo_ダメージ_EP_汎用(charactorNum, amount, parts)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_ダメージ_絶頂(charactorNum, ecstasyLevel, parts)
-#DIM charactorNum
-#DIM ecstasyLevel
-#DIM parts
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_ダメージ_絶頂_{NO:(charactorNum)}(charactorNum, ecstasyLevel, parts)
-CATCH
+  #DIM charactorNum
+  #DIM ecstasyLevel
+  #DIM parts
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_ダメージ_絶頂_{NO:(charactorNum)}(charactorNum, ecstasyLevel, parts)
+  CATCH
     CALL kojo_ダメージ_絶頂_汎用(charactorNum, ecstasyLevel, parts)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_喪失(charactorNum)
-#DIM charactorNum
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_喪失_{NO:(charactorNum)}(charactorNum)
-CATCH
+  #DIM charactorNum
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_喪失_{NO:(charactorNum)}(charactorNum)
+  CATCH
     CALL kojo_喪失_汎用(charactorNum)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
-; 状態異常
+  ; 状態異常
 @kojo_状態異常_追加(charactorNum, flagId)
-#DIM charactorNum
-;cflagのid
-#DIMS flagId
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_状態異常_追加_{NO:(charactorNum)}(charactorNum, flagId)
-CATCH
+  #DIM charactorNum
+  ;cflagのid
+  #DIMS flagId
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_状態異常_追加_{NO:(charactorNum)}(charactorNum, flagId)
+  CATCH
     CALL kojo_状態異常_追加_汎用(charactorNum, flagId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR
 
 @kojo_状態異常_回復(charactorNum, flagId)
-#DIM charactorNum
-;cflagのid
-#DIMS flagId
+  #DIM charactorNum
+  ;cflagのid
+  #DIMS flagId
 
-CALL kojo_set_charactor_color(charactorNum)
-TRYCCALLFORM kojo_状態異常_回復_{NO:(charactorNum)}(charactorNum, flagId)
-CATCH
+  CALL kojo_set_charactor_color(charactorNum)
+  TRYCCALLFORM kojo_状態異常_回復_{NO:(charactorNum)}(charactorNum, flagId)
+  CATCH
     CALL kojo_状態異常_回復_汎用(charactorNum, flagId)
-ENDCATCH
-RESETCOLOR
+  ENDCATCH
+  RESETCOLOR

@@ -4,78 +4,78 @@
 
 ; ランダムで選ぶ
 @enemy_target_strategy_random
-#FUNCTION
-RETURNF RAND:(party_get_member_count())
+  #FUNCTION
+  RETURNF RAND:(party_get_member_count())
 
-; 捕獲されていないキャラの中からランダム
+  ; 捕獲されていないキャラの中からランダム
 @enemy_target_strategy_random_not_captured
-#FUNCTION
-#DIM lcount
-#DIM resultList, 4
-#DIM resultCount
-lcount = 0
-resultCount = 0
-FOR lcount, 0, party_get_member_count()
+  #FUNCTION
+  #DIM lcount
+  #DIM resultList, 4
+  #DIM resultCount
+  lcount = 0
+  resultCount = 0
+  FOR lcount, 0, party_get_member_count()
     IF CFLAG:(lcount):拘束 != -1 || CFLAG:(lcount):丸呑み != -1
-        CONTINUE
+      CONTINUE
     ENDIF
     resultList:(resultCount) = lcount
     resultCount++
-NEXT
+  NEXT
 
-IF resultCount == 0
+  IF resultCount == 0
     RETURNF -1
-ENDIF
+  ENDIF
 
-RETURNF resultList:(RAND:(resultCount))
+  RETURNF resultList:(RAND:(resultCount))
 
-; 捕獲されているキャラの中で、自分で捕獲しているものを除く
+  ; 捕獲されているキャラの中で、自分で捕獲しているものを除く
 @enemy_target_strategy_random_captured_exclude_self(enemyNum)
-#FUNCTION
-#DIM enemyNum
-#DIM lcount
-#DIM resultList, 4
-#DIM resultCount
-lcount = 0
-resultCount = 0
-FOR lcount, 0, party_get_member_count()
+  #FUNCTION
+  #DIM enemyNum
+  #DIM lcount
+  #DIM resultList, 4
+  #DIM resultCount
+  lcount = 0
+  resultCount = 0
+  FOR lcount, 0, party_get_member_count()
     ; 捕獲されている
     IF CFLAG:(lcount):拘束 != -1 && !CFLAG:(lcount):丸呑み != -1
-        CONTINUE
+      CONTINUE
     ENDIF
     ; 自分で捕獲している
     IF CFLAG:(lcount):拘束 == enemyNum || CFLAG:(lcount):丸呑み == enemyNum
-        CONTINUE
+      CONTINUE
     ENDIF
     resultList:(resultCount) = lcount
     resultCount++
-NEXT
+  NEXT
 
-IF resultCount == 0
+  IF resultCount == 0
     RETURNF -1
-ENDIF
+  ENDIF
 
-RETURNF resultList:(RAND:(resultCount))
+  RETURNF resultList:(RAND:(resultCount))
 
-; 自分で捕獲しているものからランダム
+  ; 自分で捕獲しているものからランダム
 @enemy_target_strategy_random_self_captured(enemyNum)
-#FUNCTION
-#DIM enemyNum
-#DIM lcount
-#DIM resultList, 4
-#DIM resultCount
-lcount = 0
-resultCount = 0
-FOR lcount, 0, party_get_member_count()
+  #FUNCTION
+  #DIM enemyNum
+  #DIM lcount
+  #DIM resultList, 4
+  #DIM resultCount
+  lcount = 0
+  resultCount = 0
+  FOR lcount, 0, party_get_member_count()
     ; 自分で捕獲している
     IF CFLAG:(lcount):拘束 == enemyNum || CFLAG:(lcount):丸呑み == enemyNum
-        resultList:(resultCount) = lcount
-        resultCount++
+      resultList:(resultCount) = lcount
+      resultCount++
     ENDIF
-NEXT
+  NEXT
 
-IF resultCount == 0
+  IF resultCount == 0
     RETURNF -1
-ENDIF
+  ENDIF
 
-RETURNF resultList:(RAND:(resultCount))
+  RETURNF resultList:(RAND:(resultCount))

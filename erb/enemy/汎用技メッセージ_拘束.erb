@@ -1,18 +1,18 @@
 ﻿@汎用技メッセージ_拘束(enemyNum, charactorNum)
-#FUNCTIONS
-#DIM enemyNum
-#DIM charactorNum
+  #FUNCTIONS
+  #DIM enemyNum
+  #DIM charactorNum
 
-SELECTCASE battle_enemy_id(enemyNum)
-; ヒルチャール系
-CASE 1, 2, 3, 4, 5, 6, 7
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかり押し倒した！"
-; スライム系
-CASE 50 TO 63
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかると、全身を覆ってしまった！"
-; 人間系
-CASE 200 TO 203
-    RETURNF @"%battle_enemy_name(enemyNum)%は隙をついて%charactor_get_charactor_name(charactorNum)%を押し倒した！"
-CASEELSE
-    RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた"
-ENDSELECT
+  SELECTCASE battle_enemy_id(enemyNum)
+      ; ヒルチャール系
+    CASE 1, 2, 3, 4, 5, 6, 7
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかり押し倒した！"
+      ; スライム系
+    CASE 50 TO 63
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%に飛びかかると、全身を覆ってしまった！"
+      ; 人間系
+    CASE 200 TO 203
+      RETURNF @"%battle_enemy_name(enemyNum)%は隙をついて%charactor_get_charactor_name(charactorNum)%を押し倒した！"
+    CASEELSE
+      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を捕まえようと襲いかかってきた"
+  ENDSELECT

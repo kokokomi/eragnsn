@@ -1,19 +1,19 @@
 ﻿@message_stage_clear(stageId)
-#DIM stageId
-PRINTFORML << %ステージ名:(stageId)% ステージクリア >>
-WAIT
+  #DIM stageId
+  PRINTFORML << %ステージ名:(stageId)% ステージクリア >>
+  WAIT
 
 @message_stage_defeat(stageId, floor)
-#DIM stageId
-#DIM floor
-PRINTFORML << %ステージ名:(stageId)% 全滅してしまった >>
-PRINTFORML 今回の踏破階層: {floor}
-WAIT
+  #DIM stageId
+  #DIM floor
+  PRINTFORML << %ステージ名:(stageId)% 全滅してしまった >>
+  PRINTFORML 今回の踏破階層: {floor}
+  WAIT
 
 @message_stage_select_foward
-PRINTFORML 先に進むことにした
-WAIT
+  PRINTFORML 先に進むことにした
+  WAIT
 
 @message_stage_select_explore
-PRINTFORML 周辺を探索することにした
-WAIT
+  PRINTFORML 周辺を探索することにした
+  WAIT

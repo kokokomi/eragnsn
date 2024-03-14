@@ -1,6 +1,6 @@
 ﻿@battle_turn_end
-#DIM lcount
-FOR lcount, 0, party_get_member_count()
+  #DIM lcount
+  FOR lcount, 0, party_get_member_count()
     ; 状態異常の残りターン数更新
     CALL charactor_decrease_bad_status(lcount, "恍惚", 1)
     CALL charactor_decrease_bad_status(lcount, "麻痺", 1)
@@ -9,29 +9,29 @@ FOR lcount, 0, party_get_member_count()
 
     ; クールタイム更新
     CALL charactor_decrease_cooltime(lcount)
-NEXT
+  NEXT
 
 
-CALL party_reset_ep_if_ecstasy
-; PT全滅
-IF party_is_defeat()
+  CALL party_reset_ep_if_ecstasy
+  ; PT全滅
+  IF party_is_defeat()
     CALL print_debug("@battle PT全滅")
     FOR lcount, 0, party_get_member_count()
-        CALL kojo_戦闘_敗北(lcount)
+      CALL kojo_戦闘_敗北(lcount)
     NEXT
     RETURN true
-ENDIF
-; 敵全滅
-IF battle_is_enemy_dead_all()
+  ENDIF
+  ; 敵全滅
+  IF battle_is_enemy_dead_all()
     CALL print_debug("@battle 勝利！")
     FOR lcount, 0, party_get_member_count()
-        CALL kojo_戦闘_勝利(lcount)
+      CALL kojo_戦闘_勝利(lcount)
     NEXT
     RETURN true
-ENDIF
+  ENDIF
 
-FOR lcount, 0, party_get_member_count()
+  FOR lcount, 0, party_get_member_count()
     CALL kojo_戦闘_ターン終了(lcount)
-NEXT
+  NEXT
 
-RETURN false
+  RETURN false

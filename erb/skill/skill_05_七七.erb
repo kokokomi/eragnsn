@@ -1,15 +1,15 @@
 ﻿; 元素スキル
 @do_skill_5(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
+  #DIM charactorNum
+  #DIM targetEnemyNum
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 96)
-CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 69 / 100) + 450)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 96)
+  CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 69 / 100) + 450)
 
-; 元素爆発
+  ; 元素爆発
 @do_burst_5(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
+  #DIM charactorNum
+  #DIM targetEnemyNum
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 284)
-CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 90 / 100) + 577)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 284)
+  CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 90 / 100) + 577)

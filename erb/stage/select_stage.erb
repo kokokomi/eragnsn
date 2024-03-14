@@ -1,39 +1,39 @@
 ﻿@select_stage
-#DIM command
-#DIM lcount
+  #DIM command
+  #DIM lcount
 
-CALL print_debug("select_stage")
-DRAWLINE
-PRINTL どこに向かいますか？
+  CALL print_debug("select_stage")
+  DRAWLINE
+  PRINTL どこに向かいますか？
 
-; MAX_STAGE_IDまでのステージを探し、stage_{ステージid}_can_challengeがtrueを返すものだけ選択可能にする
-FOR lcount, 0, MAX_STAGE_ID
-	; TRYCALLFORMに失敗したときRESULTが更新されないので、falseで初期化しておく
-	RESULT = false
+  ; MAX_STAGE_IDまでのステージを探し、stage_{ステージid}_can_challengeがtrueを返すものだけ選択可能にする
+  FOR lcount, 0, MAX_STAGE_ID
+    ; TRYCALLFORMに失敗したときRESULTが更新されないので、falseで初期化しておく
+    RESULT = false
 
-	TRYCALLFORM stage_{lcount}_can_challenge
-	IF !RESULT
-		CONTINUE
-	ENDIF
-	PRINTFORML [{lcount}] - %ステージ名:(lcount)%
-NEXT
+    TRYCALLFORM stage_{lcount}_can_challenge
+    IF !RESULT
+      CONTINUE
+    ENDIF
+    PRINTFORML [{lcount}] - %ステージ名:(lcount)%
+  NEXT
 
-PRINTL [ 0] 戻る
+  PRINTL [ 0] 戻る
 
-$INPUT_LOOP
-INPUT
-command = RESULT
+  $INPUT_LOOP
+  INPUT
+  command = RESULT
 
-IF command == 0
-	RETURN
-ENDIF
+  IF command == 0
+    RETURN
+  ENDIF
 
-TRYCALLFORM stage_{command}_can_challenge
-; 直接入力を防ぎつつcan_challengeがtrueならステージの攻略開始
-IF RESULT
-	CALL stage(command)
-	RETURN
-ENDIF
+  TRYCALLFORM stage_{command}_can_challenge
+  ; 直接入力を防ぎつつcan_challengeがtrueならステージの攻略開始
+  IF RESULT
+    CALL stage(command)
+    RETURN
+  ENDIF
 
-REUSELASTLINE 入力値が不正です。再入力してください
-GOTO INPUT_LOOP
+  REUSELASTLINE 入力値が不正です。再入力してください
+  GOTO INPUT_LOOP

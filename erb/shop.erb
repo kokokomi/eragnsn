@@ -1,70 +1,70 @@
 ﻿;お店（という名の待機画面）処理
 
 @EVENTSHOP
-CALL print_debug("EVENTSHOP")
-DRAWLINE
+  CALL print_debug("EVENTSHOP")
+  DRAWLINE
 
 @SHOW_SHOP
-#DIM lcount
-#DIM lcount2
+  #DIM lcount
+  #DIM lcount2
 
-CALL AUTO_SAVE
+  CALL AUTO_SAVE
 
-FOR lcount, 0, party_get_member_count()
+  FOR lcount, 0, party_get_member_count()
     FOR lcount2, 0, VARSIZE("BAD_STATUS")
-        CALL charactor_reset_bad_status(lcount, BAD_STATUS:(lcount2), true)
+      CALL charactor_reset_bad_status(lcount, BAD_STATUS:(lcount2), true)
     NEXT
     BASE:(lcount):0 = MAXBASE:(lcount):0
     BASE:(lcount):1 = MAXBASE:(lcount):1
     BASE:(lcount):2 = MAXBASE:(lcount):2
     BASE:(lcount):3 = MAXBASE:(lcount):3
     BASE:(lcount):4 = MAXBASE:(lcount):4
-NEXT
-CALL print_debug("SHOW_SHOP")
-CALL show_home_gui
+  NEXT
+  CALL print_debug("SHOW_SHOP")
+  CALL show_home_gui
 
-; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
-PRINTFORML [100] - 探索へ向かう
-PRINTFORML [101] - 編成
-PRINTFORML [200] - セーブ
-PRINTFORML [300] - ロード
+  ; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
+  PRINTFORML [100] - 探索へ向かう
+  PRINTFORML [101] - 編成
+  PRINTFORML [200] - セーブ
+  PRINTFORML [300] - ロード
 
 @USERSHOP
-#DIM command
-command = RESULT
+  #DIM command
+  command = RESULT
 
-CALL print_debug("USERSHOP")
+  CALL print_debug("USERSHOP")
 
-SELECTCASE command
-CASE 100
-    CALL select_stage
-CASE 101
-    CALL organize
-CASE 200
-    CALL SAVEGAME_EX
-CASE 300
-    CALL LOADGAME_EX
-ENDSELECT
+  SELECTCASE command
+    CASE 100
+      CALL select_stage
+    CASE 101
+      CALL organize
+    CASE 200
+      CALL SAVEGAME_EX
+    CASE 300
+      CALL LOADGAME_EX
+  ENDSELECT
 
 @show_home_gui
-#DIM memberCount
-#DIM lcount
-DRAWLINE
-PRINTFORML 調査開始から {DAY}日目
-DRAWLINE
-PRINTFORML << 編成 >>
-memberCount = party_get_member_count()
-FOR lcount, 0, memberCount
+  #DIM memberCount
+  #DIM lcount
+  DRAWLINE
+  PRINTFORML 調査開始から {DAY}日目
+  DRAWLINE
+  PRINTFORML << 編成 >>
+  memberCount = party_get_member_count()
+  FOR lcount, 0, memberCount
     CALL show_charactor_status_for_home(party_get_member_nth(lcount), lcount)
-NEXT
-DRAWLINE
+  NEXT
+  DRAWLINE
 
 @show_charactor_status_for_home(charactorId, charactorNum)
-#DIM charactorId
-#DIM charactorNum
-SETCOLOR CFLAG:(charactorNum):キャラの色
-PRINTFORML %charactor_get_charactor_name(charactorNum)%
-RESETCOLOR
-CALL view_component_statusbar(charactorNum)
+  #DIM charactorId
+  #DIM charactorNum
+  SETCOLOR CFLAG:(charactorNum):キャラの色
+  PRINTFORML %charactor_get_charactor_name(charactorNum)%
+  RESETCOLOR
+  CALL view_component_statusbar(charactorNum)
 
-PRINTL
+  PRINTL

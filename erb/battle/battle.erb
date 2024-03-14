@@ -1,21 +1,21 @@
 ﻿; 戦闘画面
 ; battleを呼ぶ前にbattle_setupをする必要がある
 @battle
-CALL print_debug("battle")
-CALL battle_init
+  CALL print_debug("battle")
+  CALL battle_init
 
-$TURNLOOP
-CALL battle_player_turn
-CALL battle_enemy_turn
+  $TURNLOOP
+  CALL battle_player_turn
+  CALL battle_enemy_turn
 
-CALL battle_turn_end
-; battle_turn_endがtrueを返したらバトル終了
-IF RESULT
+  CALL battle_turn_end
+  ; battle_turn_endがtrueを返したらバトル終了
+  IF RESULT
     GOTO BATTLE_FINISH
-ENDIF
+  ENDIF
 
-;次のターンへ
-GOTO TURNLOOP
+  ;次のターンへ
+  GOTO TURNLOOP
 
-$BATTLE_FINISH
-CALL battle_finalize
+  $BATTLE_FINISH
+  CALL battle_finalize

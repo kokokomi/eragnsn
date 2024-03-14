@@ -1,13 +1,13 @@
 ﻿; 元素スキル
 @do_skill_13(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
+  #DIM charactorNum
+  #DIM targetEnemyNum
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 120)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 120)
 
-; 元素爆発
+  ; 元素爆発
 @do_burst_13(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
+  #DIM charactorNum
+  #DIM targetEnemyNum
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 150, battle_enemy_count())
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 150, battle_enemy_count())

@@ -1,19 +1,19 @@
 ﻿@enemy_initialize_101(enemyId)
-#DIM enemyId
+  #DIM enemyId
 
-敵の名前:(enemyId) = トリックフラワー氷
-敵ステータス:(enemyId):攻撃力 = 20
-敵ステータス:(enemyId):攻撃力加算値 = 28
-敵ステータス:(enemyId):体力 = 500
-敵ステータス:(enemyId):体力加算値 = 13
+  敵の名前:(enemyId) = トリックフラワー氷
+  敵ステータス:(enemyId):攻撃力 = 20
+  敵ステータス:(enemyId):攻撃力加算値 = 28
+  敵ステータス:(enemyId):体力 = 500
+  敵ステータス:(enemyId):体力加算値 = 13
 
-; 行動選択
+  ; 行動選択
 @enemy_select_command_101(enemyNum)
-#DIM enemyNum
-#DIM hpCommands = 11
-#DIM epCommands = 4, 5, 6, 7, 15
-#DIM capturedTargetCommands = 12, 4, 5, 6, 7, 9
-#DIM captureCommand = 8
+  #DIM enemyNum
+  #DIM hpCommands = 11
+  #DIM epCommands = 4, 5, 6, 7, 15
+  #DIM capturedTargetCommands = 12, 4, 5, 6, 7, 9
+  #DIM captureCommand = 8
 
-CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
-RETURN RESULT:0, RESULT:1
+  CALL enemy_strategy_ヒルチャール(enemyNum, hpCommands, epCommands, capturedTargetCommands, captureCommand)
+  RETURN RESULT:0, RESULT:1

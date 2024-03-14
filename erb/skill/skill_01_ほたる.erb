@@ -1,19 +1,19 @@
 ﻿; 元素スキル
 @do_skill_1(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
+  #DIM charactorNum
+  #DIM targetEnemyNum
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 12)
-CALL skill_util_attack(charactorNum, targetEnemyNum, 14)
-CALL skill_util_attack(charactorNum, targetEnemyNum, 16)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 12)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 14)
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 16)
 
-;最終段は範囲攻撃
-CALL skill_util_attack(charactorNum, targetEnemyNum, 192, 1)
+  ;最終段は範囲攻撃
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 192, 1)
 
-; 元素爆発
+  ; 元素爆発
 @do_burst_1(charactorNum, targetEnemyNum)
-#DIM charactorNum
-#DIM targetEnemyNum
-#DIM lcount
+  #DIM charactorNum
+  #DIM targetEnemyNum
+  #DIM lcount
 
-CALL skill_util_attack(charactorNum, targetEnemyNum, 192, battle_enemy_count())
+  CALL skill_util_attack(charactorNum, targetEnemyNum, 192, battle_enemy_count())

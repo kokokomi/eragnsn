@@ -1,41 +1,41 @@
 ﻿; ステージ初期化処理
 @stage_initialize_1(stageId)
-#DIM stageId
-ステージ名:(stageId) = 始まりの秘境
-ステージ定義:(stageId):最大階層 = 5
+  #DIM stageId
+  ステージ名:(stageId) = 始まりの秘境
+  ステージ定義:(stageId):最大階層 = 5
 
 @stage_1_can_challenge
-RETURN true
+  RETURN true
 
-; 周辺探索時のイベントを呼び出す
-; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
-; 何かしらのイベントが発生した場合はtrueを返す
+  ; 周辺探索時のイベントを呼び出す
+  ; 何も発生しない場合はfalseを返すと何も見つからなかった時の処理が走る
+  ; 何かしらのイベントが発生した場合はtrueを返す
 @stage_explore_1
-; 20%でイベントなし
-IF RAND:100 < 20
+  ; 20%でイベントなし
+  IF RAND:100 < 20
     RETURN false
-ENDIF
+  ENDIF
 
-CALL use_stage_event_table("explore_event_table_1")
+  CALL use_stage_event_table("explore_event_table_1")
 
-RETURN true
+  RETURN true
 
-; 先へ進む場合呼び出される
-; 探索度を加算したり、イベントを発生させる
+  ; 先へ進む場合呼び出される
+  ; 探索度を加算したり、イベントを発生させる
 @stage_foward_1
-; 20%で戦闘なし
-IF RAND:100 < 20
+  ; 20%で戦闘なし
+  IF RAND:100 < 20
     ステージ探索度 += 10 + RAND:10
-ENDIF
+  ENDIF
 
-CALL battle_setup
-CALL use_enemy_table("enemy_table_1")
-CALL battle
-ステージ探索度 += 10+ RAND:20
+  CALL battle_setup
+  CALL use_enemy_table("enemy_table_1")
+  CALL battle
+  ステージ探索度 += 10+ RAND:20
 
 @stage_clear_1(isFirstClear)
-#DIM isFirstClear
-IF isFirstClear
+  #DIM isFirstClear
+  IF isFirstClear
     ; ジン
     CALL charactor_add_member(2)
     ; リサ
@@ -44,20 +44,20 @@ IF isFirstClear
     PRINTFORML 本格的な調査のため、%CSVCALLNAME(2)%と%CSVCALLNAME(7)%が仲間に加わった！
     PRINTL
     WAIT
-ENDIF
+  ENDIF
 
 @explore_event_table_1
-CALL add_stage_event_table_record(1, 1)
-CALL add_stage_event_table_record(2, 1)
+  CALL add_stage_event_table_record(1, 1)
+  CALL add_stage_event_table_record(2, 1)
 
-CALLFORM stage_event_{get_random_from_stage_event_table(1)}
+  CALLFORM stage_event_{get_random_from_stage_event_table(1)}
 
 @enemy_table_1
-#DIM lcount
+  #DIM lcount
 
-CALL add_enemy_table_record(1, 1)
-CALL add_enemy_table_record(2, 1)
+  CALL add_enemy_table_record(1, 1)
+  CALL add_enemy_table_record(2, 1)
 
-FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 2
+  FOR lcount, 0, (RAND:(ステージ現在フロア) / 2) + 2
     CALL battle_setup_add_enemy(get_random_from_enemy_table(1), RAND:3 + 5)
-NEXT
+  NEXT

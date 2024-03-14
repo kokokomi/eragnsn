@@ -1,5 +1,5 @@
 ﻿@message_exp_up(charactorNum, expType, amount)
-#DIM charactorNum
-#DIMS expType
-#DIM amount
-PRINTFORML %CALLNAME:(charactorNum)%: %expType%+{amount} ({EXP:(charactorNum):(GETNUM(EXP, expType))})
+  #DIM charactorNum
+  #DIMS expType
+  #DIM amount
+  PRINTFORML %CALLNAME:(charactorNum)%: %expType%+{amount} ({EXP:(charactorNum):(GETNUM(EXP, expType))})
