@@ -1,0 +1,82 @@
+﻿@add_charactor_exp(charactorNum, amount)
+  #DIM charactorNum
+  #DIM amount
+  ; レベルがMAX
+  IF required_charactor_exp(charactorNum) < 0
+    EXP:(charactorNum):0 = 0
+    RETURN
+  ENDIF
+
+  ; レベルアップ処理
+  IF required_charactor_exp(charactorNum) < (amount + EXP:(charactorNum):0)
+    amount = (amount + EXP:(charactorNum):0) - required_charactor_exp(charactorNum)
+    EXP:(charactorNum):1 += 1
+    ; 残りの経験値で再度経験値加算処理
+    CALL add_charactor_exp(amount)
+    RETURN
+  ENDIF
+
+  ; レベルアップしない場合
+  EXP:(charactorNum):0 += amount
+
+@required_charactor_exp(charactorNum)
+  #FUNCTION
+  #DIM charactorNum
+  RETURNF EXP:(charactorNum):1 < 90 ? EXP:(charactorNum):1 * 125 + 350 # -1
+
+@add_adult_exp(charactorNum, amount, parts)
+  #DIM charactorNum
+  #DIM amount
+  #DIM parts
+
+  IF part_has_a(parts)
+    CALL add_adult_exp_for_internal(charactorNum, amount, 100, 6)
+  ENDIF
+  IF part_has_b(parts)
+    CALL add_adult_exp_for_internal(charactorNum, amount, 101, 7)
+  ENDIF
+  IF part_has_c(parts)
+    CALL add_adult_exp_for_internal(charactorNum, amount, 102, 8)
+  ENDIF
+  IF part_has_v(parts)
+    CALL add_adult_exp_for_internal(charactorNum, amount, 103, 9)
+  ENDIF
+
+@add_adult_exp_for_internal(charactorNum, amount, ablNum, expNum)
+  #DIM charactorNum
+  #DIM amount
+  #DIM ablNum
+  #DIM expNum
+  ; レベルがMAX
+  IF required_adult_exp(charactorNum, ablNum) < 0
+    EXP:(charactorNum):(expNum) = 0
+    RETURN
+  ENDIF
+
+    ; レベルアップ処理
+  IF required_adult_exp(charactorNum, ablNum) < (amount + EXP:(charactorNum):(expNum))
+    amount = (amount + EXP:(charactorNum):(expNum)) - required_adult_exp(charactorNum, ablNum)
+    ; 感度を上昇
+    ABL:(charactorNum):(abl) += 1
+    ; 残りの経験値で再度経験値加算処理
+    CALL add_adult_exp_for_internal(charactorNum, amount, ablNum, expNum)
+    RETURN
+  ENDIF
+
+    ; レベルアップしない場合
+  EXP:(charactorNum):(expNum) += amount
+
+@required_adult_exp(charactorNum, ablNum)
+  #FUNCTION
+  #DIM charactorNum
+  #DIM ablNum
+  SELECTCASE ABL:(charactorNum):(ablNum)
+    CASE -1
+      RETURNF 10000
+    CASE 0
+      RETURNF 25000
+    CASE 1
+      RETURNF 45000
+    CASEELSE
+      RETURNF -1
+  ENDSELECT
