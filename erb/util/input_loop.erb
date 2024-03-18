@@ -1,0 +1,14 @@
+﻿@inputLoop(displayFunc, commandFunc)
+  #DIMS displayFunc
+  #DIMS commandFunc
+
+  $INPUT_LOOP
+  CALLFORM %displayFunc%
+  INPUT
+
+  CALLFORM %commandFunc%(RESULT)
+
+  IF RESULT
+    RETURN
+  ENDIF
+  GOTO INPUT_LOOP

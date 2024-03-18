@@ -1,4 +1,7 @@
 ﻿@organize
+  CALL inputLoop("show_organize", "organize_command")
+
+@show_organize()
   #DIM lcount
   PRINTFORML << 編成中 >>
   FOR lcount, 0, party_get_member_count()
@@ -7,28 +10,28 @@
   NEXT
   PRINTFORML << 控え >>
 
-  lcount = party_get_member_count() + 1
   WHILE lcount < CHARANUM
     PRINTFORML [{lcount}] %CALLNAME:(lcount)%
     lcount++
   WEND
   PRINTFORML [999] 編成完了
-  $INPUT_LOOP
-  INPUT
-  IF RESULT == 999
-    RETURN
-  ENDIF
-  IF party_get_member_count() < RESULT && RESULT < CHARANUM
-    CALL organize_swap(RESULT)
-    RETURN
-  ENDIF
 
-  GOTO INPUT_LOOP
+@organize_command(command)
+  #DIM command
+  IF command == 999
+    RETURN true
+  ENDIF
+  PRINTFORM {command} {party_get_member_count()} {CHARANUM} {party_get_member_count() < command}
+  IF party_get_member_count() <= command && command < CHARANUM
+    CALL organize_swap(command)
+    RETURN false
+  ENDIF
 
 @organize_swap(member)
   #DIM member
   #DIM lcount
 
+  lcount = 0
   PRINTFORML 誰と交代する？
   FOR lcount, 0, party_get_member_count()
     PRINTFORML [{lcount}] %CALLNAME:(lcount)%

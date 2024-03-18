@@ -1,8 +1,9 @@
 ﻿@select_stage
-  #DIM command
-  #DIM lcount
-
   CALL print_debug("select_stage")
+  CALL inputLoop("show_select_stage", "select_stage_command")
+
+@show_select_stage
+  #DIM lcount
   DRAWLINE
   PRINTL どこに向かいますか？
 
@@ -20,20 +21,17 @@
 
   PRINTL [ 0] 戻る
 
-  $INPUT_LOOP
-  INPUT
-  command = RESULT
-
+@select_stage_command(command)
+  #DIM command
+  
   IF command == 0
-    RETURN
+    RETURN true
   ENDIF
 
   TRYCALLFORM stage_{command}_can_challenge
   ; 直接入力を防ぎつつcan_challengeがtrueならステージの攻略開始
   IF RESULT
     CALL stage(command)
-    RETURN
+    RETURN true
   ENDIF
-
-  REUSELASTLINE 入力値が不正です。再入力してください
-  GOTO INPUT_LOOP
+  RETURN false
