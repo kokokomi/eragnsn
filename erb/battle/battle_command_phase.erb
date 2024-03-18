@@ -1,0 +1,91 @@
+﻿@battle_command_phase
+  #DIM lcount
+
+  FOR lcount, 0, party_get_member_count()
+    CALL kojo_戦闘_ターン開始(lcount)
+    戦闘_入力コマンド:(lcount) = -1
+    戦闘_ターゲット:(lcount) = -1
+  NEXT
+
+  lcount = 0
+  FOR lcount, 0, party_get_member_count()
+    IF battle_is_enemy_dead_all()
+      CONTINUE
+    ENDIF
+    ; 放心チェック
+    IF charactor_is_faint(lcount)
+      CONTINUE
+    ENDIF
+    ; 恍惚チェック
+    IF charactor_has_bad_status(lcount, "恍惚")
+      CONTINUE
+    ENDIF
+    CALL battle_command_phase_input(lcount)
+  NEXT
+
+@battle_command_phase_input(charactorNum)
+  #DIM charactorNum
+  #DIM lcount
+  #DIM canAttackAction
+
+  CALL show_battle_gui
+  DRAWLINE
+  PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
+  CALL kojo_戦闘_自分のターン開始(charactorNum)
+
+  canAttackAction = !charactor_has_bad_status(charactorNum, "拘束") && !charactor_has_bad_status(charactorNum, "丸呑み")
+  $COMMAND_SELECT
+  IF canAttackAction
+    PRINTFORML [1] 通常攻撃 
+    IF charactor_can_use_skill(charactorNum)
+      PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
+    ELSE
+      PRINTFORML [x] %CSTR:(charactorNum):元素スキル%はまだ使えない
+    ENDIF
+
+    IF charactor_can_use_burst(charactorNum)
+      PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
+    ELSE
+      PRINTFORML [x] %CSTR:(charactorNum):元素爆発%はまだ使えない
+    ENDIF
+  ELSE
+    PRINTFORML [4] 拘束を振りほどく
+    PRINTFORML [5] されるがままに
+  ENDIF
+
+  INPUT
+  SELECTCASE RESULT
+    CASE 1
+      IF canAttackAction
+        戦闘_入力コマンド:(charactorNum) = 1
+      ENDIF
+    CASE 2
+      IF charactor_can_use_skill(charactorNum) && canAttackAction
+        戦闘_入力コマンド:(charactorNum) = 2
+      ENDIF
+    CASE 3
+      IF charactor_can_use_burst(charactorNum) && canAttackAction
+        戦闘_入力コマンド:(charactorNum) = 3
+      ENDIF
+    CASE 4, 5
+      IF !canAttackAction
+        戦闘_入力コマンド:(charactorNum) = RESULT
+      ENDIF
+  ENDSELECT
+  IF 戦闘_入力コマンド:(charactorNum) < 0
+    GOTO COMMAND_SELECT
+  ENDIF
+
+  $TARGET_SELECT
+  PRINTFORML 誰を狙う？
+  FOR lcount, 0, battle_enemy_count()
+    PRINTFORM [{lcount}]
+    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
+    PRINTL
+  NEXT
+  INPUT
+  IF RESULT < 0 || battle_enemy_count() < RESULT
+    GOTO TARGET_SELECT
+  ENDIF
+  戦闘_ターゲット:(charactorNum) = RESULT

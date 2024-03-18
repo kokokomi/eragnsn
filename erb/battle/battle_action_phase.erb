@@ -1,0 +1,96 @@
+﻿@battle_action_phase
+  #DIM playerNum
+  #DIM enemyNum
+  playerNum = 0
+  enemyNum = 0
+
+  ; キャラの並びの順番は保ちつつ、ランダムな順で敵とプレイヤーのターンを入れ替える
+  WHILE playerNum + enemyNum != party_get_member_count() + battle_enemy_count()
+    IF RAND:((party_get_member_count() -playerNum) + (battle_enemy_count() - enemyNum)) < (party_get_member_count() - playerNum)
+      SETCOLOR COLOR_CP
+      PRINTFORML ━━━━　<< %charactor_get_charactor_name(playerNum)%のターン >>　━━━━━━━━━━━━
+      RESETCOLOR
+      CALL battle_action_phase_do_player_action(playerNum)
+      playerNum++
+    ELSE
+      CALL battle_action_phase_do_enemy_action(enemyNum)
+      enemyNum++
+    ENDIF
+
+    PRINTL
+    WAIT
+  WEND
+
+@battle_action_phase_do_player_action(charactorNum)
+  #DIM charactorNum
+  #DIM targetEnemy
+  #DIM lcount
+
+  targetEnemy = 戦闘_ターゲット:(charactorNum)
+  ; 喪失チェック
+  IF charactor_is_faint(charactorNum)
+    CALL message_skip_player_turn_faint(charactorNum)
+    RETURN
+  ENDIF
+  ; 体力が尽きている場合、ランダムな確率で行動不能
+  IF charactor_is_weak(charactorNum) && RAND:5 < 1
+    CALL message_skip_player_turn_weak(charactorNum)
+    RETURN
+  ENDIF
+  IF charactor_has_bad_status(charactorNum, "恍惚")
+    CALL message_skip_player_turn_ecstasy(charactorNum)
+    RETURN
+  ENDIF
+
+  SELECTCASE 戦闘_入力コマンド:(charactorNum)
+    CASE 1
+      CALL kojo_戦闘_通常攻撃使用(charactorNum)
+      CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
+    CASE 2
+      IF charactor_can_use_skill(charactorNum)
+        CALL message_command_skill(charactorNum)
+        CALL kojo_戦闘_元素スキル使用(charactorNum)
+        CALLFORM do_skill_{NO:(charactorNum)}(charactorNum, targetEnemy)
+        ; スキルを発動したキャラに元素エネルギーを入れる
+        CALL charactor_charge_energy(charactorNum, RAND:3 + 5)
+
+        ; PTのキャラ全員に元素エネルギーを入れる
+        FOR lcount, 0, party_get_member_count()
+          CALL charactor_charge_energy(lcount, RAND:3 + 5)
+        NEXT
+        CFLAG:(charactorNum):元素スキルクールタイム = ABL:(charactorNum):スキルクールタイム
+      ENDIF
+    CASE 3
+      IF charactor_can_use_burst(charactorNum)
+        CALL message_command_burst(charactorNum)
+        CALL kojo_戦闘_元素爆発使用(charactorNum)
+        CALLFORM do_burst_{NO:(charactorNum)}(charactorNum, targetEnemy)
+        CFLAG:(charactorNum):元素爆発クールタイム = ABL:(charactorNum):元素爆発クールタイム
+        CFLAG:(charactorNum):元素エネルギー量 = 0
+      ENDIF
+    CASE 4
+      LOCAL:0 = CFLAG:(charactorNum):拘束 > -1 ? CFLAG:(charactorNum):拘束 # CFLAG:(charactorNum):丸呑み
+      CALL message_command_shake(charactorNum, LOCAL:0)
+      IF RAND:5 == 0
+        CALL message_shake_success(charactorNum, LOCAL:0)
+        CFLAG:(charactorNum):拘束 = -1
+        CFLAG:(charactorNum):丸呑み = -1
+      ELSE
+        CALL message_shake_failure(charactorNum, LOCAL:0)
+      ENDIF
+    CASE 5
+      LOCAL:0 = CFLAG:(charactorNum):拘束 > -1 ? CFLAG:(charactorNum):拘束 # CFLAG:(charactorNum):丸呑み
+      CALL message_command_none(charactorNum, LOCAL:0)
+  ENDSELECT
+
+@battle_action_phase_do_enemy_action(enemyNum)
+  #DIM enemyNum
+  ; 敵が死んでいる場合行動スキップ
+  IF battle_is_enemy_dead(enemyNum)
+    RETURN
+  ENDIF
+
+  SETCOLOR COLOR_CP
+  PRINTFORML ━━━━　<< %battle_enemy_name(enemyNum)% {battle_enemy_level(enemyNum)}Lv のターン >>　━━━━━━━━━━━━
+  RESETCOLOR
+  CALL enemy_select_command(battle_enemy_id(enemyNum), enemyNum)

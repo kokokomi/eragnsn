@@ -33,5 +33,6 @@
   FOR lcount, 0, party_get_member_count()
     CALL kojo_戦闘_ターン終了(lcount)
   NEXT
+  戦闘_ターン数++
 
   RETURN false

@@ -5,8 +5,10 @@
   CALL battle_init
 
   $TURNLOOP
-  CALL battle_player_turn
-  CALL battle_enemy_turn
+  ; CALL battle_player_turn
+  ; CALL battle_enemy_turn
+  CALL battle_command_phase
+  CALL battle_action_phase
 
   CALL battle_turn_end
   ; battle_turn_endがtrueを返したらバトル終了
