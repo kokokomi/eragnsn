@@ -6,8 +6,8 @@
   DT_COLUMN_ADD "enemies", "enemy_level", "int16"
   DT_COLUMN_ADD "enemies", "enemy_max_hp", "int16"
   DT_COLUMN_ADD "enemies", "enemy_hp", "int16"
-  DT_COLUMN_ADD "enemies", "enemy_aura", "int16"
   DT_COLUMN_ADD "enemies", "enemy_atk", "int16"
+  DT_COLUMN_ADD "enemies", "enemy_exp", "int16"
 
   ; 戦闘に敵を追加する
 @battle_setup_add_enemy(enemyId, enemyLevel)
@@ -20,7 +20,15 @@
   maxHp = 敵ステータス:(enemyId):体力 + (敵ステータス:(enemyId):体力加算値 * enemyLevel)
   enemyAtk = 敵ステータス:(enemyId):攻撃力 + (敵ステータス:(enemyId):攻撃力加算値 * enemyLevel)
 
-  DT_ROW_ADD "enemies", "enemy_id", enemyId, "enemy_name", @"%敵の名前:(enemyId)% %UNICODE(namePostfix + battle_enemy_count())%", "enemy_level", enemyLevel, "enemy_max_hp", maxHp, "enemy_hp", maxHp, "enemy_aura", 0, "enemy_atk", enemyAtk
+  {
+    DT_ROW_ADD "enemies",
+      "enemy_id", enemyId,
+      "enemy_name", @"%敵の名前:(enemyId)% %UNICODE(namePostfix + battle_enemy_count())%",
+      "enemy_level", enemyLevel,
+      "enemy_max_hp", maxHp, 
+      "enemy_hp", maxHp, 
+      "enemy_atk", enemyAtk
+  }
 
 @battle_enemy_name(enemyNum)
   #FUNCTIONS
@@ -51,6 +59,21 @@
   #FUNCTION
   #DIM enemyNum
   RETURNF DT_CELL_GET("enemies", enemyNum, "enemy_atk")
+
+@battle_enemy_mora(enemyNum)
+  #FUNCTION
+  #DIM enemyNum
+  #DIM enemyId
+  enemyId = battle_enemy_id(enemyNum)
+  RETURNF 敵ステータス:(enemyId):モラ + 敵ステータス:(enemyId):モラ加算値 * battle_enemy_level(enemyNum)
+
+@battle_enemy_exp(enemyNum)
+  #FUNCTION
+  #DIM enemyNum
+  #DIM enemyId
+  enemyId = battle_enemy_id(enemyNum)
+  RETURNF 敵ステータス:(enemyId):経験値 + 敵ステータス:(enemyId):経験値加算値 * battle_enemy_level(enemyNum)
+
 
   ; 敵の数
 @battle_enemy_count
@@ -85,8 +108,9 @@
   #FUNCTION
   RETURNF DT_SELECT("enemies", "enemy_hp > 0", "id ASC") == 0
 
-@battle_attack_to_enemy(enemyNum, damage)
+@battle_attack_to_enemy(enemyNum, charactorNum, damage)
   #DIM enemyNum
+  #DIM charactorNum
   #DIM damage
   #DIM newHp
   #DIM lcount
@@ -106,4 +130,8 @@
   ENDIF
 
   CALL message_enemy_damage(enemyNum, damage)
-  WAIT
+  ; ダメージを与えて倒したとき、経験値とモラを加算
+  IF battle_is_enemy_dead(enemyNum)
+    MONEY += battle_enemy_mora(enemyNum)
+    CALL add_charactor_exp(charactorNum, battle_enemy_exp(enemyNum))
+  ENDIF

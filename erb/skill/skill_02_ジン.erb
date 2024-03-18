@@ -3,7 +3,7 @@
   #DIM charactorNum
   #DIM targetEnemyNum
 
-  CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 292))
+  CALL battle_attack_to_enemy(targetEnemyNum, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 292))
 
   ; 元素爆発
 @do_burst_2(charactorNum, targetEnemyNum)
