@@ -1,0 +1,6 @@
+@stage_event_4
+  #DIM amount
+  amount = RAND:20 + 5
+  PRINTFORML 仙霊を見つけた！ %CALLNAME:0%達は追いかけながら先へ進んだ
+  PRINTFORML 探索度: +{amount}
+  ステージ探索度 += amount

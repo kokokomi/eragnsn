@@ -4,20 +4,24 @@
   #DIM amount
   PRINTFORML %CALLNAME:(charactorNum)%: %expType%+{amount} ({EXP:(charactorNum):(GETNUM(EXP, expType))})
 
-@message_abl_up(charactorNum, ablName, amount)
+@message_abl_up(charactorNum, abilityName, amount)
   #DIM charactorNum
-  #DIMS ablName
+  #DIMS abilityName
   #DIM amount
-  PRINTFORML %CALLNAME:(charactorNum)%: %ablName%+{amount} ({ABL:(charactorNum):(GETNUM(ABL, ablName))})
+  SETCOLOR ACCENT_TEXT_COLOR
+  PRINTFORML %CALLNAME:(charactorNum)%: %abilityName%+{amount} ({ABL:(charactorNum):(GETNUM(ABL, abilityName))})
+  RESETCOLOR
 
 @message_charactor_lv_up(charactorNum, amount)
   #DIM charactorNum
   #DIM amount
-  PRINTFORML %CALLNAME:(charactorNum)%: キャラクターレベル+{amount} ({(EXP:(charactprNum):キャラクターレベル) + amount})
+  SETCOLOR ACCENT_TEXT_COLOR
+  PRINTFORML %CALLNAME:(charactorNum)%: キャラクターレベル+{amount} ({(EXP:(charactorNum):キャラクターレベル) + amount}Lv)
+  RESETCOLOR
 
 @message_charactor_exp_up(charactorNum, amount)
   #DIM charactorNum
   #DIM amount
   #DIM expPercent
-  expPercent = ((EXP:(charactprNum):経験値) + amount) * 100 / required_charactor_exp(charactprNum)
+  expPercent = ((EXP:(charactorNum):経験値) + amount) * 100 / required_charactor_exp(charactorNum)
   PRINTFORML %CALLNAME:(charactorNum)%: 経験値+{amount} ({expPercent}\%)

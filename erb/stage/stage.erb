@@ -61,9 +61,11 @@
     CASE 1
       ; 探索を進める
       CALL stage_command_foward(ステージID)
+      RETURN true
     CASE 2
       ; 周辺を探索
       CALL stage_command_explore(ステージID)
+      RETURN true
   ENDSELECT
 
 @stage_command_foward(stageId)

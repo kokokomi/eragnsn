@@ -122,16 +122,27 @@
   newHp = MAX(0, battle_enemy_hp(enemyNum) - damage)
   DT_CELL_SET "enemies", enemyNum, "enemy_hp", newHp
 
+  CALL message_enemy_damage(enemyNum, damage)
+  ; ダメージを与えて倒したとき
   IF battle_is_enemy_dead(enemyNum)
-    ; この攻撃で敵が死んだら元素エネルギー生成
-    FOR lcount, 0, party_get_member_count()
-      CALL charactor_charge_energy(lcount, RAND:3 + 5)
-    NEXT
+    CALL battle_on_enemy_dead(enemyNum, charactorNum)
   ENDIF
 
-  CALL message_enemy_damage(enemyNum, damage)
-  ; ダメージを与えて倒したとき、経験値とモラを加算
-  IF battle_is_enemy_dead(enemyNum)
-    MONEY += battle_enemy_mora(enemyNum)
-    CALL add_charactor_exp(charactorNum, battle_enemy_exp(enemyNum))
-  ENDIF
+@battle_on_enemy_dead(enemyNum, charactorNum)
+  #DIM enemyNum
+  #DIM charactorNum
+  #DIM lcount
+
+  FOR lcount, 0, party_get_member_count()
+    CALL charactor_charge_energy(lcount, RAND:3 + 5)
+    CALL add_charactor_exp(lcount, battle_enemy_exp(enemyNum))
+
+    ;自分自身で拘束している場合開放する
+    IF CFLAG:(lcount):拘束 == enemyNum
+      CALL charactor_decrease_bad_status(lcount, "拘束")
+    ENDIF
+    IF CFLAG:(lcount):丸呑み == enemyNum
+      CALL charactor_decrease_bad_status(lcount, "丸呑み")
+    ENDIF
+  NEXT
+  MONEY += battle_enemy_mora(enemyNum)

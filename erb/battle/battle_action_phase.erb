@@ -16,9 +16,12 @@
       CALL battle_action_phase_do_enemy_action(enemyNum)
       enemyNum++
     ENDIF
-
     PRINTL
     WAIT
+    ; 戦闘終了ならループを切ってactionフェーズを終える
+    IF battle_is_enemy_dead_all() || party_is_defeat()
+      BREAK
+    ENDIF
   WEND
 
 @battle_action_phase_do_player_action(charactorNum)
@@ -44,6 +47,7 @@
 
   SELECTCASE 戦闘_入力コマンド:(charactorNum)
     CASE 1
+      CALL message_command_normal_attack(charactorNum)
       CALL kojo_戦闘_通常攻撃使用(charactorNum)
       CALLFORM normal_attack_{ABL:(charactorNum):武器 - 10}(charactorNum, targetEnemy)
     CASE 2

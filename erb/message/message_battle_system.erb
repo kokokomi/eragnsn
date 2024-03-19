@@ -1,11 +1,17 @@
 ﻿@message_skip_player_turn_faint(charactorNum)
   #DIM charactorNum
+  SETCOLOR SECONDARY_TEXT_COLOR
   PRINTFORML %charactor_get_charactor_name(charactorNum)%は虚ろな目でその場に倒れている...
+  RESETCOLOR
 
 @message_skip_player_turn_weak(charactorNum)
   #DIM charactorNum
+  SETCOLOR SECONDARY_TEXT_COLOR
   PRINTFORML %charactor_get_charactor_name(charactorNum)%は体力が尽きて動くことができない！
+  RESETCOLOR
 
 @message_skip_player_turn_ecstasy(charactorNum)
   #DIM charactorNum
+  SETCOLOR SECONDARY_TEXT_COLOR
   PRINTFORML %charactor_get_charactor_name(charactorNum)%は絶頂の余韻で腰が砕けてしまい戦えない！
+  RESETCOLOR

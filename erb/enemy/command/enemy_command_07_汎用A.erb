@@ -2,9 +2,9 @@
   #DIM enemyNum
   #DIM charactorNum
   IF CFLAG:(charactorNum):拘束 == enemyNum || CFLAG:(charactorNum):丸呑み == enemyNum
-    CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, true, false))
+    CALL charactor_damage_ep(charactorNum, 150, part_build(false, false, false, true))
   ELSE
-    CALL charactor_damage_ep(charactorNum, 100, part_build(false, false, true, false))
+    CALL charactor_damage_ep(charactorNum, 100, part_build(false, false, false, true))
   ENDIF
 
 @enemy_command_7_message(enemyNum, charactorNum)

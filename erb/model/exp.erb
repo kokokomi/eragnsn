@@ -1,6 +1,7 @@
-﻿@add_charactor_exp(charactorNum, amount)
+﻿@add_charactor_exp(charactorNum, amount, message = true)
   #DIM charactorNum
   #DIM amount
+  #DIM message
   ; レベルがMAX
   IF required_charactor_exp(charactorNum) < 0
     EXP:(charactorNum):0 = 0
@@ -10,12 +11,13 @@
   ; レベルアップ処理
   IF required_charactor_exp(charactorNum) < (amount + EXP:(charactorNum):0)
     amount = (amount + EXP:(charactorNum):0) - required_charactor_exp(charactorNum)
+    CALL message_charactor_lv_up(charactorNum, 1)
     EXP:(charactorNum):1 += 1
     ; 残りの経験値で再度経験値加算処理
-    CALL add_charactor_exp(amount)
+    CALL add_charactor_exp(charactorNum, amount, message)
     RETURN
   ENDIF
-
+  CALL message_charactor_exp_up(charactorNum, amount)
   ; レベルアップしない場合
   EXP:(charactorNum):0 += amount
 
