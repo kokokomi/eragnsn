@@ -1,11 +1,16 @@
 ﻿; 加入
-@charactor_add_member(charactorId)
+@charactor_add_member(charactorId, disableKojo = 0)
   #DIM charactorId
+  #DIM disableKojo
   IF GETCHARA(charactorId) != -1
     ; すでに加入している場合は無視
   ENDIF
   ADDCHARA charactorId
-  CALL kojo_チーム加入(GETCHARA(charactorId))
+  IF !disableKojo
+    CALL kojo_チーム加入(GETCHARA(charactorId))
+  ENDIF
+  ; キャラのレベルを1で初期化
+  EXP:(CHARANUM - 1):キャラクターレベル = 1
 
   ; キャラクターについての操作
   ; 元素名

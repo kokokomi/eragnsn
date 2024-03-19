@@ -1,0 +1,44 @@
+﻿@shop_charactor_status(charactorId)
+  #DIM charactorId
+  #DIM lcount
+  ; CALL view_component_statusbar(charactorNum)
+  DRAWLINE
+  PRINTFORML %CSVNAME(charactorId)%
+  PRINTFORML -能力-
+  PRINTFORMLC 元素: %STR:(CSVABL(charactorId, GETNUM(ABL, "元素")))%
+  PRINTFORMLC 武器: %STR:(CSVABL(charactorId, GETNUM(ABL, "武器")))%
+  PRINTL
+  PRINTFORMLC 攻撃力: {CSVABL(charactorId, GETNUM(ABL, "攻撃力"))}
+  PRINTFORMLC 防御力: {CSVABL(charactorId, GETNUM(ABL, "防御力"))}
+  PRINTL
+  PRINTFORMLC 会心率: {CSVABL(charactorId, GETNUM(ABL, "会心率"))}\%
+  PRINTFORMLC 会心ダメージ: {CSVABL(charactorId, GETNUM(ABL, "会心ダメージ"))}\%
+  PRINTL
+  PRINTFORMLC 元素チャージ: {CSVABL(charactorId, GETNUM(ABL, "元素チャージ"))}\%
+  PRINTFORMLC 元素熟知: {CSVABL(charactorId, GETNUM(ABL, "元素熟知"))}
+  PRINTL
+  PRINTL
+  PRINTFORML -部位感覚-
+  PRINTFORML Ａ感覚 {CSVABL(charactorId, GETNUM(ABL, "Ａ感覚"))} Lv
+  PRINTFORML Ｂ感覚 {CSVABL(charactorId, GETNUM(ABL, "Ｂ感覚"))} Lv
+  PRINTFORML Ｃ感覚 {CSVABL(charactorId, GETNUM(ABL, "Ｃ感覚"))} Lv
+  PRINTFORML Ｖ感覚 {CSVABL(charactorId, GETNUM(ABL, "Ｖ感覚"))} Lv
+  PRINTL
+  PRINTFORML -その他-
+  PRINTFORMLC 自慰中毒 {CSVABL(charactorId, GETNUM(ABL, "自慰中毒"))} Lv
+  PRINTFORMLC 触手中毒 {CSVABL(charactorId, GETNUM(ABL, "触手中毒"))} Lv
+  PRINTFORMLC レズ中毒 {CSVABL(charactorId, GETNUM(ABL, "レズ中毒"))} Lv
+  PRINTL
+  PRINTFORMLC 精液中毒 {CSVABL(charactorId, GETNUM(ABL, "精液中毒"))} Lv
+  PRINTFORMLC マゾっ気 {CSVABL(charactorId, GETNUM(ABL, "マゾっ気"))} Lv
+  PRINTL
+  PRINTFORML 絶頂経験 {CSVEXP(charactorId, GETNUM(EXP, "絶頂経験"))} 回
+  PRINTFORML 敗北経験 {CSVEXP(charactorId, GETNUM(EXP, "敗北経験"))} 回
+  PRINTL
+  PRINTFORML -素質-
+
+  DRAWLINE
+  CALL view_component_yes_no("招待する", "キャンセル")
+  IF RESULT
+    CALL charactor_add_member(charactorId)
+  ENDIF

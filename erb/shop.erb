@@ -24,10 +24,13 @@
   CALL show_home_gui
 
   ; 0-99の値が入力されるとUSERSHOPが呼び出されないので100からスタートする
-  PRINTFORML [100] - 探索へ向かう
-  PRINTFORML [101] - 編成
-  PRINTFORML [200] - セーブ
-  PRINTFORML [300] - ロード
+  PRINTFORMLC [100] - 探索へ向かう
+  PRINTL
+  PRINTFORMLC [101] - 編成
+  PRINTFORMLC [102] - 招待
+  PRINTL
+  PRINTFORMLC [200] - セーブ
+  PRINTFORMLC [300] - ロード
 
 @USERSHOP
   #DIM command
@@ -40,6 +43,8 @@
       CALL select_stage
     CASE 101
       CALL organize
+    CASE 102
+      CALL charactor_shop
     CASE 200
       CALL SAVEGAME_EX
     CASE 300
@@ -50,7 +55,9 @@
   #DIM memberCount
   #DIM lcount
   DRAWLINE
-  PRINTFORML 調査開始から {DAY}日目
+  PRINTFORMLC 調査開始から {DAY}日目
+  PRINTFORMLC 資金: {MONEY:0}モラ
+  PRINTL
   DRAWLINE
   PRINTFORML << 編成 >>
   memberCount = party_get_member_count()
@@ -64,7 +71,12 @@
   #DIM charactorNum
   SETCOLOR CFLAG:(charactorNum):キャラの色
   PRINTFORML %charactor_get_charactor_name(charactorNum)%
-  RESETCOLOR
-  CALL view_component_statusbar(charactorNum)
 
+  RESETCOLOR
+  LOCAL:0 = (EXP:(charactorNum):経験値) * 100 / required_charactor_exp(charactorNum)
+  PRINTFORM {EXP:(charactorNum):キャラクターレベル}Lv {LOCAL:0}\%
+  CALL view_component_colorbar(EXP:(charactorNum):0, required_charactor_exp(charactorNum), 10, COLOR_TEXT, TEXT_DISABLE)
+  PRINTL
+
+  CALL view_component_statusbar(charactorNum)
   PRINTL

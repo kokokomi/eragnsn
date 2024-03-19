@@ -27,7 +27,7 @@
 
   memberCount = party_get_member_count()
   FOR lcount, 0, memberCount
-    PRINTFORML 【%charactor_get_charactor_name(lcount)%】
+    PRINTFORML 【%charactor_get_charactor_name(lcount)%】{EXP:(lcount):キャラクターレベル}Lv
     CALL view_component_statusbar(lcount)
     PRINTL
   NEXT

@@ -1,0 +1,20 @@
+﻿@charactor_shop
+  CALL inputLoop("charactor_shop_ui", "charactor_shop_command")
+
+@charactor_shop_ui
+  PRINTFORML << 仲間の招待 >>
+  DRAWLINE
+  CALL view_component_charactor_selector(true)
+  DRAWLINE
+
+  PRINTFORML [999] 戻る
+@charactor_shop_command(command)
+  #DIM command
+  IF command == 999
+    RETURN true
+  ENDIF
+
+  IF EXISTCSV(command) && GETCHARA(command) < 0
+    CALL shop_charactor_status(command)
+  ENDIF
+  return false

@@ -2,6 +2,7 @@
 @EVENTFIRST
   CALL print_debug("EVENTFIRST")
   CALL InitializeCharacters
+  DAY = 1
   CALL show_newgame_story
 
   BEGIN SHOP
@@ -10,11 +11,9 @@
 @InitializeCharacters
 
   ; ほたちん
-  ADDCHARA 1
+  CALL charactor_add_member(1, true)
   ; アンバー
-  ADDCHARA 6
-
-  ADDCHARA 28
+  CALL charactor_add_member(6, true)
 
 @show_newgame_story
   PRINTFORML 「このヒルチャール、いつものやつとなにか違うような…」
