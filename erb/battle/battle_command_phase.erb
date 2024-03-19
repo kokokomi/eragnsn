@@ -27,6 +27,7 @@
   #DIM charactorNum
   #DIM lcount
   #DIM canAttackAction
+  #DIM command
 
   CALL show_battle_gui
   DRAWLINE
@@ -54,6 +55,7 @@
   ENDIF
 
   INPUT
+  command = RESULT
   SELECTCASE RESULT
     CASE 1
       IF canAttackAction
@@ -69,7 +71,7 @@
       ENDIF
     CASE 4, 5
       IF !canAttackAction
-        戦闘_入力コマンド:(charactorNum) = RESULT
+        戦闘_入力コマンド:(charactorNum) = command
       ENDIF
   ENDSELECT
   IF 戦闘_入力コマンド:(charactorNum) < 0
@@ -79,13 +81,22 @@
   $TARGET_SELECT
   PRINTFORML 誰を狙う？
   FOR lcount, 0, battle_enemy_count()
-    PRINTFORM [{lcount}]
-    PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    IF !battle_is_enemy_dead(lcount)
+      PRINTFORM [{lcount,3}]
+      PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+    ELSE
+      SETCOLOR TEXT_DISABLE
+      PRINTFORM [  x]
+      PRINTFORM 【%battle_enemy_name(lcount)% {battle_enemy_level(lcount)}Lv】
+      RESETCOLOR
+    ENDIF
     CALL view_component_colorbar(battle_enemy_hp(lcount), battle_enemy_max_hp(lcount), 20, COLOR_HP, COLOR_HP_BG)
     PRINTL
   NEXT
   INPUT
-  IF RESULT < 0 || battle_enemy_count() < RESULT
+  command = RESULT
+
+  IF command < 0 || battle_enemy_count() < command
     GOTO TARGET_SELECT
   ENDIF
-  戦闘_ターゲット:(charactorNum) = RESULT
+  戦闘_ターゲット:(charactorNum) = command
