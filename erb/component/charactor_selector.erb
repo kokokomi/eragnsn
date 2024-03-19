@@ -1,0 +1,25 @@
+﻿; 全キャラのリストを出す
+; INPUTで取れるのはchara no
+; disableMember=trueにすると招待済みのキャラを選択できなくする
+@view_component_charactor_selector(disableMember = false)
+  #DIM disableMember
+  #DIM lcount
+  #DIM col
+  col = 0
+  FOR lcount, 0, 1000
+    IF EXISTCSV(lcount)
+      IF GETCHARA(lcount) < 0 || !disableMember
+        PRINTFORMLC [{lcount,3}] %CSVCALLNAME(lcount)%
+      ELSE
+        SETCOLOR TEXT_DISABLE
+        PRINTFORMLC [  x] %CSVCALLNAME(lcount)%
+        RESETCOLOR
+      ENDIF
+      col++
+    ENDIF
+    IF 3 <= col
+      col = 0
+      PRINTL
+    ENDIF
+  NEXT
+  PRINTL
