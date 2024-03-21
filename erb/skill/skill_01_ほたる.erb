@@ -9,6 +9,7 @@
 
   ;最終段は範囲攻撃
   CALL skill_util_attack(charactorNum, targetEnemyNum, 192, 1)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_風, 2, 1)
 
   ; 元素爆発
 @do_burst_1(charactorNum, targetEnemyNum)
@@ -17,3 +18,4 @@
   #DIM lcount
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 192, battle_enemy_count())
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_風, 1, battle_enemy_count())

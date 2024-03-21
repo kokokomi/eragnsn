@@ -1,0 +1,46 @@
+﻿@apply_elemental_reaction_6(targetNum, elementId, damage_amount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM elemental_amount
+  #DIM damage_amount
+  #DIM isEnemyTarget
+  #DIM lcount
+  #DIM elementalReactionTypes = ELEMENT_TYPE_炎, ELEMENT_TYPE_水, ELEMENT_TYPE_氷, ELEMENT_TYPE_雷
+  #DIM hasReaction
+  #DIM reactionDamage
+  ; 元素が足りない場合は反応なし
+  IF get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_風) <= 0
+    RETURN damage_amount
+  ENDIF
+  reactionDamage = isEnemyTarget ? 10 * MAX(1, party_em_amount()) # 5 * MAX(1, party_em_amount())
+  hasReaction = true
+  ; 何かしら拡散できている間はループを続ける
+  WHILE hasReaction
+    hasReaction = false
+    FOR lcount, 0, VARSIZE("elementalReactionTypes")
+      ;風オーブがなければ中断
+      SIF get_elemental_orb(isEnemyTarget, targetNum, elementalReactionTypes:(lcount)) <= 0
+        CONTINUE
+      
+      ; 拡散対象の元素がなければ中断
+      SIF get_elemental_orb(isEnemyTarget, targetNum, elementalReactionTypes:(lcount)) <= 0
+        CONTINUE
+
+      CALL print_debug(@"拡散反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+      CALL message_elemental_reaction(@"%ELEMENT_TYPE:(elementalReactionTypes:(lcount))%拡散")
+      CALL decreace_elemental_orb(isEnemyTarget, targetNum, elementalReactionTypes:(lcount), 1)
+      CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_風, 2)
+      CALL battle_damage_to(isEnemyTarget, targetNum, reactionDamage)
+      IF targetNum - 1 > 0
+        CALL increace_elemental_orb(isEnemyTarget, targetNum - 1, elementalReactionTypes:(lcount), 2)
+        CALL battle_damage_to(isEnemyTarget, targetNum - 1, reactionDamage)
+      ENDIF
+      IF targetNum + 1 < (isEnemyTarget ? battle_enemy_count() # party_get_member_count())
+        CALL increace_elemental_orb(isEnemyTarget, targetNum + 1, elementalReactionTypes:(lcount), 2)
+        CALL battle_damage_to(isEnemyTarget, targetNum + 1, reactionDamage)
+      ENDIF
+      hasReaction = true
+    NEXT
+  WEND
+
+  RETURN damage_amount

@@ -41,13 +41,17 @@
     IF charactor_can_use_skill(charactorNum)
       PRINTFORML [2] %CSTR:(charactorNum):元素スキル%
     ELSE
+      SETCOLOR TEXT_DISABLE
       PRINTFORML [x] %CSTR:(charactorNum):元素スキル%はまだ使えない
+      RESETCOLOR
     ENDIF
 
     IF charactor_can_use_burst(charactorNum)
       PRINTFORML [3] %CSTR:(charactorNum):元素爆発%
     ELSE
+      SETCOLOR TEXT_DISABLE
       PRINTFORML [x] %CSTR:(charactorNum):元素爆発%はまだ使えない
+      RESETCOLOR
     ENDIF
   ELSE
     PRINTFORML [4] 拘束を振りほどく

@@ -36,3 +36,21 @@
   FOR lcount, 0, member_count
     CALL charactor_reset_ep_if_ecstasy(lcount)
   NEXT
+
+@party_em_amount
+  #FUNCTION
+  #DIM totalEmAmount
+  #DIM lcount
+  #DIM memberCount
+  totalEmAmount = 0
+  memberCount = 0
+  FOR lcount, 0, party_get_member_count()
+    IF !charactor_is_faint(lcount)
+      memberCount++
+      totalEmAmount += ABL:(lcount):元素熟知
+    ENDIF
+  NEXT
+  IF memberCount == 0
+    RETURNF 0
+  ENDIF
+  RETURNF totalEmAmount / memberCount

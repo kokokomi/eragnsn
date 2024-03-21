@@ -4,6 +4,7 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 95)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_炎, 1)
   CALL skill_util_random_target_attack(charactorNum, 32, 0, 3)
 
   ; 元素爆発

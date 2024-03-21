@@ -1,0 +1,25 @@
+﻿@apply_elemental_reaction_3(targetNum, elementId, damage_amount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM elemental_amount
+  #DIM damage_amount
+  #DIM isEnemyTarget
+  #DIM reactionDamage
+  ; 元素が足りない場合は反応なし
+  IF get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_雷) <= 0 || get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_炎) <= 0
+    RETURN damage_amount
+  ENDIF
+  CALL print_debug(@"過負荷反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+  CALL message_elemental_reaction("過負荷")
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_雷, 2)
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_炎, 2)
+
+  reactionDamage = isEnemyTarget ? 30 * MAX(1, party_em_amount()) # 10 * MAX(1, party_em_amount())
+  ; 反応した対象+左右の敵にダメージ
+  CALL battle_damage_to(isEnemyTarget, targetNum - 1, reactionDamage)
+  SIF (targetNum - 1) >= 0
+    CALL battle_damage_to(isEnemyTarget, targetNum - 1, reactionDamage)
+  SIF (targetNum + 1) < (isEnemyTarget ? battle_enemy_count() # party_get_member_count())
+    CALL battle_damage_to(isEnemyTarget, targetNum - 1, reactionDamage)
+    
+  RETURN damage_amount

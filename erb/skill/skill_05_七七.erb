@@ -4,6 +4,7 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 96)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_氷, 1)
   CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 69 / 100) + 450)
 
   ; 元素爆発
@@ -12,4 +13,5 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 284)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_氷, 1)
   CALL skill_util_heal_all_member((ABL:(charactorNum):攻撃力 * 90 / 100) + 577)

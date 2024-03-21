@@ -1,0 +1,29 @@
+﻿@apply_elemental_reaction_2(targetNum, elementId, damage_amount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM elemental_amount
+  #DIM damage_amount
+  #DIM isEnemyTarget
+  ; 元素が足りない場合は反応なし
+  IF get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷) <= 0 || get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_炎) <= 0
+    RETURN damage_amount
+  ENDIF
+
+  ; 2倍溶解
+  IF elementId == ELEMENT_TYPE_炎
+    CALL print_debug(@"2倍溶解反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+    CALL message_elemental_reaction("溶解")
+    CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷, 2)
+    CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_炎, 1)
+    RETURN damage_amount * 2
+  ENDIF
+  ; 1.5倍溶解
+  IF elementId == ELEMENT_TYPE_氷
+    CALL print_debug(@"1.5倍溶解反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+    CALL message_elemental_reaction("溶解")
+    CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_炎, 2)
+    CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷, 1)
+    RETURN damage_amount + (damage_amount / 2)
+  ENDIF
+  ; トリガーの元素が炎氷以外なら付着を残して次へ
+  RETURN damage_amount

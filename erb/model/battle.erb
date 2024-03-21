@@ -108,9 +108,8 @@
   #FUNCTION
   RETURNF DT_SELECT("enemies", "enemy_hp > 0", "id ASC") == 0
 
-@battle_attack_to_enemy(enemyNum, charactorNum, damage)
+@battle_attack_to_enemy(enemyNum, damage)
   #DIM enemyNum
-  #DIM charactorNum
   #DIM damage
   #DIM newHp
   #DIM lcount
@@ -125,12 +124,11 @@
   CALL message_enemy_damage(enemyNum, damage)
   ; ダメージを与えて倒したとき
   IF battle_is_enemy_dead(enemyNum)
-    CALL battle_on_enemy_dead(enemyNum, charactorNum)
+    CALL battle_on_enemy_dead(enemyNum)
   ENDIF
 
-@battle_on_enemy_dead(enemyNum, charactorNum)
+@battle_on_enemy_dead(enemyNum)
   #DIM enemyNum
-  #DIM charactorNum
   #DIM lcount
 
   FOR lcount, 0, party_get_member_count()
@@ -146,3 +144,32 @@
     ENDIF
   NEXT
   MONEY += battle_enemy_mora(enemyNum)
+
+@battle_enemy_em_amount
+  #FUNCTION
+  #DIM enemyCount
+  #DIM totalEm
+  #DIM lcount
+  enemyCount = 0
+  totalEm = 0
+  FOR lcount, 0, battle_enemy_count()
+    SIF battle_is_enemy_dead(lcount)
+      CONTINUE
+
+    enemyCount++
+    totalEm += battle_enemy_level(lcount)
+  NEXT
+
+  RETURNF totalEm / enemyCount
+
+@battle_damage_to(isEnemyTarget, targetNum, damage)
+  #DIM isEnemyTarget
+  #DIM targetNum
+  #DIM damage
+  ; 最低1ダメージは保証
+  damage = MAX(damage, 1)
+  IF isEnemyTarget
+    CALL battle_attack_to_enemy(targetNum, damage)
+  ELSE
+    CALL charactor_damage_hp(targetNum, damage)
+  ENDIF

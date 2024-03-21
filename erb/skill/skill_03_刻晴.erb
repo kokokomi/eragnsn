@@ -3,8 +3,9 @@
   #DIM charactorNum
   #DIM targetEnemyNum
 
-  CALL battle_attack_to_enemy(targetEnemyNum, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 50))
-  CALL battle_attack_to_enemy(targetEnemyNum, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 168))
+  CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 50))
+  CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, 168))
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_雷, 1)
 
   ; 元素爆発
 @do_burst_3(charactorNum, targetEnemyNum)
@@ -15,6 +16,7 @@
 
   ; 8回の攻撃をすべての敵に
   CALL skill_util_attack(charactorNum, targetEnemyNum, 24, battle_enemy_count(), 8)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_雷, 1, battle_enemy_count())
 
 
   ; 最終段は1匹に

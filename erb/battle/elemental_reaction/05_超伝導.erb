@@ -1,0 +1,17 @@
+﻿@apply_elemental_reaction_5(targetNum, elementId, damage_amount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM elemental_amount
+  #DIM damage_amount
+  #DIM isEnemyTarget
+  ; 元素が足りない場合は反応なし
+  IF get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷) <= 0 || get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_雷) <= 0
+    RETURN damage_amount
+  ENDIF
+
+  CALL print_debug(@"超伝導反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+  CALL message_elemental_reaction("超伝導")
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_雷, 1)
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷, 1)
+
+  RETURN damage_amount + (damage_amount / 10)

@@ -11,14 +11,14 @@
   ; 複数回攻撃のループ
   FOR lcount2, 0, hitCount
     ; 範囲攻撃の中心
-    CALL battle_attack_to_enemy(targetEnemyNum, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
+    CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
     FOR lcount1, 1, range + 1
       ; 中心から左右に攻撃を当てていく
       IF (targetEnemyNum - lcount1) >= 0
-        CALL battle_attack_to_enemy(targetEnemyNum - lcount1, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
+        CALL battle_attack_to_enemy(targetEnemyNum - lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
       ENDIF
       IF (targetEnemyNum + lcount1) < battle_enemy_count()
-        CALL battle_attack_to_enemy(targetEnemyNum + lcount1, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
+        CALL battle_attack_to_enemy(targetEnemyNum + lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
       ENDIF
     NEXT
   NEXT
@@ -38,14 +38,14 @@
     ; ランダムなターゲットを設定
     targetEnemyNum = RAND:(battle_enemy_count())
     ; 範囲攻撃の中心
-    CALL battle_attack_to_enemy(targetEnemyNum, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
+    CALL battle_attack_to_enemy(targetEnemyNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum, multiplier))
     FOR lcount1, 1, range + 1
       ; 中心から左右に攻撃を当てていく
       IF (targetEnemyNum - lcount1) >= 0
-        CALL battle_attack_to_enemy(targetEnemyNum - lcount1, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
+        CALL battle_attack_to_enemy(targetEnemyNum - lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum - lcount1, multiplier))
       ENDIF
       IF (targetEnemyNum + lcount1) < battle_enemy_count()
-        CALL battle_attack_to_enemy(targetEnemyNum + lcount1, charactorNum, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
+        CALL battle_attack_to_enemy(targetEnemyNum + lcount1, calculate_hp_damage_to_enemy(charactorNum, targetEnemyNum + lcount1, multiplier))
       ENDIF
     NEXT
   NEXT

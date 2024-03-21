@@ -51,6 +51,9 @@
   CALL add_enemy_table_record(202, 1)
   CALL add_enemy_table_record(203, 1)
 
+  CALL add_enemy_table_record(100, 2)
+  CALL add_enemy_table_record(101, 2)
+
   FOR lcount, 0, (RAND:(ステージ現在フロア)) + 5
     SELECTCASE RAND:100
       CASE IS < 90

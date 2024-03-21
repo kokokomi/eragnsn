@@ -5,6 +5,7 @@
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 115)
   CALL skill_util_random_target_attack(charactorNum, 88, 0, 3)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_雷, 1)
 
   ; 元素爆発
 @do_burst_12(charactorNum, targetEnemyNum)
@@ -12,3 +13,4 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 208, 1)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_雷, 1, 1)

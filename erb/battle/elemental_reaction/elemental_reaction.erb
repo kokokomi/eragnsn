@@ -1,0 +1,15 @@
+﻿@apply_elemental_reaction(targetNum, elementId, damageAmount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM damageAmount
+  #DIM isEnemyTarget
+
+  #DIM lcount
+  FOR lcount, 1, 20
+    IF !EXISTFUNCTION(@"apply_elemental_reaction_{lcount}")
+      BREAK
+    ENDIF
+    CALLFORM apply_elemental_reaction_{lcount}(targetNum, elementId, damageAmount, isEnemyTarget)
+    damageAmount = RESULT
+  NEXT
+  RETURN damageAmount

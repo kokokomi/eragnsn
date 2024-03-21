@@ -4,6 +4,7 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 123, 1)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_炎, 1, 1)
 
   ; 元素爆発
 @do_burst_6(charactorNum, targetEnemyNum)
@@ -11,3 +12,4 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 505)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_炎, 2)

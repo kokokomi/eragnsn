@@ -21,6 +21,13 @@
       ENDIF
     NEXT
     PRINTL
+    lcount2 = 0
+    FOR lcount2, 0, 7
+      IF get_elemental_orb(true, lcount, lcount2) > 0
+        PRINTFORM %ELEMENT_TYPE:lcount2%={get_elemental_orb(true, lcount, lcount2)}
+      ENDIF
+    NEXT
+    PRINTL
   NEXT
 
   DRAWLINE

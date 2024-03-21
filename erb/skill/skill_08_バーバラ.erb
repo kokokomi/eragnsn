@@ -4,6 +4,7 @@
   #DIM targetEnemyNum
 
   CALL skill_util_attack(charactorNum, targetEnemyNum, 54)
+  CALL increace_elemental_orb(true, targetEnemyNum, ELEMENT_TYPE_水, 1)
   CALL skill_util_heal_all_member(385 + BASE:(charactorNum):0 * 4 / 100)
 
   ; 元素爆発

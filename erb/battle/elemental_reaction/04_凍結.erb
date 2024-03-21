@@ -1,0 +1,22 @@
+﻿@apply_elemental_reaction_4(targetNum, elementId, damage_amount, isEnemyTarget)
+  #DIM targetNum
+  #DIM elementId
+  #DIM elemental_amount
+  #DIM damage_amount
+  #DIM isEnemyTarget
+  ; 元素が足りない場合は反応なし
+  IF get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_水) <= 0 || get_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷) <= 0
+    RETURN damage_amount
+  ENDIF
+  CALL print_debug(@"凍結反応発生: %isEnemyTarget ? battle_enemy_name(targetNum) # CALLNAME:(targetNum)% %ELEMENT_TYPE:(elementId)%元素付着")
+  CALL message_elemental_reaction("凍結")
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_水, 1)
+  CALL decreace_elemental_orb(isEnemyTarget, targetNum, ELEMENT_TYPE_氷, 1)
+
+  ; トリガーの元素関係なく反応が発生する
+  IF isEnemyTarget
+    敵_状態異常:(tagetNum):凍結++
+  ELSE
+    CFLAG:(targetNum):凍結++
+  ENDIF
+  RETURN damage_amount

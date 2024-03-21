@@ -1,0 +1,85 @@
+﻿@reset_elemental_orb
+  #DIM lcount
+  #DIM lcount2
+  FOR lcount, 0, VARSIZE("敵_元素付着")
+    FOR lcount2, 0, VARSIZE("ELEMENT_TYPE")
+      CALL set_elemental_orb(true, lcount, lcount2, 0)
+    NEXT
+  NEXT
+
+  FOR lcount, 0, VARSIZE("味方_元素付着")
+    FOR lcount2, 0, VARSIZE("ELEMENT_TYPE")
+      CALL set_elemental_orb(false, lcount, lcount2, 0)
+    NEXT
+  NEXT
+
+@set_elemental_orb(isEnemyTarget, targetNum, elementId, amount)
+  #DIM isEnemyTarget
+  #DIM targetNum
+  #DIM elementId
+  #DIM amount
+  IF isEnemyTarget
+    敵_元素付着:(targetNum):(elementId) = MAX(0, amount)
+  ELSE
+    味方_元素付着:(targetNum):(elementId) = MAX(0, amount)
+  ENDIF
+
+@increace_elemental_orb(isEnemyTarget, targetNum, elementId, amount, range = 0)
+  #DIM isEnemyTarget
+  #DIM targetNum
+  #DIM elementId
+  #DIM amount
+  #DIM range
+  #DIM lcount
+  ; 範囲の中心
+  CALL set_elemental_orb(isEnemyTarget, targetNum, elementId, get_elemental_orb(isEnemyTarget, targetNum, elementId) + amount)
+  ; 拡散ダメージは増幅系反応を考慮しないのでRESULTは捨てる
+  CALL apply_elemental_reaction(targetNum, elementId, 0, isEnemyTarget)
+  FOR lcount, 1, range + 1
+    ; 中心から左右に攻撃を当てていく
+    IF (targetNum - lcount) >= 0
+      CALL set_elemental_orb(isEnemyTarget, targetNum - 1, elementId, get_elemental_orb(isEnemyTarget, targetNum - 1, elementId) + amount)
+      ; 拡散ダメージは増幅系反応を考慮しないのでRESULTは捨てる
+      CALL apply_elemental_reaction(targetNum - 1, elementId, 0, isEnemyTarget)
+    ENDIF
+    IF (targetNum + lcount) < (isEnemyTarget ? battle_enemy_count() # party_get_member_count())
+      CALL set_elemental_orb(isEnemyTarget, targetNum + 1, elementId, get_elemental_orb(isEnemyTarget, targetNum + 1, elementId) + amount)
+      ; 拡散ダメージは増幅系反応を考慮しないのでRESULTは捨てる
+      CALL apply_elemental_reaction(targetNum + 1, elementId, 0, isEnemyTarget)
+    ENDIF
+  NEXT
+
+@decreace_elemental_orb(isEnemyTarget, targetNum, elementId, amount)
+  #DIM isEnemyTarget
+  #DIM targetNum
+  #DIM elementId
+  #DIM amount
+  CALL set_elemental_orb(isEnemyTarget, targetNum, elementId, get_elemental_orb(isEnemyTarget, targetNum, elementId) - amount)
+
+@get_elemental_orb(isEnemyTarget, targetNum, elementId)
+  #FUNCTION
+  #DIM isEnemyTarget
+  #DIM targetNum
+  #DIM elementId
+  IF isEnemyTarget
+    RETURNF 敵_元素付着:(targetNum):(elementId)
+  ELSE
+    RETURNF 味方_元素付着:(targetNum):(elementId)
+  ENDIF
+
+@debug_show_elemental_orb
+  #DIM targetNum
+  #DIM elementId
+  FOR targetNum, 0, VARSIZE("敵_元素付着")
+    CALL print_debug(@"%battle_enemy_name(targetNum)%の付着元素")
+    FOR elementId, 0, VARSIZE("ELEMENT_TYPE")
+      CALL print_debug(@"%ELEMENT_TYPE:(elementId)%={get_elemental_orb(true, targetNum, elementId)}")
+    NEXT
+  NEXT
+
+  FOR targetNum, 0, VARSIZE("味方_元素付着")
+    CALL print_debug(@"%CALLNAME:(targetNum)%の付着元素")
+    FOR elementId, 0, VARSIZE("ELEMENT_TYPE")
+      CALL print_debug(@"%ELEMENT_TYPE:(elementId)%={get_elemental_orb(false, targetNum, elementId)}")
+    NEXT
+  NEXT

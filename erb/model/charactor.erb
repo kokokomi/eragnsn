@@ -336,7 +336,7 @@
   ENDIF
 
   CALL message_player_hp_heal(charactorNum, amount)
-  BASE:(charactorNum):0 = MIN(0, BASE:(charactorNum):0 + amount)
+  BASE:(charactorNum):0 = MIN(MAXBASE:(charactorNum):0, BASE:(charactorNum):0 + amount)
 
 @charactor_ep_damage_bonus(charactorNum, expType)
   #FUNCTION
