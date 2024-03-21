@@ -1,0 +1,6 @@
+﻿#DIM TEST_INDEX
+#DIMS TEST_NAME
+
+#DIMS GLOBAL global_testFuncNames, 1000
+#DIM GLOBAL global_testCaseSize
+#DIM GLOBAL global_lcount

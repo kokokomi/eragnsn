@@ -1,5 +1,12 @@
 ﻿@SYSTEM_TITLE
   CALL print_debug("SYSTEM_TITLE")
+  [IF_DEBUG]
+  IF EXISTFUNCTION("run_testcases")
+    CALL run_testcases
+    RETURN
+  ENDIF
+  [ENDIF]
+
   ;@SYSTEM_TITLEが定義されていると、標準のタイトル画面の代わりにSYSTEM_TITLEが呼ばれる。
 
   ;このタイミングでグローバル変数を読んでおけば取りこぼしが無くなる。

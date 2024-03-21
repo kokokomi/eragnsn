@@ -1,0 +1,42 @@
+﻿@run_testcases
+  #DIM lcount
+  #DIM lcount2
+  #DIM testCaseSize
+  #DIM testIndex
+  #DIMS testFuncNames, 1000
+
+  ENUMFUNCBEGINSWITH "test__"
+  testCaseSize = RESULT
+  FOR lcount, 0, testCaseSize
+    testFuncNames:(lcount) = %RESULTS:(lcount)%
+  NEXT
+
+  lcount = 0
+  FOR lcount, 0, testCaseSize
+
+    PRINTFORML test case {lcount+1,4}/{testCaseSize,4}: %testFuncNames:(lcount)%
+    CALLFORM %testFuncNames:(lcount)%
+
+    ; globalをリセットして、テストに必要なデータをglobalに退避
+    RESETGLOBAL
+    lcount2 = 0
+    FOR lcount2, 0, testCaseSize
+      global_testFuncNames:(lcount2) = %testFuncNames:(lcount2)%
+    NEXT
+    global_testCaseSize = testCaseSize
+    global_lcount = lcount
+
+    ; 退避後にglobal以外のデータをリセットしてglobalから
+    ; テストデータを戻す
+    RESETDATA
+    lcount2 = 0
+    FOR lcount2, 0, global_testCaseSize
+      testFuncNames:(lcount2) = %global_testFuncNames:(lcount2)%
+    NEXT
+    testCaseSize = global_testCaseSize
+    lcount = global_lcount
+  NEXT
+
+  SETCOLOR 0x00FF7F
+  PRINTFORML test successful!
+  RESETCOLOR

@@ -1,0 +1,4 @@
+﻿@test__util_math_clamp
+  CALL assert_num_eq(1, math_clamp(1, 0, 10))
+  CALL assert_num_eq(0, math_clamp(-1, 0, 10))
+  CALL assert_num_eq(10, math_clamp(11, 0, 10))

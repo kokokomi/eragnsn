@@ -1,0 +1,45 @@
+﻿@assert_num_eq(expected, actual)
+  #DIM expected
+  #DIM actual
+  IF expected != actual
+    CALL assertion_error(expected, actual, "assert_num_eq")
+  ENDIF
+
+@assert_num_not_eq(expected, actual)
+  #DIM expected
+  #DIM actual
+  IF expected == actual
+    CALL assertion_error(expected, actual, "assert_num_not_eq")
+  ENDIF
+
+@assert_str_eq(expected, actual)
+  #DIMS expected
+  #DIMS actual
+  IF expected != actual
+    CALL assertion_errors(expected, actual, "assert_str_eq")
+  ENDIF
+
+@assert_str_not_eq(expected, actual)
+  #DIMS expected
+  #DIMS actual
+  IF expected != actual
+    CALL assertion_errors(expected, actual, "assert_str_not_eq")
+  ENDIF
+
+@assertion_error(expected, actual, errorMessage)
+  #DIM expected
+  #DIM actual
+  #DIMS errorMessage
+  CALL assertion_errors(@"{expected}", @"{actual}", errorMessage)
+  
+@assertion_errors(expected, actual, errorMessage)
+  #DIMS expected
+  #DIMS actual
+  #DIMS errorMessage
+  SETCOLOR COLOR_HP
+  PRINTFORML test failed: %TEST_NAME%: %errorMessage%
+  PRINTFORML expected: %expected%
+  PRINTFORML actual  : %actual%
+  PRINTFORML
+  RESETCOLOR
+  THROW "test failed."

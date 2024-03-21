@@ -4,6 +4,7 @@
   #DIM disableKojo
   IF GETCHARA(charactorId) != -1
     ; すでに加入している場合は無視
+    RETURN
   ENDIF
   ADDCHARA charactorId
   IF !disableKojo

@@ -1,0 +1,10 @@
+﻿@test__add_charactor
+  CALL assert_num_eq(0, party_get_member_count())
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(1, party_get_member_count())
+
+@test__add_dup_charactor
+  CALL assert_num_eq(0, party_get_member_count())
+  CALL charactor_add_member(1, true)
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(1, party_get_member_count())
