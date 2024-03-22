@@ -6,12 +6,12 @@
   SELECTCASE battle_enemy_id(enemyNum)
       ; ヒルチャール系
     CASE 1, 2, 3, 4, 5, 6, 7
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを乱暴にこすっている！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のクリトリスを乱暴にこすっている！"
       ; スライム系
     CASE 50 TO 63
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスに張り付き、あらゆる角度から刺激を与えた！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のクリトリスに張り付き、あらゆる角度から刺激を与えた！"
     CASEELSE
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の秘部を刺激している！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%の秘部を刺激している！"
   ENDSELECT
 
 @汎用技メッセージ_C_拘束(enemyNum, charactorNum)
@@ -22,13 +22,13 @@
   SELECTCASE battle_enemy_id(enemyNum)
       ; ヒルチャール系
     CASE 1, 2, 3, 4, 5, 6, 7
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスをざらざらとした舌で舐めている！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のクリトリスをざらざらとした舌で舐めている！"
       ; スライム系
     CASE 50 TO 63
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスに張り付き、あらゆる角度から刺激を与えた！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のクリトリスに張り付き、あらゆる角度から刺激を与えた！"
       ; 人間系
     CASE 200 TO 203
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%の足を開脚したまま固定し、クリトリスに吸い付いた！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%の足を開脚したまま固定し、クリトリスに吸い付いた！"
     CASEELSE
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のクリトリスを吸いあげている！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のクリトリスを吸いあげている！"
   ENDSELECT

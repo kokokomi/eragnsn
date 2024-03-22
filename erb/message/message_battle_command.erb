@@ -2,21 +2,21 @@
 @message_command_normal_attack(charactorNum)
   #DIM charactorNum
   SETCOLOR SECONDARY_TEXT_COLOR
-  PRINTFORML %charactor_get_charactor_name(charactorNum)%の通常攻撃！
+  PRINTFORML %CALLNAME:(charactorNum)%の通常攻撃！
   RESETCOLOR
 
 ; 元素スキル選択
 @message_command_skill(charactorNum)
   #DIM charactorNum
   SETCOLOR SECONDARY_TEXT_COLOR
-  PRINTFORML %charactor_get_charactor_name(charactorNum)%の%CSTR:(charactorNum):元素スキル%！
+  PRINTFORML %CALLNAME:(charactorNum)%の%CSTR:(charactorNum):元素スキル%！
   RESETCOLOR
 
   ; 元素爆発選択
 @message_command_burst(charactorNum)
   #DIM charactorNum
   SETCOLOR SECONDARY_TEXT_COLOR
-  PRINTFORML %charactor_get_charactor_name(charactorNum)%の%CSTR:(charactorNum):元素爆発%！
+  PRINTFORML %CALLNAME:(charactorNum)%の%CSTR:(charactorNum):元素爆発%！
   RESETCOLOR
 
   ; 振りほどく選択
@@ -26,9 +26,9 @@
 
   SETCOLOR SECONDARY_TEXT_COLOR
   IF CFLAG:(charactorNum):拘束 > -1
-    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%の拘束を振りほどこうとした！
+    PRINTFORML %CALLNAME:(charactorNum)%は%battle_enemy_name(enemyNum)%の拘束を振りほどこうとした！
   ELSEIF CFLAG:(charactorNum):丸呑み > -1
-    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%の中から逃れようとした！
+    PRINTFORML %CALLNAME:(charactorNum)%は%battle_enemy_name(enemyNum)%の中から逃れようとした！
   ENDIF
   RESETCOLOR
 
@@ -37,7 +37,7 @@
   #DIM charactorNum
   #DIM enemyNum
   SETCOLOR SECONDARY_TEXT_COLOR
-  PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%のされるがままになっている！
+  PRINTFORML %CALLNAME:(charactorNum)%は%battle_enemy_name(enemyNum)%のされるがままになっている！
   RESETCOLOR
 
   ; 振りほどく成功
@@ -46,9 +46,9 @@
   #DIM enemyNum
 
   IF CFLAG:(charactorNum):拘束 > -1
-    PRINTFORML %charactor_get_charactor_name(charactorNum)%は%battle_enemy_name(enemyNum)%を振り払った！
+    PRINTFORML %CALLNAME:(charactorNum)%は%battle_enemy_name(enemyNum)%を振り払った！
   ELSEIF CFLAG:(charactorNum):丸呑み > -1
-    PRINTFORML %charactor_get_charactor_name(charactorNum)%は何とか%battle_enemy_name(CFLAG:(enemyNum):丸呑み)%の中から這い出した！
+    PRINTFORML %CALLNAME:(charactorNum)%は何とか%battle_enemy_name(CFLAG:(enemyNum):丸呑み)%の中から這い出した！
   ENDIF
 
   ; 振りほどく失敗
@@ -57,7 +57,7 @@
   #DIM enemyNum
 
   IF CFLAG:(charactorNum):拘束 > -1
-    PRINTFORML しかし、%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%を離さない！
+    PRINTFORML しかし、%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%を離さない！
   ELSEIF CFLAG:(charactorNum):丸呑み > -1
     PRINTFORML しかし、%battle_enemy_name(enemyNum)%から抜け出すことはできなかった！
   ENDIF

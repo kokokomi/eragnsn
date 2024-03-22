@@ -70,7 +70,7 @@
   #DIM charactorId
   #DIM charactorNum
   SETCOLOR CFLAG:(charactorNum):キャラの色
-  PRINTFORML %charactor_get_charactor_name(charactorNum)%
+  PRINTFORML %CALLNAME:(charactorNum)%
 
   RESETCOLOR
   LOCAL:0 = (EXP:(charactorNum):経験値) * 100 / required_charactor_exp(charactorNum)

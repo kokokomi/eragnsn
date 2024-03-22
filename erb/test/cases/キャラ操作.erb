@@ -8,3 +8,298 @@
   CALL charactor_add_member(1, true)
   CALL charactor_add_member(1, true)
   CALL assert_num_eq(1, party_get_member_count())
+
+@test__charactor_set_ep_1
+  CALL charactor_add_member(1, true)
+  CALL assert_num_not_eq(1, BASE:0:4)
+
+  CALL charactor_set_ep_1(0)
+  CALL assert_num_eq(1, BASE:0:4)
+
+  CALL charactor_set_ep_1(0)
+  CALL assert_num_eq(1, BASE:0:4)
+
+@test__charactor_reset_ep_if_ecstasy
+  CALL charactor_add_member(1, true)
+
+  BASE:0:4 = 100
+  CALL charactor_reset_ep_if_ecstasy(0)
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(100, BASE:0:4)
+
+  BASE:0:4 = 0
+  CALL charactor_reset_ep_if_ecstasy(0)
+  CALL assert_num_eq(1, CFLAG:0:恍惚)
+  CALL assert_num_eq(MAXBASE:0:4, BASE:0:4)
+
+@test__charactor_ecstasy
+  CALL charactor_add_member(1, true)
+
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+
+  CALL charactor_ecstasy(0, 0, part_build(true, false, false, false))
+  CALL assert_num_eq(1, CFLAG:0:恍惚)
+  CALL assert_num_eq(1, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:2 - 100, BASE:0:2)
+
+  CALL charactor_ecstasy(0, 2, part_build(true, false, false, false))
+  CALL assert_num_eq(1 + 3, CFLAG:0:恍惚)
+  CALL assert_num_eq(2, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:2 - 100 - 120, BASE:0:2)
+
+@test__charactor_is_faint
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(false, charactor_is_faint(0))
+
+  BASE:0:2 = 0
+  CALL assert_num_eq(true, charactor_is_faint(0))
+
+@test__charactor_is_weak
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(false, charactor_is_weak(0))
+
+  BASE:0:0 = 0
+  CALL assert_num_eq(true, charactor_is_weak(0))
+
+@test__charactor_is_nude
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(false, charactor_is_nude(0))
+
+  BASE:0:3 = 0
+  CALL assert_num_eq(true, charactor_is_nude(0))
+
+@test__charactor_charge_energy
+  CALL charactor_add_member(1, true)
+  ABL:0:元素チャージ = 100
+  ABL:0:元素エネルギー = 60
+  CALL assert_num_eq(0, CFLAG:0:元素エネルギー量)
+
+  CALL charactor_charge_energy(0, 20)
+  CALL assert_num_eq(20, CFLAG:0:元素エネルギー量)
+
+  CALL charactor_charge_energy(0, 80)
+  CALL assert_num_eq(60, CFLAG:0:元素エネルギー量)
+
+  CFLAG:0:元素エネルギー量 = 0
+  ABL:0:元素チャージ = 120
+  CALL charactor_charge_energy(0, 5)
+  CALL assert_num_eq(6, CFLAG:0:元素エネルギー量)
+
+@test__charactor_decrease_cooltime
+  CALL charactor_add_member(1, true)
+
+  CALL charactor_decrease_cooltime(0)
+  CALL assert_num_eq(0, CFLAG:0:元素スキルクールタイム)
+  CALL assert_num_eq(0, CFLAG:0:元素爆発クールタイム)
+
+  CFLAG:0:元素スキルクールタイム = 10
+  CFLAG:0:元素爆発クールタイム = 10
+  CALL charactor_decrease_cooltime(0)
+  CALL assert_num_eq(8, CFLAG:0:元素スキルクールタイム)
+  CALL assert_num_eq(8, CFLAG:0:元素爆発クールタイム)
+
+@test__charactor_can_use_skill
+  CALL charactor_add_member(1, true)
+  CFLAG:0:元素スキルクールタイム = 0
+  CALL assert_num_eq(true, charactor_can_use_skill(0))
+
+  CFLAG:0:元素スキルクールタイム = 1
+  CALL assert_num_eq(false, charactor_can_use_skill(0))
+
+@test__charactor_can_use_burst
+  CALL charactor_add_member(1, true)
+  CFLAG:0:元素爆発クールタイム = 0
+  CALL assert_num_eq(false, charactor_can_use_burst(0))
+
+  CFLAG:0:元素爆発クールタイム = 1
+  CALL assert_num_eq(false, charactor_can_use_burst(0))
+
+  CFLAG:0:元素エネルギー量 = ABL:0:元素エネルギー
+  CFLAG:0:元素爆発クールタイム = 0
+  CALL assert_num_eq(true, charactor_can_use_burst(0))
+
+  CFLAG:0:元素爆発クールタイム = 1
+  CALL assert_num_eq(false, charactor_can_use_burst(0))
+
+@test__charactor_damage_mp
+  CALL charactor_add_member(1, true)
+
+  BASE:0:2 = 1000
+  CALL charactor_damage_mp(0, 100)
+  CALL assert_num_eq(900, BASE:0:2)
+  CALL assert_num_eq(0, EXP:0:敗北経験)
+
+  BASE:0:2 = 1000
+  CALL charactor_damage_mp(0, 1500)
+  CALL assert_num_eq(0, BASE:0:2)
+  CALL assert_num_eq(1, EXP:0:敗北経験)
+
+  CALL charactor_damage_mp(0, 1500)
+  CALL assert_num_eq(0, BASE:0:2)
+  CALL assert_num_eq(1, EXP:0:敗北経験)
+
+@test__charactor_damage_cp
+  CALL charactor_add_member(1, true)
+
+  BASE:0:3 = 1000
+  CALL charactor_damage_cp(0, 100)
+  CALL assert_num_eq(900, BASE:0:3)
+
+  BASE:0:3 = 1000
+  CALL charactor_damage_cp(0, 1500)
+  CALL assert_num_eq(0, BASE:0:3)
+
+@test__charactor_damage_hp
+  CALL charactor_add_member(1, true)
+
+  BASE:0:0 = 1000
+  CALL charactor_damage_hp(0, 100)
+  CALL assert_num_eq(900, BASE:0:0)
+
+  BASE:0:0 = 1000
+  CALL charactor_damage_hp(0, 1500)
+  CALL assert_num_eq(0, BASE:0:0)
+
+@test__charactor_damage_ep
+  ; B単体1000ダメージ
+  CALL charactor_add_member(1, true)
+  CALL charactor_damage_ep(0, 1000, part_build(true, false, false, false))
+  CALL assert_num_eq(100, EXP:0:Ｂ経験)
+  CALL assert_num_eq(0, EXP:0:Ｃ経験)
+  CALL assert_num_eq(0, EXP:0:Ｖ経験)
+  CALL assert_num_eq(0, EXP:0:Ａ経験)
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 1000, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+  ; 経験による倍率
+  CALL charactor_add_member(1, true)
+  EXP:0:Ｂ経験 = 10000
+
+  CALL charactor_damage_ep(0, 1000, part_build(true, false, false, false))
+  CALL assert_num_eq(10433, EXP:0:Ｂ経験)
+  CALL assert_num_eq(0, EXP:0:Ｃ経験)
+  CALL assert_num_eq(0, EXP:0:Ｖ経験)
+  CALL assert_num_eq(0, EXP:0:Ａ経験)
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 4334, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+  ; 経験による倍率+複合
+  CALL charactor_add_member(1, true)
+  EXP:0:Ｂ経験 = 10000
+  EXP:0:Ｃ経験 = 1000
+
+  CALL charactor_damage_ep(0, 1000, part_build(true, true, false, false))
+  CALL assert_num_eq(10481, EXP:0:Ｂ経験)
+  CALL assert_num_eq(1481, EXP:0:Ｃ経験)
+  CALL assert_num_eq(0, EXP:0:Ｖ経験)
+  CALL assert_num_eq(0, EXP:0:Ａ経験)
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 4811, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+  ; 敏感
+  CALL charactor_add_member(1, true)
+  TALENT:0:Ｃ感度 = 1
+
+  CALL charactor_damage_ep(0, 1000, part_build(false, true, false, false))
+  CALL assert_num_eq(0, EXP:0:Ｂ経験)
+  CALL assert_num_eq(140, EXP:0:Ｃ経験)
+  CALL assert_num_eq(0, EXP:0:Ｖ経験)
+  CALL assert_num_eq(0, EXP:0:Ａ経験)
+  CALL assert_num_eq(0, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 1400, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+  ; B過敏+貧乳+快感に素直+全裸+恍惚+B経験1000
+  CALL charactor_add_member(1, true)
+  TALENT:0:Ｂ感度 = 2
+  TALENT:0:貧乳 = true
+  TALENT:0:快感に素直 = true
+  BASE:0:3 = 0
+  CFLAG:0:恍惚 = 1
+  EXP:0:Ｂ経験 = 1000
+
+  CALL charactor_damage_ep(0, 1000, part_build(true, false, false, false))
+  CALL assert_num_eq(1339, EXP:0:Ｂ経験)
+  CALL assert_num_eq(0, EXP:0:Ｃ経験)
+  CALL assert_num_eq(0, EXP:0:Ｖ経験)
+  CALL assert_num_eq(0, EXP:0:Ａ経験)
+  CALL assert_num_eq(1, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 3394, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+  ; 全部位複合
+  CALL charactor_add_member(1, true)
+  TALENT:0:Ｂ感度 = 2
+  TALENT:0:Ｃ感度 = 1
+  TALENT:0:Ａ感度 = -1
+  TALENT:0:Ｖ感度 = 0
+  TALENT:0:巨乳 = true
+  TALENT:0:快感の否定 = true
+  BASE:0:3 = 0
+  CFLAG:0:恍惚 = 1
+  EXP:0:Ｂ経験 = 1000
+  EXP:0:Ｃ経験 = 2000
+  EXP:0:Ｖ経験 = 3000
+  EXP:0:Ａ経験 = 4000
+
+  CALL charactor_damage_ep(0, 1000, part_build(true, true, true, true))
+  CALL assert_num_eq(1856, EXP:0:Ｂ経験)
+  CALL assert_num_eq(2856, EXP:0:Ｃ経験)
+  CALL assert_num_eq(3856, EXP:0:Ｖ経験)
+  CALL assert_num_eq(4856, EXP:0:Ａ経験)
+  CALL assert_num_eq(1, CFLAG:0:恍惚)
+  CALL assert_num_eq(0, EXP:0:絶頂経験)
+  CALL assert_num_eq(MAXBASE:0:4 - 8562, BASE:0:4)
+  CALL assert_num_eq(MAXBASE:0:2, BASE:0:2)
+  DELCHARA 0
+
+@test__charactor_heal_hp
+  CALL charactor_add_member(1, true)
+
+  BASE:0:0 = 500
+  CALL charactor_heal_hp(0, 1000)
+  CALL assert_num_eq(BASE:0:0, 1500)
+
+  BASE:0:0 = 0
+  CALL charactor_heal_hp(0, 1000)
+  CALL assert_num_eq(BASE:0:0, 100)
+
+  BASE:0:0 = 500
+  CALL charactor_heal_hp(0, 100000)
+  CALL assert_num_eq(BASE:0:0, MAXBASE:0:0)
+
+@test__charactor_bad_status
+  CALL charactor_add_member(1, true)
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "拘束"))
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "丸呑み"))
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "恍惚"))
+
+  CALL charactor_increase_bad_status(0, "拘束", 3)
+  CALL charactor_increase_bad_status(0, "丸呑み", 5)
+  CALL charactor_increase_bad_status(0, "恍惚", 5)
+  
+  CALL assert_num_eq(true, charactor_has_bad_status(0, "拘束"))
+  CALL assert_num_eq(true, charactor_has_bad_status(0, "丸呑み"))
+  CALL assert_num_eq(true, charactor_has_bad_status(0, "恍惚"))
+
+  CALL charactor_decrease_bad_status(0, "拘束", 0)
+  CALL charactor_decrease_bad_status(0, "丸呑み", 0)
+  CALL charactor_decrease_bad_status(0, "恍惚", 10)
+
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "拘束"))
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "丸呑み"))
+  CALL assert_num_eq(false, charactor_has_bad_status(0, "恍惚"))

@@ -8,7 +8,7 @@
   WHILE playerNum + enemyNum != party_get_member_count() + battle_enemy_count()
     IF RAND:((party_get_member_count() -playerNum) + (battle_enemy_count() - enemyNum)) < (party_get_member_count() - playerNum)
       SETCOLOR COLOR_CP
-      PRINTFORML ━━━━　<< %charactor_get_charactor_name(playerNum)%のターン >>　━━━━━━━━━━━━
+      PRINTFORML ━━━━　<< %CALLNAME:(playerNum)%のターン >>　━━━━━━━━━━━━
       RESETCOLOR
       CALL battle_action_phase_do_player_action(playerNum)
       playerNum++

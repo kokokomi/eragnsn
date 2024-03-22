@@ -5,29 +5,29 @@
 
   ; HP
   PRINTFORM HP　%UNICODE(0x208D)%
-  CALL view_component_colorbar(charactor_get_hp(charactorNum), charactor_get_max_hp(charactorNum), 5, COLOR_HP, COLOR_HP_BG)
+  CALL view_component_colorbar(BASE:(charactorNum):0, MAXBASE:(charactorNum):0, 5, COLOR_HP, COLOR_HP_BG)
   PRINTFORM %UNICODE(0x208E)%
-  PRINTFORM \({charactor_get_hp(charactorNum),6}/{charactor_get_max_hp(charactorNum),6}\)
+  PRINTFORM \({BASE:(charactorNum):0, 6}/{MAXBASE:(charactorNum):0, 6}\)
 
   ; EP
   PRINTFORM EP　%UNICODE(0x208D)%
-  CALL view_component_colorbar(charactor_get_ep(charactorNum), charactor_get_max_Ep(charactorNum), 5, COLOR_EP, COLOR_EP_BG)
+  CALL view_component_colorbar(BASE:(charactorNum):4, MAXBASE:(charactorNum):4, 5, COLOR_EP, COLOR_EP_BG)
   PRINTFORM %UNICODE(0x208E)%
-  PRINTFORM \({charactor_get_ep(charactorNum),6}/{charactor_get_max_Ep(charactorNum),6}\)
+  PRINTFORM \({BASE:(charactorNum):4, 6}/{MAXBASE:(charactorNum):4, 6}\)
 
   ; MP
   PRINTFORM MP　%UNICODE(0x208D)%
-  CALL view_component_colorbar(charactor_get_mp(charactorNum), charactor_get_max_mp(charactorNum), 5, COLOR_MP, COLOR_MP_BG)
+  CALL view_component_colorbar(BASE:(charactorNum):2, MAXBASE:(charactorNum):2, 5, COLOR_MP, COLOR_MP_BG)
   PRINTFORM %UNICODE(0x208E)%
-  PRINTFORM \({charactor_get_mp(charactorNum),6}/{charactor_get_max_mp(charactorNum),6}\)
+  PRINTFORM \({BASE:(charactorNum):2, 6}/{MAXBASE:(charactorNum):2, 6}\)
 
   PRINTL
 
   ; CP
   PRINTFORM CP　%UNICODE(0x208D)%
-  CALL view_component_colorbar(charactor_get_cp(charactorNum), charactor_get_max_cp(charactorNum), 5, COLOR_CP, COLOR_CP_BG)
+  CALL view_component_colorbar(BASE:(charactorNum):3, MAXBASE:(charactorNum):3, 5, COLOR_CP, COLOR_CP_BG)
   PRINTFORM %UNICODE(0x208E)%
-  PRINTFORM \({charactor_get_cp(charactorNum),6}/{charactor_get_max_cp(charactorNum),6}\)
+  PRINTFORM \({BASE:(charactorNum):3, 6}/{MAXBASE:(charactorNum):3, 6}\)
 
   ; 元素チャージ
   PRINTFORM ER　%UNICODE(0x208D)%

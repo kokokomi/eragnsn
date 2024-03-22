@@ -6,16 +6,16 @@
   SELECTCASE battle_enemy_id(enemyNum)
       ; ヒルチャール系
     CASE 1, 2, 3, 4, 5, 6, 7
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカに大量の白濁を吐き出した！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のナカに大量の白濁を吐き出した！"
       ; 大型ヒルチャール系
     CASE 3, 5, 6, 7
-      RETURNF @"%battle_enemy_name(enemyNum)%はオナホのように%charactor_get_charactor_name(charactorNum)%を掴んで上下させ、ナカに大量の白濁を吐き出した！"
+      RETURNF @"%battle_enemy_name(enemyNum)%はオナホのように%CALLNAME:(charactorNum)%を掴んで上下させ、ナカに大量の白濁を吐き出した！"
       ; スライム系
     CASE 50 TO 63
-      RETURNF @"%battle_enemy_name(enemyNum)%は大きく震えると、飲み込んだ%charactor_get_charactor_name(charactorNum)%の秘部の近くが白く濁り始めた！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は大きく震えると、飲み込んだ%CALLNAME:(charactorNum)%の秘部の近くが白く濁り始めた！"
       ; 人間系
     CASE 200 TO 203
-      RETURNF @"%battle_enemy_name(enemyNum)%の激しいピストンが止まると、%charactor_get_charactor_name(charactorNum)%の中に射精した！"
+      RETURNF @"%battle_enemy_name(enemyNum)%の激しいピストンが止まると、%CALLNAME:(charactorNum)%の中に射精した！"
     CASEELSE
-      RETURNF @"%battle_enemy_name(enemyNum)%は%charactor_get_charactor_name(charactorNum)%のナカに大量の精を放った！"
+      RETURNF @"%battle_enemy_name(enemyNum)%は%CALLNAME:(charactorNum)%のナカに大量の精を放った！"
   ENDSELECT

@@ -12,86 +12,8 @@
   ENDIF
   ; キャラのレベルを1で初期化
   EXP:(CHARANUM - 1):キャラクターレベル = 1
-
-  ; キャラクターについての操作
-  ; 元素名
-@charactor_get_element_type_name(charactorId)
-  #FUNCTIONS
-  #DIM charactorId
-  RETURNF STR:(CFLAG:(charactorId):0)
-
-  ; 武器の種類名
-@charactor_get_weapon_type_name(charactorId)
-  #FUNCTIONS
-  #DIM charactorId
-  RETURNF STR:(CFLAG:(charactorId):1)
-
-  ; キャラクター名
-@charactor_get_charactor_name(charactorNum)
-  #FUNCTIONS
-  #DIM charactorNum
-
-  RETURNF CALLNAME:charactorNum
-
-  ; hp
-@charactor_get_hp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF BASE:(charactorNum):0
-
-  ; max hp
-@charactor_get_max_hp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF MAXBASE:(charactorNum):0
-
-  ; スタミナ
-@charactor_get_sp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF BASE:(charactorNum):1
-
-  ; max スタミナ
-@charactor_get_max_sp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF MAXBASE:(charactorNum):1
-
-  ; 精神
-@charactor_get_mp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF BASE:(charactorNum):2
-
-  ; max 精神
-@charactor_get_max_mp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF MAXBASE:(charactorNum):2
-
-  ; 衣装
-@charactor_get_cp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF BASE:(charactorNum):3
-
-  ; max 衣装
-@charactor_get_max_cp(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF MAXBASE:(charactorNum):3
-
-  ; 快楽
-@charactor_get_ep(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF BASE:(charactorNum):4
-
-  ; max 快楽
-@charactor_get_max_ep(charactorNum)
-  #FUNCTION
-  #DIM charactorNum
-  RETURNF MAXBASE:(charactorNum):4
+  CALL charactor_reset_bad_status(0, "拘束")
+  CALL charactor_reset_bad_status(0, "丸呑み")
 
   ; ステータス操作系 ----------------------------------------------------------------------------------
   ; 強制的にEPを1にする
@@ -218,10 +140,11 @@
   #DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
   #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
   #DIM damageBonus;性経験によるダメージボーナス
+  damageBonus = 0
   ; ダメージ量計算
   ; 部位ごとに倍率
   IF part_has_b(part)
-    SELECTCASE TALENT:(charactorNum):102
+    SELECTCASE TALENT:(charactorNum):Ｂ感度
       CASE -1 ; 鈍感
         damage = damage * 4 / 10
       CASE 1 ; 敏感
@@ -243,7 +166,7 @@
   ENDIF
 
   IF part_has_c(part)
-    SELECTCASE TALENT:(charactorNum):103
+    SELECTCASE TALENT:(charactorNum):Ｃ感度
       CASE -1 ; 鈍感
         damage = damage * 4 / 10
       CASE 1 ; 敏感
@@ -255,7 +178,7 @@
   ENDIF
 
   IF part_has_v(part)
-    SELECTCASE TALENT:(charactorNum):104
+    SELECTCASE TALENT:(charactorNum):Ｖ感度
       CASE -1 ; 鈍感
         damage = damage * 4 / 10
       CASE 1 ; 敏感
@@ -267,7 +190,7 @@
   ENDIF
 
   IF part_has_a(part)
-    SELECTCASE TALENT:(charactorNum):101
+    SELECTCASE TALENT:(charactorNum):Ａ感度
       CASE -1 ; 鈍感
         damage = damage * 4 / 10
       CASE 1 ; 敏感
@@ -295,7 +218,7 @@
 
   ; 恍惚になったあとは1.1倍
   IF charactor_has_bad_status(charactorNum, "恍惚")
-    damage *= 11 / 10
+    damage = damage * 11 / 10
   ENDIF
 
   ; ここまででダメージを確定

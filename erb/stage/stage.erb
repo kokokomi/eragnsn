@@ -102,7 +102,7 @@
   PRINTFORML {ステージ現在フロア}F {ステージ探索度}\%
   memberCount = party_get_member_count()
   FOR lcount, 0, memberCount
-    PRINTFORML %charactor_get_charactor_name(lcount)%
+    PRINTFORML %CALLNAME:(lcount)%
     CALL view_component_statusbar(lcount)
     PRINTL
   NEXT

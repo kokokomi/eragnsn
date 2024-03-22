@@ -2,7 +2,7 @@
 @message_player_hp_damage(charactorNum, damageAmount)
   #DIM damageAmount
   #DIM charactorNum
-  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  PRINTFORM %CALLNAME:(charactorNum)%は
 
   SETCOLOR COLOR_HP
   PRINTFORM {damageAmount}
@@ -13,7 +13,7 @@
 @message_player_mp_damage(charactorNum, damageAmount)
   #DIM damageAmount
   #DIM charactorNum
-  PRINTFORM %charactor_get_charactor_name(charactorNum)%の精神力が
+  PRINTFORM %CALLNAME:(charactorNum)%の精神力が
 
   SETCOLOR COLOR_MP
   PRINTFORM {damageAmount}
@@ -24,7 +24,7 @@
 @message_player_ep_damage(charactorNum, damageAmount)
   #DIM damageAmount
   #DIM charactorNum
-  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  PRINTFORM %CALLNAME:(charactorNum)%は
 
   SETCOLOR COLOR_EP
   PRINTFORM {damageAmount}
@@ -35,7 +35,7 @@
 @message_player_cp_damage(charactorNum, damageAmount)
   #DIM damageAmount
   #DIM charactorNum
-  PRINTFORM %charactor_get_charactor_name(charactorNum)%の服が
+  PRINTFORM %CALLNAME:(charactorNum)%の服が
 
   SETCOLOR COLOR_CP
   PRINTFORM {damageAmount}
@@ -52,7 +52,7 @@
   #DIM amount
   #DIM charactorNum
 
-  PRINTFORM %charactor_get_charactor_name(charactorNum)%は
+  PRINTFORM %CALLNAME:(charactorNum)%は
 
   SETCOLOR COLOR_HEAL
   PRINTFORM {amount}

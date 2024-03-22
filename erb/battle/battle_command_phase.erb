@@ -31,7 +31,7 @@
 
   CALL show_battle_gui
   DRAWLINE
-  PRINTFORML << %charactor_get_charactor_name(charactorNum)%のターン >>
+  PRINTFORML << %CALLNAME:(charactorNum)%のターン >>
   CALL kojo_戦闘_自分のターン開始(charactorNum)
 
   canAttackAction = !charactor_has_bad_status(charactorNum, "拘束") && !charactor_has_bad_status(charactorNum, "丸呑み")

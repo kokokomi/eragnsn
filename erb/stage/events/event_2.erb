@@ -2,7 +2,7 @@
   #DIM targetCharactor
   targetCharactor = RAND:(party_get_member_count())
 
-  PRINTFORML 粘液を滴らせた触手が%charactor_get_charactor_name(targetCharactor)%の背後から忍び寄る
-  PRINTFORML %charactor_get_charactor_name(targetCharactor)%の動きを封じると胸をもてあそんだ
+  PRINTFORML 粘液を滴らせた触手が%CALLNAME:(targetCharactor)%の背後から忍び寄る
+  PRINTFORML %CALLNAME:(targetCharactor)%の動きを封じると胸をもてあそんだ
 
   CALL charactor_damage_ep(targetCharactor, 1000, part_build(true, false, false, false))
