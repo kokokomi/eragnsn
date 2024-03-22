@@ -139,8 +139,7 @@
   #DIM charactorNum
   #DIM damage ;基礎ダメージ(最終的な値はキャラの感度などによって決定する)
   #DIM part ;ダメージを与える部位。1bit目から順にB/C/V/A
-  #DIM damageBonus;性経験によるダメージボーナス
-  damageBonus = 0
+  #DIM DYNAMIC damageBonus;性経験によるダメージボーナス
   ; ダメージ量計算
   ; 部位ごとに倍率
   IF part_has_b(part)
