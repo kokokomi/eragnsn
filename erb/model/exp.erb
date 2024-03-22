@@ -1,30 +1,33 @@
-﻿@add_charactor_exp(charactorNum, amount, message = true)
+﻿@add_charactor_exp(charactorNum, amount, message = true, totalLevel = 0)
   #DIM charactorNum
   #DIM amount
   #DIM message
+  #DIM totalLevel
   ; レベルがMAX
   IF required_charactor_exp(charactorNum) < 0
-    EXP:(charactorNum):0 = 0
+    EXP:(charactorNum):経験値 = 0
     RETURN
   ENDIF
 
   ; レベルアップ処理
   IF required_charactor_exp(charactorNum) < (amount + EXP:(charactorNum):0)
-    amount = (amount + EXP:(charactorNum):0) - required_charactor_exp(charactorNum)
-    CALL message_charactor_lv_up(charactorNum, 1)
-    EXP:(charactorNum):1 += 1
+    amount = (amount + EXP:(charactorNum):経験値) - required_charactor_exp(charactorNum)
+    EXP:(charactorNum):キャラクターレベル++
     ; 残りの経験値で再度経験値加算処理
-    CALL add_charactor_exp(charactorNum, amount, message)
+    CALL add_charactor_exp(charactorNum, amount, message, totalLevel + 1)
     RETURN
   ENDIF
+  IF totalLevel > 0
+    CALL message_charactor_lv_up(charactorNum, totalLevel)
+  ENDIF
+  ; 端数の経験値分
+  EXP:(charactorNum):経験値 += amount
   CALL message_charactor_exp_up(charactorNum, amount)
-  ; レベルアップしない場合
-  EXP:(charactorNum):0 += amount
 
 @required_charactor_exp(charactorNum)
   #FUNCTION
   #DIM charactorNum
-  RETURNF EXP:(charactorNum):1 < 90 ? EXP:(charactorNum):1 * 125 + 350 # -1
+  RETURNF EXP:(charactorNum):1 < 90 ? EXP:(charactorNum):1 * EXP:(charactorNum):1 * 125 + 350 # -1
 
 @add_adult_exp(charactorNum, amount, parts)
   #DIM charactorNum

@@ -1,0 +1,25 @@
+﻿@test__add_charactor_exp
+  CALL charactor_add_member(1, true)
+  CALL add_charactor_exp(0, 100)
+  CALL assert_num_eq(100, EXP:0:経験値)
+  CALL assert_num_eq(1, EXP:0:キャラクターレベル)
+  DELCHARA 0
+
+  CALL charactor_add_member(1, true)
+  CALL add_charactor_exp(0, 1000)
+  CALL assert_num_eq(525, EXP:0:経験値)
+  CALL assert_num_eq(2, EXP:0:キャラクターレベル)
+  DELCHARA 0
+
+  CALL charactor_add_member(1, true)
+  CALL add_charactor_exp(0, 10000)
+  CALL assert_num_eq(1375, EXP:0:経験値)
+  CALL assert_num_eq(6, EXP:0:キャラクターレベル)
+  DELCHARA 0
+
+  CALL charactor_add_member(1, true)
+  EXP:0:キャラクターレベル = 90
+  EXP:0:経験値 = 0
+  CALL add_charactor_exp(0, 1000)
+  CALL assert_num_eq(0, EXP:0:経験値)
+  CALL assert_num_eq(90, EXP:0:キャラクターレベル)

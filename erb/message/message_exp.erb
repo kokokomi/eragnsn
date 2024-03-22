@@ -16,12 +16,12 @@
   #DIM charactorNum
   #DIM amount
   SETCOLOR ACCENT_TEXT_COLOR
-  PRINTFORML %CALLNAME:(charactorNum)%: キャラクターレベル+{amount} ({(EXP:(charactorNum):キャラクターレベル) + amount}Lv)
+  PRINTFORML %CALLNAME:(charactorNum)%: キャラクターレベル+{amount} ({EXP:(charactorNum):キャラクターレベル}Lv)
   RESETCOLOR
 
 @message_charactor_exp_up(charactorNum, amount)
   #DIM charactorNum
   #DIM amount
   #DIM expPercent
-  expPercent = ((EXP:(charactorNum):経験値) + amount) * 100 / required_charactor_exp(charactorNum)
+  expPercent = (EXP:(charactorNum):経験値) * 100 / required_charactor_exp(charactorNum)
   PRINTFORML %CALLNAME:(charactorNum)%: 経験値+{amount} ({expPercent}\%)
