@@ -1,12 +1,4 @@
-﻿; n番目のパーティーメンバーのcharactorIdを返す
-; 存在しない場合は-1を返す
-@party_get_member_nth(num)
-  #FUNCTION
-  #DIM num
-  GETCHARA num
-  RETURNF RESULT
-
-  ; パーティメンバーの人数を返す
+﻿  ; パーティメンバーの人数を返す
 @party_get_member_count
   #FUNCTION
   RETURNF MIN(CHARANUM, 4)

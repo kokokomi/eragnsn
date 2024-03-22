@@ -62,12 +62,11 @@
   PRINTFORML << 編成 >>
   memberCount = party_get_member_count()
   FOR lcount, 0, memberCount
-    CALL show_charactor_status_for_home(party_get_member_nth(lcount), lcount)
+    CALL show_charactor_status_for_home(lcount)
   NEXT
   DRAWLINE
 
-@show_charactor_status_for_home(charactorId, charactorNum)
-  #DIM charactorId
+@show_charactor_status_for_home(charactorNum)
   #DIM charactorNum
   SETCOLOR CFLAG:(charactorNum):キャラの色
   PRINTFORML %CALLNAME:(charactorNum)%
